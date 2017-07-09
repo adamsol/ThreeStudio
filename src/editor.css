@@ -1,0 +1,24 @@
+
+html, body {
+	background-color: #242629;
+	background-size: 25px 25px;
+	font-family: Verdana;
+	font-size: 12px;
+	height: 100%;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.jstree {
+	color: #eee;
+}
+.jstree-rename-input {
+	color: #000;
+}
+.jstree-anchor.jstree-hovered, .jstree-default.jstree-wholerow-hovered {
+	background-color: #313443;
+}
+.jstree-anchor.jstree-clicked {
+	background-color: #585C70;
+}
