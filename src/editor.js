@@ -14,13 +14,13 @@ function init()
 
 	geometry = new THREE.BoxGeometry(1, 1, 1);
 	material = new THREE.MeshBasicMaterial({color: '#479942'});
-	var box2 = new Actor('child', box);
+	var box2 = new Actor('green', box);
 	box2.position.x = 3;
 	box2.addComponent(new THREE.Mesh(geometry, material));
 
 	geometry = new THREE.BoxGeometry(0.8, 0.6, 0.8);
 	material = new THREE.MeshBasicMaterial({color: '#325692'});
-	var box3 = new Actor('grandchild', box2);
+	var box3 = new Actor('blue', box2);
 	box3.position.y = 2;
 	box3.addComponent(new THREE.Mesh(geometry, material));
 }
@@ -30,14 +30,14 @@ init();
 var config = {
 	content: [{
 		type: 'row',
-		content:[{
+		content: [{
 			type: 'component',
 			componentName: 'hierarchy_view',
-			componentState: { label: 'A' }
+			componentState: {}
 		}, {
 			type: 'component',
 			componentName: 'scene_view',
-			componentState: { label: 'B' }
+			componentState: {}
 		}]
 	}]
 };

@@ -22,8 +22,8 @@ function HierarchyView(container, state)
 		plugins: ['state', 'dnd'],
 		state: {key: 'hierarchy_state'}
 	});
-	this.jstree = this.container.jstree(true);
-	jstree = this.jstree;
+	this.tree = this.container.jstree(true);
+	jstree = this.tree;
 
 	this.container.on('create_node.jstree', this.create.bind(this));
 	this.container.on('rename_node.jstree', this.rename.bind(this));
@@ -54,67 +54,79 @@ HierarchyView.prototype.copy = function(event, data)
 	var new_actor = scene.getActor(data.original.id).clone();
 	new_actor.setParent(scene.getActor(data.parent));
 
+	var old_node = this.tree.get_node(data.original.id);
+	var new_node = data.node;
+
+	// recursively update ids and copy data to the subtree
 	function update_nodes(old_node, new_node, actor) {
-		this.jstree.set_id(new_node, actor.id);
+		this.tree.set_id(new_node, actor.id);
 		new_node.data = $.extend({}, old_node.data);
 		for (var i = 0; i < actor.children.length; ++i) {
-			var old_child = this.jstree.get_node(old_node.children[i]);
-			var new_child = this.jstree.get_node(new_node.children[i]);
+			var old_child = this.tree.get_node(old_node.children[i]);
+			var new_child = this.tree.get_node(new_node.children[i]);
 			update_nodes.call(this, old_child, new_child, actor.children[old_child.data.order]);
 		}
 	}
-	var old_node = this.jstree.get_node(data.original.id);
-	var new_node = data.node;
-	// recursively update ids and copy data to the subtree
 	update_nodes.call(this, old_node, new_node, new_actor);
+
 	// update order value for the new node
 	new_node.data.order = new_actor.parent.children.length - 1;
+
 	// focus and select the new node
-	this.jstree.deselect_node(old_node.id);
+	this.tree.deselect_node(old_node.id);
 	$('#'+old_node.a_attr.id).blur();
-	this.jstree.select_node(new_node.id);
+	this.tree.select_node(new_node.id);
 	$('#'+new_node.a_attr.id).focus();
 };
 
 HierarchyView.prototype.move = function(event, data)
 {
-	var actor = scene.getActor(data.node.id);
-	var parent = scene.getActor(data.parent);
-	actor.setParent(parent);
+	if (data.parent != data.old_parent) {
+		var node = data.node;
+		var actor = scene.getActor(node.id);
+		var parent = scene.getActor(data.parent);
+		actor.setParent(parent);
+		this.tree.get_siblings(node).forEach(function(sibling) {
+			if (sibling.data.order > node.data.order) {
+				sibling.data.order -= 1;
+			}
+		});
+		node.data.order = parent.children.length - 1;
+	}
 };
 
 HierarchyView.prototype.keydown = function(event)
 {
 	if (event.keyCode == 113) { // F2
-		var selected = this.jstree.get_selected();
+		var selected = this.tree.get_selected();
 		if (selected.length == 1) {
-			this.jstree.edit(this.jstree.get_node(selected[0]));
+			this.tree.edit(this.tree.get_node(selected[0]));
 		}
 	}
 	else if (event.keyCode == 46) { // del
-		this.jstree.delete_node(this.jstree.get_selected()[0]);
+		this.tree.delete_node(this.tree.get_selected()[0]);
 	}
 	else if (event.keyCode == 67 && event.ctrlKey) { // ctrl C
 		event.preventDefault();
-		this.jstree.copy();
+		this.tree.copy();
 	}
 	else if (event.keyCode == 88 && event.ctrlKey) { // ctrl X
 		event.preventDefault();
-		this.jstree.cut();
+		this.tree.cut();
 	}
 	else if (event.keyCode == 86 && event.ctrlKey) { // ctrl V
 		event.preventDefault();
-		var node = this.jstree.get_selected()[0];
-		this.jstree.paste(node, 'last');
-		this.jstree.deselect_node(node);
+		var node = this.tree.get_selected()[0];
+		this.tree.paste(node, 'last');
+		this.tree.deselect_node(node);
 	}
 	else if (event.keyCode == 68 && event.ctrlKey) { // ctrl D
 		event.preventDefault();
-		this.jstree.get_selected(true).forEach(function(node) {
-			var parent = this.jstree.get_node(node.parent);
-			this.jstree.copy(node.id);
-			this.jstree.deselect_node(node.parent);
-			this.jstree.paste(parent.id, parent.children.indexOf(node.id) + 1);
+		this.tree.get_selected(true).forEach(function(node) {
+			var parent = this.tree.get_node(node.parent);
+			this.tree.copy(node.id);
+			this.tree.deselect_node(node.parent);
+			this.tree.paste(parent.id, parent.children.indexOf(node.id) + 1);
 		}, this);
 	}
 };

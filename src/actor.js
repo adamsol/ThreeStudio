@@ -14,19 +14,24 @@ Scene.prototype.getActor = function(id)
 	return actors[+id];
 };
 
-function Actor(name, parent, obj)
+function Actor(obj, parent)
 {
-	this.obj = obj || new THREE.Group();
+	if (obj instanceof THREE.Object3D) {
+		this.obj = obj;
+		this.name = obj.name;
+	} else {
+		this.obj = new THREE.Group();
+		this.setName(obj);
+	}
 	this.id = this.obj.id;
 	actors[this.id] = this;
 
-	this.setName(name);
 	this.setParent(parent, true);
 	this.children = [];
 	this.components = [];
-	this.obj.children.forEach(function(child) {
+	this.obj.children.slice().forEach(function(child) {
 		if (child.type === 'Group') {
-			new Actor(child.name, this, child);
+			new Actor(child, this);
 		} else {
 			this.components.push(child);
 		}
@@ -40,7 +45,7 @@ function Actor(name, parent, obj)
 Actor.prototype.clone = function()
 {
 	var new_obj = this.obj.clone();
-	return new Actor(new_obj.name, this.parent, new_obj);
+	return new Actor(new_obj, this.parent);
 };
 
 Actor.prototype.delete = function()
