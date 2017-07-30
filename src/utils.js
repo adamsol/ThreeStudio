@@ -5,6 +5,13 @@ Array.prototype.remove = function(el)
 	this.splice(index, 1);
 };
 
+Array.prototype.prop = function(prop)
+{
+	return this.map(function(obj) {
+		return obj[prop];
+	});
+};
+
 var _ = undefined;
 
 Function.prototype.curry = function()

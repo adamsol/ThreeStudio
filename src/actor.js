@@ -7,11 +7,19 @@ function Scene()
 	this.id = this.obj.id;
 	this.name = 'scene';
 	this.children = [];
+	this.raycaster = new THREE.Raycaster();
 }
 
 Scene.prototype.getActor = function(id)
 {
 	return actors[+id];
+};
+
+Scene.prototype.pickObject = function(coords, camera)
+{
+	this.raycaster.setFromCamera(coords, camera);
+	var intersection = this.raycaster.intersectObjects(this.children.prop('obj'), true);
+	return intersection.length ? intersection[0].object : null;
 };
 
 function Actor(obj, parent)

@@ -1,5 +1,5 @@
 
-var scene, box;
+var scene;
 
 function init()
 {
@@ -9,7 +9,7 @@ function init()
 
 	geometry = new THREE.BoxGeometry(2, 2, 2);
 	material = new THREE.MeshBasicMaterial({map: texture});
-	box = new Actor('box');
+	var box = new Actor('box');
 	box.addComponent(new THREE.Mesh(geometry, material));
 
 	geometry = new THREE.BoxGeometry(1, 1, 1);
