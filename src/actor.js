@@ -32,9 +32,11 @@ Scene.prototype.setSelection = function(ids)
 	views = [];
 	views.extend(layout.root.getComponentsByName('hierarchy'));
 	views.extend(layout.root.getComponentsByName('scene'));
+	views.extend(layout.root.getComponentsByName('inspector'));
 
+	var actors = scene.getActors(ids);
 	views.forEach(function(view) {
-		view.setSelection(scene.getActors(ids));
+		view.setSelection(actors);
 	});
 };
 
@@ -60,6 +62,11 @@ function Actor(obj, parent)
 	this.setParent(parent, true);
 	this.children = [];
 	this.components = [];
+
+	this.obj.rotation.order = 'YXZ';
+	this.transform = new Transform(this.obj.position, this.obj.rotation, this.obj.scale);
+	this.components.push(this.transform);
+
 	this.obj.children.slice().forEach(function(child) {
 		if (child.type === 'Group') {
 			new Actor(child, this);
@@ -67,10 +74,6 @@ function Actor(obj, parent)
 			this.components.push(child);
 		}
 	}, this);
-
-	this.position = this.obj.position;
-	this.rotation = this.obj.rotation;
-	this.scale = this.obj.scale;
 }
 
 Actor.prototype.clone = function()

@@ -19,6 +19,30 @@ Array.prototype.prop = function(prop)
 	});
 };
 
+String.prototype.upper = String.prototype.toUpperCase;
+String.prototype.lower = String.prototype.toLowerCase;
+
+String.prototype.capitalize = function()
+{
+	return this[0].upper() + this.slice(1);
+};
+
+String.prototype.format = function()
+{
+	var args = arguments;
+	return this.replace(/{([\w.]+)}/g, function(match, pattern) {
+		var attrs = pattern.split('.');
+		var obj = args;
+		for (var i = 0, n = attrs.length; i < n; ++i) {
+			obj = obj[attrs[i]];
+			if (typeof obj == 'undefined') {
+				break;
+			}
+		}
+		return (typeof obj != 'undefined' ? obj : match);
+	});
+};
+
 var _ = undefined;
 
 Function.prototype.curry = function()
