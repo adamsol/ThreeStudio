@@ -103,24 +103,21 @@ HierarchyView.prototype.keydown = function(event)
 			this.tree.edit(this.tree.get_node(selected[0]));
 		}
 	}
-	else if (event.keyCode == 46) { // del
+	else if (event.keyCode == 46) { // Del
 		this.tree.delete_node(this.tree.get_selected()[0]);
 	}
-	else if (event.keyCode == 67 && event.ctrlKey) { // ctrl C
-		event.preventDefault();
+	else if (event.keyCode == 67 && event.ctrlKey) { // Ctrl C
 		this.tree.copy();
 	}
-	else if (event.keyCode == 88 && event.ctrlKey) { // ctrl X
-		event.preventDefault();
+	else if (event.keyCode == 88 && event.ctrlKey) { // Ctrl X
 		this.tree.cut();
 	}
-	else if (event.keyCode == 86 && event.ctrlKey) { // ctrl V
-		event.preventDefault();
+	else if (event.keyCode == 86 && event.ctrlKey) { // Ctrl V
 		var node = this.tree.get_selected()[0];
 		this.tree.paste(node, 'last');
 		this.tree.deselect_node(node);
 	}
-	else if (event.keyCode == 68 && event.ctrlKey) { // ctrl D
+	else if (event.keyCode == 68 && event.ctrlKey) { // Ctrl D
 		event.preventDefault();
 		this.tree.get_selected(true).forEach(function(node) {
 			var parent = this.tree.get_node(node.parent);
