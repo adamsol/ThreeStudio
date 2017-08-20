@@ -96,17 +96,19 @@ function SceneView(container, state)
 	this.canvas.attr('tabindex', 42).css('outline', 'none');
 
 	this.renderer = new THREE.WebGLRenderer();
+	this.renderer.shadowMap.enabled = true;
 	this.canvas.append(this.renderer.domElement);
 
 	this.camera = new THREE.PerspectiveCamera(75, 1, 0.01, 1000);
 	this.camera.rotation.order = 'YXZ';
-	this.camera.position.z = 8;
+	this.camera.position.set(0.0, 1.0, 8.0);
 
 	this.controls = {};
 
 	this.controls.camera = new CameraControls(this.camera, this.canvas);
 
 	this.controls.transform = new THREE.TransformControls(this.camera, this.renderer.domElement);
+	this.controls.transform.space = 'local';
 	scene.obj.add(this.controls.transform);
 
 	this.clock = new THREE.Clock();

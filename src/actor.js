@@ -5,7 +5,7 @@ function Scene()
 {
 	this.obj = new THREE.Scene();
 	this.id = this.obj.id;
-	this.name = 'scene';
+	this.name = 'Scene';
 	this.children = [];
 	this.raycaster = new THREE.Raycaster();
 }
@@ -24,12 +24,19 @@ Scene.prototype.pickObject = function(coords, camera)
 
 function Actor(obj, parent)
 {
+	Object.defineProperty(this, 'name', {
+		get: function() {
+			return this.obj.name;
+		},
+		set: function(name) {
+			this.obj.name = name || '';
+		}
+	});
 	if (obj instanceof THREE.Object3D) {
 		this.obj = obj;
-		this.name = obj.name;
 	} else {
 		this.obj = new THREE.Group();
-		this.setName(obj);
+		this.name = obj;
 	}
 	this.id = this.obj.id;
 	actors[this.id] = this;
@@ -61,11 +68,6 @@ Actor.prototype.delete = function()
 	this.parent.obj.remove(this.obj);
 };
 
-Actor.prototype.setName = function(name)
-{
-	this.name = this.obj.name = name || '';
-};
-
 Actor.prototype.setParent = function(parent, keep_local)
 {
 	parent = parent || scene;
@@ -93,4 +95,22 @@ Actor.prototype.addComponent = function(component)
 {
 	this.obj.add(component);
 	this.components.push(component);
+
+	var sprite_path;
+	if (component.isLight) {
+		component.castShadow = true;
+		var sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+		sprite_path = '../gfx/sprites/' + sprite_name + '.png';
+	}
+
+	if (sprite_path) {
+		var texture = new THREE.TextureLoader().load(sprite_path);
+		var material = new THREE.SpriteMaterial({map: texture, color: component.color});
+		this.obj.add(new THREE.Sprite(material));
+	}
+
+	if (component.isMesh) {
+		component.castShadow = true;
+		component.receiveShadow = true;
+	}
 };

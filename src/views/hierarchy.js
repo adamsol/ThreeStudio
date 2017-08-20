@@ -41,7 +41,7 @@ HierarchyView.prototype.create = function(event, data)
 
 HierarchyView.prototype.rename = function(event, data)
 {
-	scene.getActor(data.node.id).setName(data.text);
+	scene.getActor(data.node.id).name = data.text;
 };
 
 HierarchyView.prototype.delete = function(event, data)
