@@ -15,7 +15,7 @@ function HierarchyView(container, state)
 
 	this.container.jstree({
 		core: {
-			multiple: true,
+			multiple: false,
 			check_callback: true,
 			data: buildHierarchy(scene)
 		},
@@ -28,6 +28,7 @@ function HierarchyView(container, state)
 	this.container.on('create_node.jstree', this.create.bind(this));
 	this.container.on('rename_node.jstree', this.rename.bind(this));
 	this.container.on('delete_node.jstree', this.delete.bind(this));
+	this.container.on('changed.jstree', this.change.bind(this));
 	this.container.on('copy_node.jstree', this.copy.bind(this));
 	this.container.on('move_node.jstree', this.move.bind(this));
 	this.container.on('keydown', this.keydown.bind(this));
@@ -47,6 +48,11 @@ HierarchyView.prototype.rename = function(event, data)
 HierarchyView.prototype.delete = function(event, data)
 {
 	scene.getActor(data.node.id).delete();
+};
+
+HierarchyView.prototype.change = function(event, data)
+{
+	scene.setSelection(this.tree.get_selected());
 };
 
 HierarchyView.prototype.copy = function(event, data)
@@ -126,4 +132,10 @@ HierarchyView.prototype.keydown = function(event)
 			this.tree.paste(parent.id, parent.children.indexOf(node.id) + 1);
 		}, this);
 	}
+};
+
+HierarchyView.prototype.setSelection = function(actors)
+{
+	this.tree.deselect_all(true);
+	this.tree.select_node(actors.prop('id'), true);
 };

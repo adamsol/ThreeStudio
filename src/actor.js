@@ -15,11 +15,27 @@ Scene.prototype.getActor = function(id)
 	return actors[+id];
 };
 
+Scene.prototype.getActors = function(ids)
+{
+	return ids.map(this.getActor.bind(this));
+};
+
 Scene.prototype.pickObject = function(coords, camera)
 {
 	this.raycaster.setFromCamera(coords, camera);
 	var intersection = this.raycaster.intersectObjects(this.children.prop('obj'), true);
 	return intersection.length ? intersection[0].object : null;
+};
+
+Scene.prototype.setSelection = function(ids)
+{
+	views = [];
+	views.extend(layout.root.getComponentsByName('hierarchy'));
+	views.extend(layout.root.getComponentsByName('scene'));
+
+	views.forEach(function(view) {
+		view.setSelection(scene.getActors(ids));
+	});
 };
 
 function Actor(obj, parent)

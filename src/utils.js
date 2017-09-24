@@ -1,4 +1,11 @@
 
+Array.prototype.extend = function(arr)
+{
+	arr.forEach(function(el) {
+		this.push(el);
+	}.bind(this));
+};
+
 Array.prototype.remove = function(el)
 {
 	var index = this.indexOf(el);
@@ -31,9 +38,17 @@ Function.prototype.curry = function()
 	};
 };
 
+Function.prototype.lock = function(n)
+{
+	var f = this;
+	return function() {
+		return f.apply(this, [].slice.call(arguments, 0, n));
+	};
+};
+
 $.jstree.core.prototype.get_children = function(obj)
 {
-	return this.get_node(obj).children.map(this.get_node.curry(_, false), this);
+	return this.get_node(obj).children.map(this.get_node.lock(1), this);
 };
 
 $.jstree.core.prototype.get_parent = function(obj)

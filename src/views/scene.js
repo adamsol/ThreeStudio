@@ -95,7 +95,7 @@ function SceneView(container, state)
 	this.canvas = container.getElement().empty();
 	this.canvas.attr('tabindex', 42).css('outline', 'none');
 
-	this.renderer = new THREE.WebGLRenderer();
+	this.renderer = new THREE.WebGLRenderer({antialias: true});
 	this.renderer.shadowMap.enabled = true;
 	this.canvas.append(this.renderer.domElement);
 
@@ -128,9 +128,16 @@ SceneView.prototype.animate = function()
 
 	var dt = this.clock.getDelta();
 
+	this.controls.transform.update();
+	if (this.controls.transform.object) {
+		this.controls.transform.visible = true;
+	}
+
 	this.controls.camera.update(dt);
 
 	this.renderer.render(scene.obj, this.camera);
+
+	this.controls.transform.visible = false;
 
 	requestAnimationFrame(this.animate.bind(this));
 };
@@ -158,14 +165,17 @@ SceneView.prototype.mousedown = function(event)
 		coords.y = -2 * (event.offsetY / this.canvas.innerHeight() - 0.5);
 		var obj = scene.pickObject(coords, this.camera);
 
-		this.canvas.on('mouseup', function() {
-			if (obj) {
-				this.controls.transform.attach(obj.parent);
-			} else {
-				this.controls.transform.detach();
+		this.canvas.on('mouseup', function(event) {
+			if (event.which == 1) {
+				if (obj) {
+					scene.setSelection([obj.parent.id]);
+				} else {
+					scene.setSelection([]);
+				}
+				$(this).off('mouseup');
 			}
 		}.bind(this));
-		this.canvas.on('mousemove', this.canvas.off.bind(this.canvas, 'mouseup'));
+		this.canvas.on('mousemove', this.canvas.off.bind(this.canvas, 'mouseup').lock());
 	}
 }
 
@@ -184,5 +194,15 @@ SceneView.prototype.keydown = function(event)
 		else if (event.keyCode == 82) { // R
 			this.controls.transform.setMode('scale');
 		}
+	}
+};
+
+SceneView.prototype.setSelection = function(actors)
+{
+	if (actors.length) {
+		this.controls.transform.attach(actors[0].obj);
+		this.controls.transform.visible = false;
+	} else {
+		this.controls.transform.detach();
 	}
 };

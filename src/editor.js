@@ -1,8 +1,9 @@
 
 var scene;
 var texture_loader;
+var layout;
 
-function init()
+$(function()
 {
 	scene = new Scene();
 	texture_loader = new THREE.TextureLoader();
@@ -50,28 +51,33 @@ function init()
 	actor.addComponent(dir_light);
 
 	scene.obj.add(new THREE.AmbientLight(0x222222));
-}
 
-init();
-
-var config = {
-	content: [{
-		type: 'row',
+	var config = {
 		content: [{
-			type: 'component',
-			componentName: 'hierarchy_view',
-			componentState: {}
-		}, {
-			type: 'component',
-			componentName: 'scene_view',
-			componentState: {}
+			type: 'row',
+			content: [{
+				type: 'component',
+				componentName: 'scene',
+				componentState: {}
+			}, {
+				type: 'column',
+				content: [{
+					type: 'component',
+					componentName: 'scene',
+					componentState: {}
+				}, {
+					type: 'component',
+					componentName: 'hierarchy',
+					componentState: {}
+				}]
+			}]
 		}]
-	}]
-};
+	};
 
-var layout = new GoldenLayout(config);
+	layout = new GoldenLayout(config);
 
-layout.registerComponent('hierarchy_view', HierarchyView);
-layout.registerComponent('scene_view', SceneView);
+	layout.registerComponent('hierarchy', HierarchyView);
+	layout.registerComponent('scene', SceneView);
 
-layout.init();
+	layout.init();
+});
