@@ -1,16 +1,17 @@
 
-var scene;
-var texture_loader;
+var scene, loaders;
 var layout;
 
 $(function()
 {
 	scene = new Scene();
-	texture_loader = new THREE.TextureLoader();
+	loaders = {
+		texture: new THREE.TextureLoader()
+	};
 
 	var textures = {
-		tiles: texture_loader.load('../gfx/textures/tiles.jpg'),
-		crate: texture_loader.load('../gfx/textures/crate.jpg')
+		tiles: loaders.texture.load('../gfx/textures/tiles.jpg'),
+		crate: loaders.texture.load('../gfx/textures/crate.jpg')
 	};
 	var geometry, material, actor;
 

@@ -3,25 +3,26 @@ function CameraControls(camera, container)
 {
 	this.camera = camera;
 
-	this.rotation_speed = 0.003; // radians/pixel
-	this.movement_speed = 5; // units/second
+	this.speed = {
+		rotation: 0.003, // radians/pixel
+		movement: 5, // units/second
+	};
 
 	this.unlocked = false;
-	this.angles = {h: 0, v: 0};
 
 	this.keys = {};
 
-	container.on('mousedown', this.mousedown.bind(this));
-	$(window).on('mouseup', this.mouseup.bind(this));
-	$(window).on('mousemove', this.mousemove.bind(this));
-	container.on('keydown', this.keydown.bind(this));
-	container.on('keyup', this.keyup.bind(this));
+	container.on('mousedown', this.onMouseDown.bind(this));
+	$(window).on('mouseup', this.onMouseUp.bind(this));
+	$(window).on('mousemove', this.onMouseMove.bind(this));
+	container.on('keydown', this.onKeyDown.bind(this));
+	container.on('keyup', this.onKeyUp.bind(this));
 }
 
 CameraControls.prototype.update = function(dt)
 {
 	if (this.unlocked) {
-		var dist = this.movement_speed * dt;
+		var dist = this.speed.movement * dt;
 		if (this.keys[-17]) { // Ctrl
 			dist *= 0.3;
 		}
@@ -52,32 +53,32 @@ CameraControls.prototype.update = function(dt)
 	}
 };
 
-CameraControls.prototype.mousedown = function(event)
+CameraControls.prototype.onMouseDown = function(event)
 {
 	if (event.which == 3) {
 		this.unlocked = true;
 	}
 };
 
-CameraControls.prototype.mousemove = function(event)
+CameraControls.prototype.onMouseMove = function(event)
 {
 	if (this.unlocked && this.prev_pos) {
 		var dh = event.clientX - this.prev_pos.x;
 		var dv = event.clientY - this.prev_pos.y;
-		this.camera.rotation.y -= this.rotation_speed * dh;
-		this.camera.rotation.x -= this.rotation_speed * dv;
+		this.camera.rotation.y -= this.speed.rotation * dh;
+		this.camera.rotation.x -= this.speed.rotation * dv;
 	}
 	this.prev_pos = {x: event.clientX, y: event.clientY};
 };
 
-CameraControls.prototype.mouseup = function(event)
+CameraControls.prototype.onMouseUp = function(event)
 {
 	if (event.which == 3) {
 		this.unlocked = false;
 	}
 };
 
-CameraControls.prototype.keydown = function(event)
+CameraControls.prototype.onKeyDown = function(event)
 {
 	if (event.keyCode >= 16 && event.keyCode <= 18) { // Shift / Ctrl / Alt - toggle
 		this.keys[-event.keyCode] = !this.keys[-event.keyCode];
@@ -85,7 +86,7 @@ CameraControls.prototype.keydown = function(event)
 	this.keys[event.keyCode] = true;
 };
 
-CameraControls.prototype.keyup = function(event)
+CameraControls.prototype.onKeyUp = function(event)
 {
 	this.keys[event.keyCode] = false;
 };
@@ -115,11 +116,11 @@ function SceneView(container, state)
 
 	this.animate();
 
-	container.on('resize', this.resize.bind(this));
-	container.on('destroy', this.destroy.bind(this));
+	container.on('resize', this.onResize.bind(this));
+	container.on('destroy', this.onDestroy.bind(this));
 
-	this.canvas.on('mousedown', this.mousedown.bind(this));
-	this.canvas.on('keydown', this.keydown.bind(this));
+	this.canvas.on('mousedown', this.onMouseDown.bind(this));
+	this.canvas.on('keydown', this.onKeyDown.bind(this));
 }
 
 SceneView.prototype.animate = function()
@@ -142,7 +143,7 @@ SceneView.prototype.animate = function()
 	requestAnimationFrame(this.animate.bind(this));
 };
 
-SceneView.prototype.resize = function()
+SceneView.prototype.onResize = function()
 {
 	var width = this.canvas.width(), height = this.canvas.height();
 
@@ -152,12 +153,12 @@ SceneView.prototype.resize = function()
 	this.renderer.setSize(width, height);
 };
 
-SceneView.prototype.destroy = function()
+SceneView.prototype.onDestroy = function()
 {
 	this.renderer = null;
 };
 
-SceneView.prototype.mousedown = function(event)
+SceneView.prototype.onMouseDown = function(event)
 {
 	if (event.which == 1) {
 		var coords = new THREE.Vector3();
@@ -177,9 +178,9 @@ SceneView.prototype.mousedown = function(event)
 		}.bind(this));
 		this.canvas.on('mousemove', this.canvas.off.bind(this.canvas, 'mouseup').lock());
 	}
-}
+};
 
-SceneView.prototype.keydown = function(event)
+SceneView.prototype.onKeyDown = function(event)
 {
 	if (!this.controls.camera.unlocked) {
 		if (event.keyCode == 81) { // Q

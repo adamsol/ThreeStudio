@@ -25,37 +25,35 @@ function HierarchyView(container, state)
 	this.tree = this.container.jstree(true);
 	jstree = this.tree;
 
-	this.container.on('create_node.jstree', this.create.bind(this));
-	this.container.on('rename_node.jstree', this.rename.bind(this));
-	this.container.on('delete_node.jstree', this.delete.bind(this));
-	this.container.on('changed.jstree', this.change.bind(this));
-	this.container.on('copy_node.jstree', this.copy.bind(this));
-	this.container.on('move_node.jstree', this.move.bind(this));
-	this.container.on('keydown', this.keydown.bind(this));
+	this.container.on('create_node.jstree', this.onNodeCreate.bind(this));
+	this.container.on('rename_node.jstree', this.onNodeRename.bind(this));
+	this.container.on('delete_node.jstree', this.onNodeDelete.bind(this));
+	this.container.on('changed.jstree', this.onNodeChange.bind(this));
+	this.container.on('copy_node.jstree', this.onNodeCopy.bind(this));
+	this.container.on('move_node.jstree', this.onNodeMove.bind(this));
+	this.container.on('keydown', this.onKeyDown.bind(this));
 }
 
-HierarchyView.prototype.create = function(event, data)
+HierarchyView.prototype.onNodeCreate = function(event, data)
 {
-	console.log('create');
-	console.log(data);
 };
 
-HierarchyView.prototype.rename = function(event, data)
+HierarchyView.prototype.onNodeRename = function(event, data)
 {
 	scene.getActor(data.node.id).name = data.text;
 };
 
-HierarchyView.prototype.delete = function(event, data)
+HierarchyView.prototype.onNodeDelete = function(event, data)
 {
 	scene.getActor(data.node.id).delete();
 };
 
-HierarchyView.prototype.change = function(event, data)
+HierarchyView.prototype.onNodeChange = function(event, data)
 {
 	scene.setSelection(this.tree.get_selected());
 };
 
-HierarchyView.prototype.copy = function(event, data)
+HierarchyView.prototype.onNodeCopy = function(event, data)
 {
 	var new_actor = scene.getActor(data.original.id).clone();
 	new_actor.setParent(scene.getActor(data.parent));
@@ -85,7 +83,7 @@ HierarchyView.prototype.copy = function(event, data)
 	$('#'+new_node.a_attr.id).focus();
 };
 
-HierarchyView.prototype.move = function(event, data)
+HierarchyView.prototype.onNodeMove = function(event, data)
 {
 	if (data.parent != data.old_parent) {
 		var node = data.node;
@@ -101,7 +99,7 @@ HierarchyView.prototype.move = function(event, data)
 	}
 };
 
-HierarchyView.prototype.keydown = function(event)
+HierarchyView.prototype.onKeyDown = function(event)
 {
 	if (event.keyCode == 113) { // F2
 		var selected = this.tree.get_selected();
