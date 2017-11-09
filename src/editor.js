@@ -58,25 +58,22 @@ $(function()
 			type: 'row',
 			content: [{
 				type: 'component',
+				title: 'Scene',
 				componentName: 'scene',
 				componentState: {}
 			}, {
 				type: 'column',
+				width: 30,
 				content: [{
 					type: 'component',
-					componentName: 'scene',
+					title: 'Inspector',
+					componentName: 'inspector',
 					componentState: {}
 				}, {
-					type: 'row',
-					content: [{
-						type: 'component',
-						componentName: 'hierarchy',
-						componentState: {}
-					}, {
-						type: 'component',
-						componentName: 'inspector',
-						componentState: {}
-					}]
+					type: 'component',
+					title: 'Hierarchy',
+					componentName: 'hierarchy',
+					componentState: {}
 				}]
 			}]
 		}]

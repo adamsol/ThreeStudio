@@ -42,6 +42,7 @@ div.component-attribute {
 	box-sizing: border-box;
 	cursor: default;
 	min-width: 25%;
+	overflow: hidden;
 	padding: 3px;
 }
 div.component-value {

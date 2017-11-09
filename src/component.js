@@ -4,7 +4,8 @@ Type = Object.freeze({
 	Integer: 'Integer',
 	Decimal: 'Decimal',
 	String: 'String',
-	Vector3: 'Vector3'
+	Vector3: 'Vector3',
+	Color: 'Color'
 });
 
 function serializeField(field, name)
@@ -54,10 +55,26 @@ function serializeField(field, name)
 			</tr>\
 		'.format(name, field.default || [0, 0, 0]));
 	}
+	else if (field.type == Type.Color) {
+		return html.format(name.capitalize(), '\
+			<tr>\
+				<td><div>\
+					<input class="color" data-name="{0}" data-default="{1}"/>\
+				</div></td>\
+			</tr>\
+		'.format(name, field.default || '000000'));
+	}
 }
 
 function serializeComponent(component, index)
 {
+	var fields = {};
+	var obj = component;
+	while (obj = obj.__proto__) {
+		if (obj._fields) {
+			fields = $.extend({}, obj._fields, fields);
+		}
+	}
 	return '\
 		<div class="component" data-index="{0}">\
 			<h3 class="component-header" data-toggle="collapse" href="#component{0}">\
@@ -68,24 +85,15 @@ function serializeComponent(component, index)
 				{2}\
 			</div>\
 		</div>\
-	'.format(index, component.constructor.name, $.map(component.fields, serializeField).join('\n'));
+	'.format(index, component.constructor.name, $.map(fields, serializeField).join('\n'));
 }
 
-function Transform(position, rotation, scale)
+THREE.Color.prototype._parse = function(str)
 {
-	this.position = position;
-	this.rotation = rotation;
-	this.scale = scale;
-	this.boolean = true;
-	this.string = 'test';
-}
+	this.set('#'+str);
+};
 
-Transform.prototype.fields = {
-	position: {type: Type.Vector3},
-	rotation: {type: Type.Vector3},
-	scale: {type: Type.Vector3, default: [1, 1, 1]},
-	boolean: {type: Type.Boolean},
-	integer: {type: Type.Integer, default: 42},
-	decimal: {type: Type.Decimal},
-	string: {type: Type.String}
+THREE.Color.prototype._serialize = function()
+{
+	return this.getHexString().upper();
 };

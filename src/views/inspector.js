@@ -14,12 +14,6 @@ function InspectorView(container, state)
 	this.actor = null;
 
 	var self = this;
-	this.container.on('change', '.component-value input.number', function() {
-		var input = $(this);
-		if (isNaN(input.val())) {
-			input.val('');
-		}
-	});
 	this.container.on('input change', '.component-value input', function() {
 		var input = $(this);
 		var attrs = input.data('name').split('.');
@@ -27,17 +21,26 @@ function InspectorView(container, state)
 		for (var i = 0; i < attrs.length - 1; ++i) {
 			obj = obj[attrs[i]];
 		}
+		var value;
 		if (input.hasClass('boolean')) {
-			obj[attrs.pop()] = input.prop('checked');
+			value = input.prop('checked');
 		}
 		else if (input.hasClass('integer')) {
-			obj[attrs.pop()] = input.val() && !isNaN(input.val()) ? parseInt(input.val()) : input.data('default');
+			value = !isNaN(input.val()) ? (input.val() ? parseInt(input.val()) : input.data('default')) : undefined;
 		}
 		else if (input.hasClass('decimal')) {
-			obj[attrs.pop()] = input.val() && !isNaN(input.val()) ? parseFloat(input.val()) : input.data('default');
+			value = !isNaN(input.val()) ? (input.val() ? parseFloat(input.val()) : input.data('default')) : undefined;
 		}
 		else {
-			obj[attrs.pop()] = input.val() || input.data('default');
+			value = input.val() || input.data('default');
+		}
+		if (value !== undefined) {
+			var attr = attrs.pop();
+			if (obj[attr]._parse) {
+				obj[attr]._parse(value);
+			} else {
+				obj[attr] = value;
+			}
 		}
 	});
 	setInterval(this.refreshAll.bind(this), 50);
@@ -48,6 +51,7 @@ InspectorView.prototype.setSelection = function(actors)
 	if (actors.length) {
 		this.actor = actors[0];
 		this.container.html(this.actor.components.map(serializeComponent).join('\n'));
+		jscolor.installByClassName('color');
 		this.refreshAll();
 	} else {
 		this.actor = null;
@@ -76,9 +80,17 @@ InspectorView.prototype.refreshInput = function(input)
 	for (var i = 0, n = attrs.length - 1; i < n; ++i) {
 		obj = obj[attrs[i]];
 	}
-	if (input.attr('type') == 'checkbox') {
-		input.prop('checked', obj[attrs.pop()]);
+	var attr = attrs.pop();
+	var value = obj[attr];
+	if (value._serialize) {
+		value = obj[attr]._serialize();
+	}
+	if (input.hasClass('boolean')) {
+		input.prop('checked', value);
 	} else {
-		input.val(obj[attrs.pop()]);
+		input.val(value);
+		if (input.hasClass('color')) {
+			input[0].jscolor.importColor();
+		}
 	}
 };
