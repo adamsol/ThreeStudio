@@ -30,16 +30,17 @@ String.prototype.capitalize = function()
 String.prototype.format = function()
 {
 	var args = arguments;
-	return this.replace(/{([\w.]+)}/g, function(match, pattern) {
+	return this.replace(/{([\w.]*)}/g, function(match, pattern) {
 		var attrs = pattern.split('.');
+		attrs[0] = attrs[0] || '0';
 		var obj = args;
 		for (var i = 0, n = attrs.length; i < n; ++i) {
 			obj = obj[attrs[i]];
-			if (typeof obj == 'undefined') {
+			if (obj === undefined) {
 				break;
 			}
 		}
-		return (typeof obj != 'undefined' ? obj : match);
+		return (obj !== undefined ? obj : match);
 	});
 };
 

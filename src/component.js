@@ -1,26 +1,44 @@
 
-Type = Object.freeze({
-	Boolean: 'Boolean',
-	Integer: 'Integer',
-	Decimal: 'Decimal',
-	String: 'String',
-	Vector3: 'Vector3',
-	Color: 'Color'
+Field = Object.freeze({
+	Boolean: function() {
+		return {type: 'Boolean'};
+	},
+	Integer: function(def) {
+		return {type: 'Integer', default: def || 0};
+	},
+	Decimal: function(def) {
+		return {type: 'Decimal', default: def || 0};
+	},
+	String: function(def) {
+		return {type: 'String', default: def || ''};
+	},
+	Vector3: function(def) {
+		return {type: 'Vector3', default: def || [0, 0, 0]};
+	},
+	Color: function(def) {
+		return {type: 'Color', default: def || '000000'};
+	},
+	Enum: function(items) {
+		return {type: 'Enum', items: items};
+	},
 });
 
-function serializeField(field, name)
+function serializeField(field, name, text, classes)
 {
+	if (text === undefined) {
+		text = name.capitalize();
+	}
 	var html = '\
-		<div class="component-field">\
+		<div class="component-field {1}">\
 			<div class="component-attribute">{0}</div>\
 			<div class="component-value">\
-				<table>{1}</table>\
+				<table>{2}</table>\
 			</div>\
 		</div>\
-	'.format(name.capitalize());
+	'.format(text, classes || '', '{0}');
 
-	if (field.type == Type.Boolean) {
-		return html.format(name.capitalize(), '\
+	if (field.type == 'Boolean') {
+		return html.format('\
 			<tr>\
 				<td><div>\
 					<input type="checkbox" class="boolean" data-name="{0}"/>\
@@ -28,17 +46,17 @@ function serializeField(field, name)
 			</tr>\
 		'.format(name));
 	}
-	else if (field.type == Type.Integer || field.type == Type.Decimal || field.type == Type.String) {
-		return html.format(name.capitalize(), '\
+	else if (field.type == 'Integer' || field.type == 'Decimal' || field.type == 'String') {
+		return html.format('\
 			<tr>\
 				<td><div>\
 					<input class="{2}" data-name="{0}" data-default="{1}">\
 				</div></td>\
 			</tr>\
-		'.format(name, field.default || 0, field.type == Type.Integer ? 'number integer' : field.type == Type.Decimal ? 'number decimal' : ''));
+		'.format(name, field.default, field.type == 'Integer' ? 'number integer' : field.type == 'Decimal' ? 'number decimal' : ''));
 	}
-	else if (field.type == Type.Vector3) {
-		return html.format(name.capitalize(), '\
+	else if (field.type == 'Vector3') {
+		return html.format('\
 			<tr>\
 				<td><div>\
 					<span class="axis x">X</span>\
@@ -53,16 +71,25 @@ function serializeField(field, name)
 					<input class="number decimal" data-name="{0}.z" data-default="{1.2}"/>\
 				</div></td>\
 			</tr>\
-		'.format(name, field.default || [0, 0, 0]));
+		'.format(name, field.default));
 	}
-	else if (field.type == Type.Color) {
-		return html.format(name.capitalize(), '\
+	else if (field.type == 'Color') {
+		return html.format('\
 			<tr>\
 				<td><div>\
 					<input class="color" data-name="{0}" data-default="{1}"/>\
 				</div></td>\
 			</tr>\
-		'.format(name, field.default || '000000'));
+		'.format(name, field.default));
+	}
+	else if (field.type == 'Enum') {
+		return html.format('\
+			<tr>\
+				<td><div>\
+					<select class="enum" data-name="{0}">{1}</select>\
+				</div></td>\
+			</tr>\
+		'.format(name, $.map(field.items, ''.format.bind('<option value="{0}">{0}</option>')).join('')));
 	}
 }
 
@@ -72,7 +99,7 @@ function serializeComponent(component, index)
 	var obj = component;
 	while (obj = obj.__proto__) {
 		if (obj._fields) {
-			fields = $.extend({}, obj._fields, fields);
+			fields = $.extend({}, obj._fields, fields);  // order matters
 		}
 	}
 	return '\

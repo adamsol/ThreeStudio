@@ -1,11 +1,11 @@
 
 THREE.Light.prototype._fields = {
-	color: {type: Type.Color, default: 'FFFFFF'},
-	intensity: {type: Type.Decimal, default: 1.0},
-	castShadow: {type: Type.Boolean}
+	color: Field.Color('FFFFFF'),
+	intensity: Field.Decimal(1.0),
+	castShadow: Field.Boolean(),
 };
 
 THREE.PointLight.prototype._fields = {
-	distance: {type: Type.Decimal, default: 0},
-	decay: {type: Type.Decimal, default: 1.0}
+	distance: Field.Decimal(),
+	decay: Field.Decimal(1.0),
 };

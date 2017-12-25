@@ -76,7 +76,7 @@ div.component-value span.axis.y {
 div.component-value span.axis.z {
 	color: #4e78db;
 }
-div.component-value input:not([type="checkbox"]) {
+div.component-value input:not([type="checkbox"]), div.component-value select {
 	background-color: #333;
 	border: 1px solid black;
 	border-radius: 0 4px 4px 0;
