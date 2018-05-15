@@ -65,7 +65,7 @@ InspectorView.prototype.updateValue = function(input, refresh) {
 	if (refresh) {
 		this.refreshInput(input, true);
 	}
-}
+};
 
 InspectorView.prototype.refreshAll = function(input)
 {

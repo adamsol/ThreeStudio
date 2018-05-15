@@ -23,30 +23,30 @@ CameraControls.prototype.update = function(dt)
 {
 	if (this.unlocked) {
 		var dist = this.speed.movement * dt;
-		if (this.keys[-17]) { // Ctrl
+		if (this.keys[KEYS.CTRL]) {
 			dist *= 0.3;
 		}
-		if (this.keys[-16]) { // Shift
+		if (this.keys[KEYS.SHIFT]) {
 			dist *= 3;
 		}
 		var axis = new THREE.Vector3();
 
-		if (this.keys[87]) { // W
+		if (this.keys[KEYS.W]) { // W
 			axis.z -= 1;
 		}
-		if (this.keys[83]) { // S
+		if (this.keys[KEYS.S]) { // S
 			axis.z += 1;
 		}
-		if (this.keys[65]) { // A
+		if (this.keys[KEYS.A]) { // A
 			axis.x -= 1;
 		}
-		if (this.keys[68]) { // D
+		if (this.keys[KEYS.D]) { // D
 			axis.x += 1;
 		}
-		if (this.keys[81]) { // Q
+		if (this.keys[KEYS.Q]) { // Q
 			axis.y -= 1;
 		}
-		if (this.keys[69]) { // E
+		if (this.keys[KEYS.E]) { // E
 			axis.y += 1;
 		}
 		this.camera.translateOnAxis(axis.normalize(), dist);
@@ -80,9 +80,6 @@ CameraControls.prototype.onMouseUp = function(event)
 
 CameraControls.prototype.onKeyDown = function(event)
 {
-	if (event.keyCode >= 16 && event.keyCode <= 18) { // Shift / Ctrl / Alt - toggle
-		this.keys[-event.keyCode] = !this.keys[-event.keyCode];
-	}
 	this.keys[event.keyCode] = true;
 };
 
@@ -183,16 +180,16 @@ SceneView.prototype.onMouseDown = function(event)
 SceneView.prototype.onKeyDown = function(event)
 {
 	if (!this.controls.camera.unlocked) {
-		if (event.keyCode == 81) { // Q
+		if (event.keyCode == KEYS.Q) {
 			this.controls.transform.setSpace(this.controls.transform.space == 'local' ? 'world' : 'local');
 		}
-		else if (event.keyCode == 87) { // W
+		else if (event.keyCode == KEYS.W) {
 			this.controls.transform.setMode('translate');
 		}
-		else if (event.keyCode == 69) { // E
+		else if (event.keyCode == KEYS.E) {
 			this.controls.transform.setMode('rotate');
 		}
-		else if (event.keyCode == 82) { // R
+		else if (event.keyCode == KEYS.R) {
 			this.controls.transform.setMode('scale');
 		}
 	}

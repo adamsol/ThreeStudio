@@ -1,4 +1,9 @@
 
+KEYS = {SHIFT: 16, CTRL: 17, ALT: 18, DEL: 46, F2: 113};
+for (var c = 65; c <= 90; ++c) {
+	KEYS[String.fromCharCode(c)] = c;
+}
+
 Array.prototype.extend = function(arr)
 {
 	arr.forEach(function(el) {

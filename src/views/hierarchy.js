@@ -101,27 +101,27 @@ HierarchyView.prototype.onNodeMove = function(event, data)
 
 HierarchyView.prototype.onKeyDown = function(event)
 {
-	if (event.keyCode == 113) { // F2
+	if (event.keyCode == KEYS.F2) { // F2
 		var selected = this.tree.get_selected();
 		if (selected.length == 1) {
 			this.tree.edit(this.tree.get_node(selected[0]));
 		}
 	}
-	else if (event.keyCode == 46) { // Del
+	else if (event.keyCode == KEYS.DEL) { // Del
 		this.tree.delete_node(this.tree.get_selected()[0]);
 	}
-	else if (event.keyCode == 67 && event.ctrlKey) { // Ctrl C
+	else if (event.keyCode == KEYS.C && event.ctrlKey) { // Ctrl C
 		this.tree.copy();
 	}
-	else if (event.keyCode == 88 && event.ctrlKey) { // Ctrl X
+	else if (event.keyCode == KEYS.X && event.ctrlKey) { // Ctrl X
 		this.tree.cut();
 	}
-	else if (event.keyCode == 86 && event.ctrlKey) { // Ctrl V
+	else if (event.keyCode == KEYS.V && event.ctrlKey) { // Ctrl V
 		var node = this.tree.get_selected()[0];
 		this.tree.paste(node, 'last');
 		this.tree.deselect_node(node);
 	}
-	else if (event.keyCode == 68 && event.ctrlKey) { // Ctrl D
+	else if (event.keyCode == KEYS.D && event.ctrlKey) { // Ctrl D
 		event.preventDefault();
 		this.tree.get_selected(true).forEach(function(node) {
 			var parent = this.tree.get_node(node.parent);
