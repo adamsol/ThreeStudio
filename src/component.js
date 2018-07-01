@@ -1,26 +1,12 @@
 
-Field = Object.freeze({
-	Boolean: function() {
-		return {type: 'Boolean'};
-	},
-	Integer: function(def) {
-		return {type: 'Integer', default: def || 0};
-	},
-	Decimal: function(def) {
-		return {type: 'Decimal', default: def || 0};
-	},
-	String: function(def) {
-		return {type: 'String', default: def || ''};
-	},
-	Vector3: function(def) {
-		return {type: 'Vector3', default: def || [0, 0, 0]};
-	},
-	Color: function(def) {
-		return {type: 'Color', default: def || '000000'};
-	},
-	Enum: function(items) {
-		return {type: 'Enum', items: items};
-	},
+const Field = Object.freeze({
+	Boolean: () => ({type: 'Boolean'}),
+	Integer: (def) => ({type: 'Integer', default: def || 0}),
+	Decimal: (def) => ({type: 'Decimal', default: def || 0}),
+	String: (def) => ({type: 'String', default: def || ''}),
+	Vector3: (def) => ({type: 'Vector3', default: def || [0, 0, 0]}),
+	Color: (def) => ({type: 'Color', default: def || '000000'}),
+	Enum: (items) => ({type: 'Enum', items: items}),
 });
 
 function serializeField(field, name, text, classes)
@@ -28,7 +14,7 @@ function serializeField(field, name, text, classes)
 	if (text === undefined) {
 		text = name.capitalize();
 	}
-	var html = '\
+	let html = '\
 		<div class="component-field {1}">\
 			<div class="component-attribute">{0}</div>\
 			<div class="component-value">\
@@ -95,8 +81,8 @@ function serializeField(field, name, text, classes)
 
 function serializeComponent(component, index)
 {
-	var fields = {};
-	var obj = component;
+	let fields = {};
+	let obj = component;
 	while (obj = obj.__proto__) {
 		if (obj._fields) {
 			fields = $.extend({}, obj._fields, fields);  // order matters

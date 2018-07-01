@@ -1,5 +1,5 @@
 
-var actors = {};
+let actors = {};
 
 function Scene()
 {
@@ -23,7 +23,7 @@ Scene.prototype.getActors = function(ids)
 Scene.prototype.pickObject = function(coords, camera)
 {
 	this.raycaster.setFromCamera(coords, camera);
-	var intersection = this.raycaster.intersectObjects(this.children.prop('obj'), true);
+	let intersection = this.raycaster.intersectObjects(this.children.prop('obj'), true);
 	return intersection.length ? intersection[0].object : null;
 };
 
@@ -34,8 +34,8 @@ Scene.prototype.setSelection = function(ids)
 	views.extend(layout.root.getComponentsByName('scene'));
 	views.extend(layout.root.getComponentsByName('inspector'));
 
-	var actors = scene.getActors(ids);
-	views.forEach(function(view) {
+	let actors = scene.getActors(ids);
+	views.forEach((view) => {
 		view.setSelection(actors);
 	});
 };
@@ -67,7 +67,7 @@ function Actor(obj, parent)
 	this.transform = new Transform(this.obj.position, this.obj.rotation, this.obj.scale);
 	this.components.push(this.transform);
 
-	this.obj.children.slice().forEach(function(child) {
+	this.obj.children.slice().forEach((child) => {
 		if (child.type === 'Group') {
 			new Actor(child, this);
 		} else {
@@ -78,7 +78,7 @@ function Actor(obj, parent)
 
 Actor.prototype.clone = function()
 {
-	var new_obj = this.obj.clone();
+	let new_obj = this.obj.clone();
 	return new Actor(new_obj, this.parent);
 };
 
@@ -115,16 +115,16 @@ Actor.prototype.addComponent = function(component)
 	this.obj.add(component);
 	this.components.push(component);
 
-	var sprite_path;
+	let sprite_path;
 	if (component.isLight) {
 		component.castShadow = true;
-		var sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+		let sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 		sprite_path = '../gfx/sprites/' + sprite_name + '.png';
 	}
 
 	if (sprite_path) {
-		var texture = new THREE.TextureLoader().load(sprite_path);
-		var material = new THREE.SpriteMaterial({map: texture, color: component.color});
+		let texture = new THREE.TextureLoader().load(sprite_path);
+		let material = new THREE.SpriteMaterial({map: texture, color: component.color});
 		this.obj.add(new THREE.Sprite(material));
 	}
 

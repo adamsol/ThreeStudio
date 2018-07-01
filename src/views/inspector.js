@@ -6,14 +6,14 @@ function InspectorView(container, state)
 	this.container.sortable({
 		axis: 'y',
 		handle: 'h3',
-		stop: function(event, ui) {
+		stop: (event, ui) => {
 			ui.item.children('h3').trigger('focusout');
 		}
 	});
 
 	this.actor = null;
 
-	var self = this;
+	let self = this;
 	this.container.on('input change keydown', '.component-value input, .component-value select', function(event) {
 		if (event.type != 'keydown' || event.which == 13) {
 			self.updateValue($(this), event.type == 'keydown');
@@ -36,26 +36,23 @@ InspectorView.prototype.setSelection = function(actors)
 };
 
 InspectorView.prototype.updateValue = function(input, refresh) {
-	var attrs = input.attr('data-name').split('.');
+	let attrs = input.attr('data-name').split('.');
 	obj = this.actor.components[input.closest('.component').data('index')];
-	for (var i = 0; i < attrs.length - 1; ++i) {
+	for (let i = 0; i < attrs.length - 1; ++i) {
 		obj = obj[attrs[i]];
 	}
-	var value;
+	let value;
 	if (input.hasClass('boolean')) {
 		value = input.prop('checked');
-	}
-	else if (input.hasClass('integer')) {
+	} else if (input.hasClass('integer')) {
 		value = !isNaN(input.val()) ? (input.val() ? parseInt(input.val()) : input.data('default')) : undefined;
-	}
-	else if (input.hasClass('decimal')) {
+	} else if (input.hasClass('decimal')) {
 		value = !isNaN(input.val()) ? (input.val() ? parseFloat(input.val()) : input.data('default')) : undefined;
-	}
-	else {
+	} else {
 		value = input.val() || input.data('default');
 	}
 	if (value !== undefined) {
-		var attr = attrs.pop();
+		let attr = attrs.pop();
 		if (obj[attr] !== undefined && obj[attr]._parse) {
 			obj[attr]._parse(value);
 		} else {
@@ -72,7 +69,7 @@ InspectorView.prototype.refreshAll = function(input)
 	if (!this.actor) {
 		return;
 	}
-	var self = this;
+	let self = this;
 	this.container.find('.component-value input, .component-value select').each(function() {
 		self.refreshInput($(this));
 	});
@@ -83,13 +80,13 @@ InspectorView.prototype.refreshInput = function(input, force)
 	if (input.is(':focus') && !force) {
 		return;
 	}
-	var attrs = input.data('name').split('.');
+	let attrs = input.data('name').split('.');
 	obj = this.actor.components[input.closest('.component').data('index')];
-	for (var i = 0, n = attrs.length - 1; i < n; ++i) {
+	for (let i = 0, n = attrs.length - 1; i < n; ++i) {
 		obj = obj[attrs[i]];
 	}
-	var attr = attrs.pop();
-	var value = obj[attr];
+	let attr = attrs.pop();
+	let value = obj[attr];
 	if (value._serialize) {
 		value = obj[attr]._serialize();
 	}

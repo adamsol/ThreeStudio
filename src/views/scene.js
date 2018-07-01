@@ -22,31 +22,31 @@ function CameraControls(camera, container)
 CameraControls.prototype.update = function(dt)
 {
 	if (this.unlocked) {
-		var dist = this.speed.movement * dt;
-		if (this.keys[KEYS.CTRL]) {
+		let dist = this.speed.movement * dt;
+		if (this.keys[Keys.CTRL]) {
 			dist *= 0.3;
 		}
-		if (this.keys[KEYS.SHIFT]) {
+		if (this.keys[Keys.SHIFT]) {
 			dist *= 3;
 		}
-		var axis = new THREE.Vector3();
+		let axis = new THREE.Vector3();
 
-		if (this.keys[KEYS.W]) { // W
+		if (this.keys[Keys.W]) { // W
 			axis.z -= 1;
 		}
-		if (this.keys[KEYS.S]) { // S
+		if (this.keys[Keys.S]) { // S
 			axis.z += 1;
 		}
-		if (this.keys[KEYS.A]) { // A
+		if (this.keys[Keys.A]) { // A
 			axis.x -= 1;
 		}
-		if (this.keys[KEYS.D]) { // D
+		if (this.keys[Keys.D]) { // D
 			axis.x += 1;
 		}
-		if (this.keys[KEYS.Q]) { // Q
+		if (this.keys[Keys.Q]) { // Q
 			axis.y -= 1;
 		}
-		if (this.keys[KEYS.E]) { // E
+		if (this.keys[Keys.E]) { // E
 			axis.y += 1;
 		}
 		this.camera.translateOnAxis(axis.normalize(), dist);
@@ -63,8 +63,8 @@ CameraControls.prototype.onMouseDown = function(event)
 CameraControls.prototype.onMouseMove = function(event)
 {
 	if (this.unlocked && this.prev_pos) {
-		var dh = event.clientX - this.prev_pos.x;
-		var dv = event.clientY - this.prev_pos.y;
+		let dh = event.clientX - this.prev_pos.x;
+		let dv = event.clientY - this.prev_pos.y;
 		this.camera.rotation.y -= this.speed.rotation * dh;
 		this.camera.rotation.x -= this.speed.rotation * dv;
 	}
@@ -124,7 +124,7 @@ SceneView.prototype.animate = function()
 {
 	if (!this.renderer) return;
 
-	var dt = this.clock.getDelta();
+	let dt = this.clock.getDelta();
 
 	this.controls.transform.update();
 	if (this.controls.transform.object) {
@@ -142,7 +142,7 @@ SceneView.prototype.animate = function()
 
 SceneView.prototype.onResize = function()
 {
-	var width = this.canvas.width(), height = this.canvas.height();
+	let width = this.canvas.width(), height = this.canvas.height();
 
 	this.camera.aspect = width / height;
 	this.camera.updateProjectionMatrix();
@@ -158,10 +158,10 @@ SceneView.prototype.onDestroy = function()
 SceneView.prototype.onMouseDown = function(event)
 {
 	if (event.which == 1) {
-		var coords = new THREE.Vector3();
+		let coords = new THREE.Vector3();
 		coords.x = 2 * (event.offsetX / this.canvas.innerWidth() - 0.5);
 		coords.y = -2 * (event.offsetY / this.canvas.innerHeight() - 0.5);
-		var obj = scene.pickObject(coords, this.camera);
+		let obj = scene.pickObject(coords, this.camera);
 
 		this.canvas.on('mouseup', function(event) {
 			if (event.which == 1) {
@@ -180,16 +180,13 @@ SceneView.prototype.onMouseDown = function(event)
 SceneView.prototype.onKeyDown = function(event)
 {
 	if (!this.controls.camera.unlocked) {
-		if (event.keyCode == KEYS.Q) {
+		if (event.keyCode == Keys.Q) {
 			this.controls.transform.setSpace(this.controls.transform.space == 'local' ? 'world' : 'local');
-		}
-		else if (event.keyCode == KEYS.W) {
+		} else if (event.keyCode == Keys.W) {
 			this.controls.transform.setMode('translate');
-		}
-		else if (event.keyCode == KEYS.E) {
+		} else if (event.keyCode == Keys.E) {
 			this.controls.transform.setMode('rotate');
-		}
-		else if (event.keyCode == KEYS.R) {
+		} else if (event.keyCode == Keys.R) {
 			this.controls.transform.setMode('scale');
 		}
 	}

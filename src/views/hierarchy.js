@@ -55,19 +55,19 @@ HierarchyView.prototype.onNodeChange = function(event, data)
 
 HierarchyView.prototype.onNodeCopy = function(event, data)
 {
-	var new_actor = scene.getActor(data.original.id).clone();
+	let new_actor = scene.getActor(data.original.id).clone();
 	new_actor.setParent(scene.getActor(data.parent));
 
-	var old_node = this.tree.get_node(data.original.id);
-	var new_node = data.node;
+	let old_node = this.tree.get_node(data.original.id);
+	let new_node = data.node;
 
 	// recursively update ids and copy data to the subtree
 	function update_nodes(old_node, new_node, actor) {
 		this.tree.set_id(new_node, actor.id);
 		new_node.data = $.extend({}, old_node.data);
-		for (var i = 0; i < actor.children.length; ++i) {
-			var old_child = this.tree.get_node(old_node.children[i]);
-			var new_child = this.tree.get_node(new_node.children[i]);
+		for (let i = 0; i < actor.children.length; ++i) {
+			let old_child = this.tree.get_node(old_node.children[i]);
+			let new_child = this.tree.get_node(new_node.children[i]);
 			update_nodes.call(this, old_child, new_child, actor.children[old_child.data.order]);
 		}
 	}
@@ -86,9 +86,9 @@ HierarchyView.prototype.onNodeCopy = function(event, data)
 HierarchyView.prototype.onNodeMove = function(event, data)
 {
 	if (data.parent != data.old_parent) {
-		var node = data.node;
-		var actor = scene.getActor(node.id);
-		var parent = scene.getActor(data.parent);
+		let node = data.node;
+		let actor = scene.getActor(node.id);
+		let parent = scene.getActor(data.parent);
 		actor.setParent(parent);
 		this.tree.get_siblings(node).forEach(function(sibling) {
 			if (sibling.data.order > node.data.order) {
@@ -101,30 +101,30 @@ HierarchyView.prototype.onNodeMove = function(event, data)
 
 HierarchyView.prototype.onKeyDown = function(event)
 {
-	if (event.keyCode == KEYS.F2) { // F2
-		var selected = this.tree.get_selected();
+	if (event.keyCode == Keys.F2) { // F2
+		let selected = this.tree.get_selected();
 		if (selected.length == 1) {
 			this.tree.edit(this.tree.get_node(selected[0]));
 		}
 	}
-	else if (event.keyCode == KEYS.DEL) { // Del
+	else if (event.keyCode == Keys.DEL) { // Del
 		this.tree.delete_node(this.tree.get_selected()[0]);
 	}
-	else if (event.keyCode == KEYS.C && event.ctrlKey) { // Ctrl C
+	else if (event.keyCode == Keys.C && event.ctrlKey) { // Ctrl C
 		this.tree.copy();
 	}
-	else if (event.keyCode == KEYS.X && event.ctrlKey) { // Ctrl X
+	else if (event.keyCode == Keys.X && event.ctrlKey) { // Ctrl X
 		this.tree.cut();
 	}
-	else if (event.keyCode == KEYS.V && event.ctrlKey) { // Ctrl V
-		var node = this.tree.get_selected()[0];
+	else if (event.keyCode == Keys.V && event.ctrlKey) { // Ctrl V
+		let node = this.tree.get_selected()[0];
 		this.tree.paste(node, 'last');
 		this.tree.deselect_node(node);
 	}
-	else if (event.keyCode == KEYS.D && event.ctrlKey) { // Ctrl D
+	else if (event.keyCode == Keys.D && event.ctrlKey) { // Ctrl D
 		event.preventDefault();
 		this.tree.get_selected(true).forEach(function(node) {
-			var parent = this.tree.get_node(node.parent);
+			let parent = this.tree.get_node(node.parent);
 			this.tree.copy(node.id);
 			this.tree.deselect_node(node.parent);
 			this.tree.paste(parent.id, parent.children.indexOf(node.id) + 1);
