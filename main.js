@@ -1,22 +1,30 @@
 
 const electron = require('electron');
 require('electron-debug')();
+const windowStateKeeper = require('electron-window-state');
 
 const app = electron.app;
 const Menu = electron.Menu;
 
 let mainWindow;
 
-function createMainWindow() {
-	const win = new electron.BrowserWindow({
-		width: 1600,
-		height: 900,
+function createMainWindow()
+{
+	const state = windowStateKeeper({
+		defaultWidth: 1600,
+    	defaultHeight: 900
 	});
 
-	win.loadURL(`file://${__dirname}/src/editor.html`);
-	win.on('closed', () => mainWindow = null);
+	mainWindow = new electron.BrowserWindow({
+		x: state.x,
+		y: state.y,
+		width: state.width,
+		height: state.height,
+	});
+	state.manage(mainWindow);
 
-	return win;
+	mainWindow.loadURL(`file://${__dirname}/src/editor.html`);
+	mainWindow.on('closed', () => mainWindow = null);
 }
 
 app.on('window-all-closed', () => {
@@ -27,12 +35,12 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
 	if (!mainWindow) {
-		mainWindow = createMainWindow();
+		createMainWindow();
 	}
 });
 
 app.on('ready', () => {
-	mainWindow = createMainWindow();
+	createMainWindow();
 
 	const menuTemplate = [
 		{
