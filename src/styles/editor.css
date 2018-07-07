@@ -1,0 +1,107 @@
+@charset "UTF-8";
+html, body {
+  background-color: #242629;
+  background-size: 25px 25px;
+  font-family: Verdana;
+  font-size: 12px;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+div.component {
+  margin: 4px;
+}
+div.component h3.component-header {
+  background-color: #0c0d10;
+  color: #ddd;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 3px;
+  margin: 0;
+}
+div.component h3.component-header.collapsed > span.fa::before {
+  content: "";
+}
+div.component h3.component-header:not(.collapsed) > span.fa::before {
+  content: "";
+}
+div.component div.component-body {
+  background-color: #1a1b1e;
+  color: #ccc;
+  box-sizing: border-box;
+  padding: 0;
+}
+div.component div.component-field {
+  display: flex;
+  flex-direction: row;
+}
+div.component div.component-attribute {
+  border-right: 2px solid #0c0d10;
+  box-sizing: border-box;
+  cursor: default;
+  min-width: 25%;
+  overflow: hidden;
+  padding: 3px;
+}
+div.component div.component-value {
+  box-sizing: border-box;
+  flex-grow: 1;
+  padding: 2px;
+}
+div.component div.component-value table {
+  table-layout: fixed;
+  width: 100%;
+}
+div.component div.component-value table td div {
+  border-collapse: separate;
+  border-spacing: 2px 0;
+  display: table;
+  width: 100%;
+}
+div.component div.component-value span.axis {
+  border-radius: 4px 0 0 4px;
+  font-size: 12px;
+  cursor: default;
+  display: table-cell;
+  box-sizing: border-box;
+}
+div.component div.component-value span.axis.x {
+  color: #bf5345;
+}
+div.component div.component-value span.axis.y {
+  color: #47983f;
+}
+div.component div.component-value span.axis.z {
+  color: #4e78db;
+}
+div.component div.component-value input:not([type=checkbox]), div.component div.component-value select {
+  background-color: #333;
+  border: 1px solid black;
+  border-radius: 0 4px 4px 0;
+  color: #ccc;
+  font-size: 12px;
+  display: table-cell;
+  width: 100%;
+  height: 18px;
+  padding: 0 2px;
+}
+
+.jstree {
+  color: #eee;
+}
+
+.jstree-rename-input {
+  color: #000;
+}
+
+.jstree-anchor.jstree-hovered, .jstree-default.jstree-wholerow-hovered {
+  background-color: #313443;
+}
+
+.jstree-anchor.jstree-clicked {
+  background-color: #585C70;
+}
+
+/*# sourceMappingURL=editor.css.map */
