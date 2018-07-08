@@ -10,86 +10,123 @@ html, body {
 	margin: 0;
 }
 
-div.component {
-	margin: 4px;
+div.toolbox {
+	padding: 4px;
+}
 
-	h3.component-header {
-		background-color: #0c0d10;
-		color: #ddd;
-		font-size: 12px;
-		cursor: pointer;
-		padding: 3px;
-		margin: 0;
-	}
-	h3.component-header.collapsed >span.fa::before {
-		content: "\f0da";
-	}
-	h3.component-header:not(.collapsed) >span.fa::before {
-		content: "\f0d7";
-	}
-	div.component-body {
-		background-color: #1a1b1e;
-		color: #ccc;
-		box-sizing: border-box;
-		padding: 0;
-	}
-	div.component-field {
-		display: flex;
-		flex-direction: row;
-	}
-	div.component-attribute {
-		border-right: 2px solid #0c0d10;
-		box-sizing: border-box;
-		cursor: default;
-		min-width: 25%;
-		overflow: hidden;
-		padding: 3px;
-	}
-	div.component-value {
-		box-sizing: border-box;
-		flex-grow: 1;
-		padding: 2px;
+div.components {
+	overflow-y: auto;
 
-		table {
-			table-layout: fixed;
-			width: 100%;
+	div.component {
+		margin: 4px;
 
-			td div {
-				border-collapse: separate;
-				border-spacing: 2px 0;
-				display: table;
-				width: 100%;
-			}
+		h3.component-header {
+			background-color: #0c0d10;
+			color: #ddd;
+			font-size: 1.2rem;
+			cursor: pointer;
+			padding: 3px;
+			margin: 0;
 		}
-		span.axis {
-			border-radius: 4px 0 0 4px;
-			font-size: 12px;
-			cursor: default;
-			display: table-cell;
-			box-sizing: border-box;
-
-			&.x {
-				color: #bf5345;
-			}
-			&.y {
-				color: #47983f;
-			}
-			&.z {
-				color: #4e78db;
-			}
+		h3.component-header.collapsed >span.fa::before {
+			content: "\f0da";
 		}
-		input:not([type="checkbox"]), select {
-			background-color: #333;
-			border: 1px solid black;
-			border-radius: 0 4px 4px 0;
+		h3.component-header:not(.collapsed) >span.fa::before {
+			content: "\f0d7";
+		}
+		div.component-body {
+			background-color: #1a1b1e;
 			color: #ccc;
-			font-size: 12px;
-			display: table-cell;
-			width: 100%;
-			height: 18px;
-			padding: 0 2px;
+			box-sizing: border-box;
+			padding: 0;
+		}
+		div.component-field {
+			display: flex;
+			flex-direction: row;
+		}
+		div.component-attribute {
+			border-right: 2px solid #0c0d10;
+			box-sizing: border-box;
+			cursor: default;
+			min-width: 25%;
+			overflow: hidden;
+			padding: 3px;
+		}
+		div.component-value {
+			box-sizing: border-box;
+			flex-grow: 1;
+			padding: 2px;
+
+			table {
+				table-layout: fixed;
+				width: 100%;
+
+				td div {
+					border-collapse: separate;
+					border-spacing: 2px 0;
+					display: table;
+					width: 100%;
+				}
+			}
+			span.axis {
+				border-radius: 4px 0 0 4px;
+				font-size: 1rem;
+				cursor: default;
+				display: table-cell;
+				box-sizing: border-box;
+
+				&.x {
+					color: #bf5345;
+				}
+				&.y {
+					color: #47983f;
+				}
+				&.z {
+					color: #4e78db;
+				}
+			}
+			input:not([type="checkbox"]), select {
+				background-color: #333;
+				border: 1px solid black;
+				border-radius: 0 4px 4px 0;
+				color: #ccc;
+				font-size: 1rem;
+				display: table-cell;
+				width: 100%;
+				height: 18px;
+				padding: 0 2px;
+			}
 		}
 	}
+}
+
+div.lm_content {
+	display: flex;
+	flex-direction: column;
+}
+
+ul.dropdown-menu li {
+	cursor: pointer;
+
+	&.dropdown-submenu {
+		position: relative;
+
+		&::after {
+			transform: rotate(-90deg);
+		}
+		&:hover >ul.dropdown-menu {
+			display: block;
+		}
+		>ul.dropdown-menu {
+			top: 0;
+			left: 100%;
+			margin-top: -6px;
+		}
+	}
+}
+
+button.btn {
+	box-shadow: none !important;
 }
 
 .jstree {

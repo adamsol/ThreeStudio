@@ -9,3 +9,6 @@ THREE.PointLight.prototype._fields = {
 	distance: Field.Decimal(),
 	decay: Field.Decimal(1.0),
 };
+window.PointLight = THREE.PointLight;
+
+window.DirectionalLight = THREE.DirectionalLight;

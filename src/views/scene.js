@@ -166,7 +166,7 @@ SceneView.prototype.onMouseDown = function(event)
 		this.canvas.on('mouseup', function(event) {
 			if (event.which == 1) {
 				if (obj) {
-					scene.setSelection([obj.parent.id]);
+					scene.setSelection([obj.actor.id]);
 				} else {
 					scene.setSelection([]);
 				}

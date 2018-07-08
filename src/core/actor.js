@@ -1,45 +1,4 @@
 
-let actors = {};
-
-function Scene()
-{
-	this.obj = new THREE.Scene();
-	this.id = this.obj.id;
-	this.name = 'Scene';
-	this.children = [];
-	this.raycaster = new THREE.Raycaster();
-}
-
-Scene.prototype.getActor = function(id)
-{
-	return actors[+id];
-};
-
-Scene.prototype.getActors = function(ids)
-{
-	return ids.map(this.getActor.bind(this));
-};
-
-Scene.prototype.pickObject = function(coords, camera)
-{
-	this.raycaster.setFromCamera(coords, camera);
-	let intersection = this.raycaster.intersectObjects(this.children.prop('obj'), true);
-	return intersection.length ? intersection[0].object : null;
-};
-
-Scene.prototype.setSelection = function(ids)
-{
-	views = [];
-	views.extend(layout.root.getComponentsByName('hierarchy'));
-	views.extend(layout.root.getComponentsByName('scene'));
-	views.extend(layout.root.getComponentsByName('inspector'));
-
-	let actors = scene.getActors(ids);
-	views.forEach((view) => {
-		view.setSelection(actors);
-	});
-};
-
 function Actor(obj, parent)
 {
 	Object.defineProperty(this, 'name', {
@@ -125,11 +84,20 @@ Actor.prototype.addComponent = function(component)
 	if (sprite_path) {
 		let texture = new THREE.TextureLoader().load(sprite_path);
 		let material = new THREE.SpriteMaterial({map: texture, color: component.color});
-		this.obj.add(new THREE.Sprite(material));
+		let sprite = new THREE.Sprite(material);
+		component.add(sprite);
 	}
 
 	if (component.isMesh) {
 		component.castShadow = true;
 		component.receiveShadow = true;
+	}
+};
+
+Actor.prototype.removeComponent = function(index)
+{
+	if (this.components[index] !== this.transform) {
+		this.obj.remove(this.components[index]);
+		this.components.splice(index, 1);
 	}
 };
