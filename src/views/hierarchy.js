@@ -1,4 +1,9 @@
 
+const ActorMenu = {
+	'Empty': [],
+	'Light': {'Point light': [PointLight], 'Directional light': [DirectionalLight]},
+};
+
 function buildHierarchy(actor, index)
 {
 	return {
@@ -11,28 +16,76 @@ function buildHierarchy(actor, index)
 
 function HierarchyView(container, state)
 {
+	const self = this;
 	this.container = container.getElement();
 
-	this.container.jstree({
+	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.container);
+	this.initToolbox();
+
+	this.toolbox.on('click', '.actor-new li[data-component-names]', function(event) {
+		let componentNames = $(this).data('component-names');
+		let selected = self.tree.get_selected();
+		if (selected.length <= 1) {
+			let node = selected.length ? selected[0] : scene.id;
+			let text = $(this).text();
+			let actor = new Actor(text, scene.getActor(selected[0]));
+			if (componentNames) {
+				componentNames.split(',').forEach((name) => actor.addComponent(new window[name]()));
+			}
+			self.tree.settings.core.data = buildHierarchy(scene);
+			self.tree.refresh();
+			self.tree.deselect_all();
+			self.tree.select_node(actor.id);
+		}
+	});
+
+	this.hierarchy = $('<div class="hierarchy"></div>').appendTo(this.container);
+
+	this.hierarchy.jstree({
 		core: {
 			multiple: false,
 			check_callback: true,
-			data: buildHierarchy(scene)
+			data: buildHierarchy(scene),
 		},
 		plugins: ['state', 'dnd'],
-		state: {key: 'hierarchy_state'}
+		state: {key: 'hierarchy_state'},
 	});
-	this.tree = this.container.jstree(true);
-	jstree = this.tree;
+	this.tree = this.hierarchy.jstree(true);
+	jstree = this.tree;  // for debugging
 
-	this.container.on('create_node.jstree', this.onNodeCreate.bind(this));
-	this.container.on('rename_node.jstree', this.onNodeRename.bind(this));
-	this.container.on('delete_node.jstree', this.onNodeDelete.bind(this));
-	this.container.on('changed.jstree', this.onNodeChange.bind(this));
-	this.container.on('copy_node.jstree', this.onNodeCopy.bind(this));
-	this.container.on('move_node.jstree', this.onNodeMove.bind(this));
-	this.container.on('keydown', this.onKeyDown.bind(this));
+	this.hierarchy.on('create_node.jstree', this.onNodeCreate.bind(this));
+	this.hierarchy.on('rename_node.jstree', this.onNodeRename.bind(this));
+	this.hierarchy.on('delete_node.jstree', this.onNodeDelete.bind(this));
+	this.hierarchy.on('changed.jstree', this.onNodeChange.bind(this));
+	this.hierarchy.on('copy_node.jstree', this.onNodeCopy.bind(this));
+	this.hierarchy.on('move_node.jstree', this.onNodeMove.bind(this));
+	this.hierarchy.on('keydown', this.onKeyDown.bind(this));
 }
+
+HierarchyView.prototype.initToolbox = function()
+{
+	let self = this;
+	function submenu(actors) {
+		return '<ul class="dropdown-menu">{}</ul>'.format(
+			$.map(actors, (item, key) => {
+				if ($.isArray(item)) {
+					return '<li class="dropdown-item" data-component-names="{1}">{0}</li>'.format(key, item.prop('name').join(','));
+				} else {
+					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, submenu(item));
+				}
+			}).join('\n')
+		);
+	}
+	this.toolbox.html('\
+		<div class="dropdown actor-new">\
+			<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">\
+				<span class="fa fa-plus"></span>\
+				New actor\
+			</button>\
+			{}\
+		</div>\
+	'.format(submenu(ActorMenu)));
+};
 
 HierarchyView.prototype.onNodeCreate = function(event, data)
 {

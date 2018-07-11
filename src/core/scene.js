@@ -44,7 +44,7 @@ Scene.prototype.setSelection = function(ids)
 	views.extend(layout.root.getComponentsByName('scene'));
 	views.extend(layout.root.getComponentsByName('inspector'));
 
-	let actors = scene.getActors(ids);
+	let actors = scene.getActors(ids).filter((a) => a !== undefined);
 	views.forEach((view) => {
 		view.setSelection(actors);
 	});

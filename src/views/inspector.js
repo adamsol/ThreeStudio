@@ -1,19 +1,19 @@
 
 const ComponentMenu = {
-	Mesh: [],
-	Light: [PointLight, DirectionalLight],
+	'Mesh': [],
+	'Light': [PointLight, DirectionalLight],
 };
 
 function InspectorView(container, state)
 {
-	let self = this;
+	const self = this;
 	this.container = container.getElement();
 	this.actor = null;
 
 	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.container);
 	this.initToolbox();
 
-	this.toolbox.on('click', '.component-add li', function(event) {
+	this.toolbox.on('click', '.component-add li[data-component-name]', function(event) {
 		let componentName = $(this).data('component-name');
 		if (self.actor && componentName) {
 			self.actor.addComponent(new window[componentName]());
@@ -60,10 +60,10 @@ InspectorView.prototype.initToolbox = function()
 	function submenu(components) {
 		return '<ul class="dropdown-menu">{}</ul>'.format(
 			$.map(components, (item, key) => {
-				if (typeof item === 'object') {
-					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, submenu(item));
-				} else if (typeof item === 'function') {
+				if ($.isFunction(item)) {
 					return '<li class="dropdown-item" data-component-name="{0}">{0}</li>'.format(item.name);
+				} else {
+					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, submenu(item));
 				}
 			}).join('\n')
 		);
