@@ -4,11 +4,24 @@ const ActorMenu = {
 	'Light': {'Point light': [PointLight], 'Directional light': [DirectionalLight]},
 };
 
+function nodeIcon(actor) {
+	let icon = 'fa fa-';
+	if (actor.id == scene.id) {
+		icon += 'globe fa-lg';
+	} else if (actor.children.length) {
+		icon += 'cubes fa-lg';
+	} else {
+		icon += 'cube';
+	}
+	return icon;
+}
+
 function buildHierarchy(actor, index)
 {
 	return {
 		id: actor.id,
 		text: actor.name,
+		icon: nodeIcon(actor),
 		data: {order: index || 0},
 		children: actor.children.map(buildHierarchy)
 	};

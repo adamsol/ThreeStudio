@@ -6,8 +6,9 @@ function Transform(position, rotation, scale)
 	this.scale = scale;
 }
 
-Transform.prototype._fields = {
+Transform.prototype.FIELDS = {
 	position: Field.Vector3(),
 	rotation: Field.Vector3(),
 	scale: Field.Vector3([1, 1, 1]),
 };
+Transform.prototype.ICON = 'crosshairs';

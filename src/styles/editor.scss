@@ -28,10 +28,10 @@ div.components {
 			padding: 3px;
 			margin: 0;
 		}
-		h3.component-header.collapsed >span.fa::before {
+		h3.component-header.collapsed >span.fa.caret::before {
 			content: "\f0da";
 		}
-		h3.component-header:not(.collapsed) >span.fa::before {
+		h3.component-header:not(.collapsed) >span.fa.caret::before {
 			content: "\f0d7";
 		}
 		div.component-body {

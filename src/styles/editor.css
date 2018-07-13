@@ -28,10 +28,10 @@ div.components div.component h3.component-header {
   padding: 3px;
   margin: 0;
 }
-div.components div.component h3.component-header.collapsed > span.fa::before {
+div.components div.component h3.component-header.collapsed > span.fa.caret::before {
   content: "";
 }
-div.components div.component h3.component-header:not(.collapsed) > span.fa::before {
+div.components div.component h3.component-header:not(.collapsed) > span.fa.caret::before {
   content: "";
 }
 div.components div.component div.component-body {
