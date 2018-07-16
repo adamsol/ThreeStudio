@@ -1,7 +1,8 @@
 
 const ActorMenu = {
-	'Empty': [],
-	'Light': {'Point light': [PointLight], 'Directional light': [DirectionalLight]},
+	"Empty": [],
+	"Model": {"Plane": [Plane], "Cube": [Cube], "Cylinder": [Cylinder], "Sphere": [Sphere]},
+	"Light": {"Point light": [PointLight], "Directional light": [DirectionalLight]},
 };
 
 function nodeIcon(actor) {

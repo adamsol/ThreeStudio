@@ -1,12 +1,13 @@
 
 const Field = Object.freeze({
-	Boolean: () => ({type: 'Boolean'}),
+	Boolean: (def) => ({type: 'Boolean', default: def || false}),
 	Integer: (def) => ({type: 'Integer', default: def || 0}),
 	Decimal: (def) => ({type: 'Decimal', default: def || 0}),
 	String: (def) => ({type: 'String', default: def || ''}),
 	Vector3: (def) => ({type: 'Vector3', default: def || [0, 0, 0]}),
 	Color: (def) => ({type: 'Color', default: def || '000000'}),
 	Enum: (items) => ({type: 'Enum', items: items}),
+	Reference: (cls) => ({type: 'Reference', class: cls}),
 });
 
 function serializeField(field, name, text, classes)
@@ -75,7 +76,16 @@ function serializeField(field, name, text, classes)
 					<select class="enum" data-name="{0}">{1}</select>\
 				</div></td>\
 			</tr>\
-		'.format(name, $.map(field.items, ''.format.bind('<option value="{0}">{0}</option>')).join('')));
+		'.format(name, $.map(field.items, ''.format.bind('<option value="{1}">{0}</option>')).join('')));
+	}
+	else if (field.type == 'Reference') {
+		return html.format('\
+			<tr>\
+				<td><div>\
+					<select class="reference" data-name="{0}" data-class="{1}">{2}</select>\
+				</div></td>\
+			</tr>\
+		'.format(name, field.class.name, $.map(getAssets(field.class), ''.format.bind('<option value="{1}">{1}</option>')).join('')));
 	}
 }
 
@@ -84,15 +94,15 @@ function serializeComponent(component, index)
 	let fields = {};
 	let obj = component;
 	while (obj = obj.__proto__) {
-		if (obj.FIELDS) {
-			fields = $.extend({}, obj.FIELDS, fields);  // order matters
+		if (obj.constructor.FIELDS) {
+			fields = $.extend({}, obj.constructor.FIELDS, fields);  // order matters
 		}
 	}
 	return '\
 		<div class="component" data-index="{0}">\
 			<h3 class="component-header" data-toggle="collapse" href="#component{0}">\
 				<span class="fa fa-fw caret"></span>\
-				<span class="fa fa-{3}"></span>\
+				<span class="fa fa-fw fa-{3}"></span>\
 				{1}\
 				<button class="btn btn-sm btn-danger float-right component-remove" title="Remove">\
 					<span class="fa fa-times"></span>\
@@ -102,7 +112,7 @@ function serializeComponent(component, index)
 				{2}\
 			</div>\
 		</div>\
-	'.format(index, component.constructor.name, $.map(fields, serializeField).join('\n'), component.ICON);
+	'.format(index, component.constructor.name, $.map(fields, serializeField).join('\n'), component.constructor.ICON);
 }
 
 THREE.Color.prototype._parse = function(str)

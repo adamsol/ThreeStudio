@@ -1,7 +1,7 @@
 
 const ComponentMenu = {
-	'Mesh': [],
-	'Light': [PointLight, DirectionalLight],
+	"Model": [Plane, Cube, Cylinder, Sphere],
+	"Light": [PointLight, DirectionalLight],
 };
 
 function InspectorView(container, state)
@@ -125,6 +125,8 @@ InspectorView.prototype.refreshInput = function(input, force)
 	}
 	if (input.hasClass('boolean')) {
 		input.prop('checked', value);
+	} else if (input.hasClass('reference')) {
+		input.val(findAssetName(input.data('class'), value.id));
 	} else {
 		input.val(value);
 		if (input.hasClass('color')) {
@@ -147,6 +149,8 @@ InspectorView.prototype.updateValue = function(input, refresh)
 		value = !isNaN(input.val()) ? (input.val() ? parseInt(input.val()) : input.data('default')) : undefined;
 	} else if (input.hasClass('decimal')) {
 		value = !isNaN(input.val()) ? (input.val() ? parseFloat(input.val()) : input.data('default')) : undefined;
+	} else if (input.hasClass('reference')) {
+		value = getAssets(input.data('class'))[input.val()];
 	} else {
 		value = input.val() || input.data('default');
 	}

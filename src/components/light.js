@@ -1,17 +1,17 @@
 
 Light = THREE.Light;
-Light.prototype.FIELDS = {
+Light.FIELDS = {
 	color: Field.Color('FFFFFF'),
 	intensity: Field.Decimal(1.0),
-	castShadow: Field.Boolean(),
+	castShadow: Field.Boolean(false),
 };
 
 PointLight = THREE.PointLight;
-PointLight.prototype.FIELDS = {
+PointLight.FIELDS = {
 	distance: Field.Decimal(),
 	decay: Field.Decimal(1.0),
 };
-PointLight.prototype.ICON = 'lightbulb';
+PointLight.ICON = 'lightbulb';
 
 DirectionalLight = THREE.DirectionalLight;
-DirectionalLight.prototype.ICON = 'sun';
+DirectionalLight.ICON = 'sun';
