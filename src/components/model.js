@@ -9,6 +9,7 @@ Model.prototype.constructor = Model;
 Model.FIELDS = {
 	castShadow: Field.Boolean(true),
 	geometry: Field.Reference(Geometry),
+	material: Field.Reference(Material),
 };
 Model.ICON = 'gem';
 

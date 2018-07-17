@@ -1,36 +1,24 @@
 
-const loaders = {
-	texture: new THREE.TextureLoader()
-};
-const textures = {
-	tiles: loaders.texture.load('../gfx/textures/tiles.jpg'),
-	crate: loaders.texture.load('../gfx/textures/crate.jpg')
-};
-
 let scene = new Scene();
-let material, actor;
+let actor;
 
-material = new THREE.MeshPhongMaterial({map: textures.tiles});
 actor = new Actor('Ground');
 actor.transform.position.set(0, -1, 0);
 actor.transform.scale.set(10, 1, 10);
-actor.addComponent(new Model(getAssets(Geometry)['Cube'], material));
+actor.addComponent(new Model(getAssets(Geometry)['Cube'], getAssets(Material)['Tiles']));
 
-material = new THREE.MeshPhongMaterial({map: textures.crate, shininess: 5});
 actor = new Actor('Wooden box');
 actor.transform.position.set(0, 1, 0);
-actor.addComponent(new Model(getAssets(Geometry)['Cube'], material));
+actor.addComponent(new Model(getAssets(Geometry)['Cube'], getAssets(Material)['Crate']));
 
-material = new THREE.MeshPhongMaterial({color: '#479942'});
 actor = new Actor('Torus knot', actor);
 actor.transform.position.set(3, 0, 0);
 actor.transform.scale.set(0.5, 0.5, 0.5);
-actor.addComponent(new Model(getAssets(Geometry)['TorusKnot'], material));
+actor.addComponent(new Model(getAssets(Geometry)['TorusKnot'], getAssets(Material)['Green']));
 
-material = new THREE.MeshPhongMaterial({color: '#325692'});
 actor = new Actor('Dodecahedron', actor);
 actor.transform.position.set(0, 3, 0);
-actor.addComponent(new Model(getAssets(Geometry)['Dodecahedron'], material));
+actor.addComponent(new Model(getAssets(Geometry)['Dodecahedron'], getAssets(Material)['Blue']));
 
 actor = new Actor('Point light');
 actor.transform.position.set(1.5, 3, 2);
