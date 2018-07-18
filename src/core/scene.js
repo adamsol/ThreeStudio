@@ -1,4 +1,5 @@
 
+let scene = new Scene();
 let actors = {};
 
 Object.defineProperty(THREE.Object3D.prototype, 'actor', {

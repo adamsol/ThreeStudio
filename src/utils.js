@@ -49,7 +49,7 @@ String.prototype.format = function()
 
 let _ = undefined;
 
-Function.prototype.curry = function()
+Function.prototype.partial = function()
 {
 	let f = this;
 	let org_args = [].slice.call(arguments);

@@ -42,18 +42,32 @@ app.on('activate', () => {
 app.on('ready', () => {
 	createMainWindow();
 
+	function openView(view) {
+		return () => mainWindow.webContents.send('openView', view);
+	}
+
 	const menuTemplate = [
 		{
 			label: 'File',
-			submenu: [{role: 'quit'}],
+			submenu: [
+				{role: 'quit'},
+			],
 		},
 		{
 			label: 'Edit',
-			submenu: [{role: 'undo'}, {role: 'redo'}, {type: 'separator'}, {role: 'cut'}, {role: 'copy'}, {role: 'paste'}, {label: 'Duplicate', accelerator: 'CmdOrCtrl+D'}, {role: 'delete', accelerator: 'Delete'}],
+			submenu: [
+				{role: 'undo'}, {role: 'redo'}, {type: 'separator'},
+				{role: 'cut'}, {role: 'copy'}, {role: 'paste'}, {label: 'Duplicate', accelerator: 'CmdOrCtrl+D'}, {role: 'delete', accelerator: 'Delete'},
+			],
 		},
 		{
 			label: 'View',
-			submenu: [{role: 'reload'}, {role: 'toggledevtools'}, {type: 'separator'}, {role: 'resetzoom'}, {role: 'zoomin'}, {role: 'zoomout'}, {type: 'separator'}, {role: 'togglefullscreen'}],
+			submenu: [
+				{role: 'reload'}, {role: 'toggledevtools'}, {type: 'separator'},
+				{label: 'Scene', click: openView('scene')}, {label: 'Hierarchy', click: openView('hierarchy')}, {label: 'Inspector', click: openView('inspector')}, {type: 'separator'},
+				{role: 'resetzoom'}, {role: 'zoomin'}, {role: 'zoomout'}, {type: 'separator'},
+				{role: 'togglefullscreen'},
+			],
 		},
 	];
 	const menu = Menu.buildFromTemplate(menuTemplate);

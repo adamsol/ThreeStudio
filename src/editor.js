@@ -1,5 +1,6 @@
 
-let scene = new Scene();
+const electron = require('electron');
+
 let actor;
 
 actor = new Actor('Ground');
@@ -34,11 +35,10 @@ actor.addComponent(dir_light);
 
 scene.obj.add(new THREE.AmbientLight(0x222222));
 
-
-let layout;
+let config;
 
 if (!localStorage['layoutConfig']) {
-	let config = {
+	config = {
 		content: [{
 			type: 'row',
 			content: [{
@@ -63,10 +63,14 @@ if (!localStorage['layoutConfig']) {
 			}]
 		}]
 	};
-	layout = new GoldenLayout(config);
 } else {
-	layout = new GoldenLayout(JSON.parse(localStorage['layoutConfig']));
+	config = JSON.parse(localStorage['layoutConfig'])
 }
+
+config['settings'] = {
+};
+
+const layout = new GoldenLayout(config);
 
 layout.registerComponent('hierarchy', HierarchyView);
 layout.registerComponent('scene', SceneView);
@@ -77,3 +81,24 @@ layout.init();
 $(window).on('beforeunload', () => {
     localStorage['layoutConfig'] = JSON.stringify(layout.toConfig());
 });
+
+function openView(view)
+{
+	if (layout.root.getComponentsByName(view).length) {
+		return;
+	}
+	let parent;
+	if (layout.root.contentItems.length) {
+		parent = layout.root.contentItems[0];
+	} else {
+		parent = layout.root;
+	}
+	parent.addChild({
+		type: 'component',
+		title: view.capitalize(),
+		componentName: view,
+		componentState: {},
+	});
+}
+
+electron.ipcRenderer.on('openView', (event, data) => openView(data));
