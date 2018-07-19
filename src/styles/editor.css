@@ -95,6 +95,15 @@ div.components div.component div.component-value input:not([type=checkbox]), div
   padding: 0 2px;
 }
 
+ul.lm_tabs div {
+  display: inline-block;
+}
+ul.lm_tabs div button {
+  background: none;
+  border: none;
+  padding-top: 2px;
+}
+
 div.lm_content {
   display: flex;
   flex-direction: column;

@@ -48,8 +48,7 @@ function HierarchyView(container, state)
 			}
 			self.tree.settings.core.data = buildHierarchy(scene);
 			self.tree.refresh();
-			self.tree.deselect_all();
-			self.tree.select_node(actor.id);
+			scene.setSelection([actor.id]);
 		}
 	});
 

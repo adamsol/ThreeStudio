@@ -82,16 +82,17 @@ $(window).on('beforeunload', () => {
     localStorage['layoutConfig'] = JSON.stringify(layout.toConfig());
 });
 
-function openView(view)
+function openView(view, parent)
 {
-	if (layout.root.getComponentsByName(view).length) {
+	if (!['scene'].includes(view) && layout.root.getComponentsByName(view).length) {
 		return;
 	}
-	let parent;
-	if (layout.root.contentItems.length) {
-		parent = layout.root.contentItems[0];
-	} else {
-		parent = layout.root;
+	if (!parent) {
+		if (layout.root.contentItems.length) {
+			parent = layout.root.contentItems[0];
+		} else {
+			parent = layout.root;
+		}
 	}
 	parent.addChild({
 		type: 'component',
@@ -100,5 +101,24 @@ function openView(view)
 		componentState: {},
 	});
 }
+
+layout.on('stackCreated', (stack) => {
+	let button = $('\
+		<div class="dropdown">\
+			<button class="btn btn-sm btn-dark dropdown-toggle" data-toggle="dropdown">\
+				<span class="fa fa-sm fa-plus"></span>\
+			</button>\
+			<ul class="dropdown-menu">\
+				<li class="dropdown-item" data-view="scene">Scene</li>\
+				<li class="dropdown-item" data-view="hierarchy">Hierarchy</li>\
+				<li class="dropdown-item" data-view="inspector">Inspector</li>\
+			</ul>\
+		</div>\
+	');
+	button.on('click', 'li.dropdown-item', function() {
+		openView($(this).data('view'), stack);
+	});
+	stack.header.tabsContainer.append(button);
+});
 
 electron.ipcRenderer.on('openView', (event, data) => openView(data));
