@@ -39,11 +39,12 @@ app.on('activate', () => {
 	}
 });
 
-app.on('ready', () => {
+app.on('ready', () =>
+{
 	createMainWindow();
 
-	function openView(view) {
-		return () => mainWindow.webContents.send('openView', view);
+	function send() {
+		return () => mainWindow.webContents.send.apply(mainWindow.webContents, arguments);
 	}
 
 	const menuTemplate = [
@@ -64,7 +65,8 @@ app.on('ready', () => {
 			label: 'View',
 			submenu: [
 				{role: 'reload'}, {role: 'toggledevtools'}, {type: 'separator'},
-				{label: 'Scene', click: openView('scene')}, {label: 'Hierarchy', click: openView('hierarchy')}, {label: 'Inspector', click: openView('inspector')}, {type: 'separator'},
+				{label: 'Reset Layout', click: send('resetLayout')}, {type: 'separator'},
+				{label: 'Scene', click: send('openView', 'scene')}, {label: 'Hierarchy', click: send('openView', 'hierarchy')}, {label: 'Inspector', click: send('openView', 'inspector')}, {type: 'separator'},
 				{role: 'resetzoom'}, {role: 'zoomin'}, {role: 'zoomout'}, {type: 'separator'},
 				{role: 'togglefullscreen'},
 			],

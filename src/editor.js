@@ -35,48 +35,50 @@ actor.addComponent(dir_light);
 
 scene.obj.add(new THREE.AmbientLight(0x222222));
 
-let config;
+let layout;
 
-if (!localStorage['layoutConfig']) {
-	config = {
-		content: [{
-			type: 'row',
-			content: [{
-				type: 'component',
-				title: 'Scene',
-				componentName: 'scene',
-				componentState: {}
-			}, {
-				type: 'column',
-				width: 30,
-				content: [{
-					type: 'component',
-					title: 'Inspector',
-					componentName: 'inspector',
-					componentState: {}
-				}, {
-					type: 'component',
-					title: 'Hierarchy',
-					componentName: 'hierarchy',
-					componentState: {}
-				}]
-			}]
-		}]
-	};
-} else {
-	config = JSON.parse(localStorage['layoutConfig'])
+function initLayout(config)
+{
+	layout = new GoldenLayout(config);
+
+	layout.registerComponent('hierarchy', HierarchyView);
+	layout.registerComponent('scene', SceneView);
+	layout.registerComponent('inspector', InspectorView);
+
+	layout.init();
 }
 
-config['settings'] = {
+const configDefault = {
+	content: [{
+		type: 'row',
+		content: [{
+			type: 'component',
+			title: 'Scene',
+			componentName: 'scene',
+			componentState: {}
+		}, {
+			type: 'column',
+			width: 30,
+			content: [{
+				type: 'component',
+				title: 'Inspector',
+				componentName: 'inspector',
+				componentState: {}
+			}, {
+				type: 'component',
+				title: 'Hierarchy',
+				componentName: 'hierarchy',
+				componentState: {}
+			}]
+		}]
+	}]
 };
 
-const layout = new GoldenLayout(config);
-
-layout.registerComponent('hierarchy', HierarchyView);
-layout.registerComponent('scene', SceneView);
-layout.registerComponent('inspector', InspectorView);
-
-layout.init();
+if (!localStorage['layoutConfig']) {
+	initLayout(configDefault);
+} else {
+	initLayout(JSON.parse(localStorage['layoutConfig']));
+}
 
 $(window).on('beforeunload', () => {
     localStorage['layoutConfig'] = JSON.stringify(layout.toConfig());
@@ -122,3 +124,8 @@ layout.on('stackCreated', (stack) => {
 });
 
 electron.ipcRenderer.on('openView', (event, data) => openView(data));
+
+electron.ipcRenderer.on('resetLayout', (event, data) => {
+	layout.destroy();
+	initLayout(configDefault);
+});
