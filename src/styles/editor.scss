@@ -21,8 +21,8 @@ div.components {
 		margin: 4px;
 
 		h3.component-header {
-			background-color: #0c0d10;
-			color: #ddd;
+			background-color: #0C0D10;
+			color: #DDD;
 			font-size: 1.2rem;
 			cursor: pointer;
 			padding: 3px;
@@ -35,7 +35,7 @@ div.components {
 			content: "\f0d7";
 		}
 		div.component-body {
-			background-color: #1a1b1e;
+			background-color: #1A1B1E;
 			color: #ccc;
 			box-sizing: border-box;
 			padding: 0;
@@ -45,7 +45,7 @@ div.components {
 			flex-direction: row;
 		}
 		div.component-attribute {
-			border-right: 2px solid #0c0d10;
+			border-right: 2px solid #0C0D10;
 			box-sizing: border-box;
 			cursor: default;
 			min-width: 25%;
@@ -76,26 +76,73 @@ div.components {
 				box-sizing: border-box;
 
 				&.x {
-					color: #bf5345;
+					color: #Bf5345;
 				}
 				&.y {
-					color: #47983f;
+					color: #47983F;
 				}
 				&.z {
-					color: #4e78db;
+					color: #4E78DB;
 				}
 			}
 			input:not([type="checkbox"]), select {
 				background-color: #333;
 				border: 1px solid black;
 				border-radius: 0 4px 4px 0;
-				color: #ccc;
+				color: #CCC;
 				font-size: 1rem;
 				display: table-cell;
 				width: 100%;
 				height: 18px;
 				padding: 0 2px;
 			}
+		}
+	}
+}
+
+div.hierarchy {
+	overflow-y: auto;
+}
+
+div.project {
+	overflow-y: auto;
+}
+
+div.assets {
+	overflow-y: auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	a.asset {
+		display: block;
+		width: 6em;
+		padding: 2px;
+		margin: 3px;
+		border-radius: 5px;
+
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.1);
+			text-decoration: none;
+		}
+		&:focus {
+			background-color: rgba(255, 255, 255, 0.18);
+		}
+		span.icon {
+			display: block;
+			color: #9AA5B4;
+			text-align: center;
+			font-size: 5em;
+		}
+		span.label {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			margin-top: 3px;
+			color: #EEE;
+			text-align: center;
+			font-size: 1rem;
 		}
 	}
 }
@@ -141,7 +188,7 @@ button.btn {
 }
 
 .jstree {
-	color: #eee;
+	color: #EEE;
 }
 .jstree-rename-input {
 	color: #000;

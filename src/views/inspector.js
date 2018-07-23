@@ -54,6 +54,8 @@ function InspectorView(container, state)
 	setInterval(this.refreshAll.bind(this), 50);
 }
 
+InspectorView.TITLE = "Inspector";
+
 InspectorView.prototype.initToolbox = function()
 {
 	let self = this;
@@ -70,8 +72,8 @@ InspectorView.prototype.initToolbox = function()
 	}
 	this.toolbox.html('\
 		<div class="dropdown component-add">\
-			<button class="btn btn-success dropdown-toggle" data-toggle="dropdown">\
-				<span class="fa fa-plus"></span>\
+			<button class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">\
+				<span class="fa fa-sm fa-plus"></span>\
 				Add component\
 			</button>\
 			{}\

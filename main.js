@@ -47,31 +47,40 @@ app.on('ready', () =>
 		return () => mainWindow.webContents.send.apply(mainWindow.webContents, arguments);
 	}
 
-	const menuTemplate = [
-		{
-			label: 'File',
-			submenu: [
-				{role: 'quit'},
-			],
-		},
-		{
-			label: 'Edit',
-			submenu: [
-				{role: 'undo'}, {role: 'redo'}, {type: 'separator'},
-				{role: 'cut'}, {role: 'copy'}, {role: 'paste'}, {label: 'Duplicate', accelerator: 'CmdOrCtrl+D'}, {role: 'delete', accelerator: 'Delete'},
-			],
-		},
-		{
-			label: 'View',
-			submenu: [
-				{role: 'reload'}, {role: 'toggledevtools'}, {type: 'separator'},
-				{label: 'Reset Layout', click: send('resetLayout')}, {type: 'separator'},
-				{label: 'Scene', click: send('openView', 'scene')}, {label: 'Hierarchy', click: send('openView', 'hierarchy')}, {label: 'Inspector', click: send('openView', 'inspector')}, {type: 'separator'},
-				{role: 'resetzoom'}, {role: 'zoomin'}, {role: 'zoomout'}, {type: 'separator'},
-				{role: 'togglefullscreen'},
-			],
-		},
-	];
-	const menu = Menu.buildFromTemplate(menuTemplate);
-	Menu.setApplicationMenu(menu);
+	electron.ipcMain.on('createMenu', (event, views) => {
+		let view_submenu = [];
+		view_submenu.push(
+			{role: 'reload'}, {role: 'toggledevtools'}, {type: 'separator'},
+			{label: 'Reset Layout', click: send('resetLayout')}, {type: 'separator'},
+		);
+		for (let i = 0; i < views.length; i += 2) {
+			let name = views[i], title = views[i+1];
+			view_submenu.push({label: title, click: send('openView', name)});
+		};
+		view_submenu.push({type: 'separator'},
+			{role: 'resetzoom'}, {role: 'zoomin'}, {role: 'zoomout'}, {type: 'separator'},
+			{role: 'togglefullscreen'},
+		);
+		const menu_template = [
+			{
+				label: 'File',
+				submenu: [
+					{role: 'quit'},
+				],
+			},
+			{
+				label: 'Edit',
+				submenu: [
+					{role: 'undo'}, {role: 'redo'}, {type: 'separator'},
+					{role: 'cut'}, {role: 'copy'}, {role: 'paste'}, {label: 'Duplicate', accelerator: 'CmdOrCtrl+D'}, {role: 'delete', accelerator: 'Delete'},
+				],
+			},
+			{
+				label: 'View',
+				submenu: view_submenu,
+			},
+		];
+		Menu.setApplicationMenu(Menu.buildFromTemplate(menu_template));
+	});
+	Menu.setApplicationMenu(Menu.buildFromTemplate([{}]));
 });

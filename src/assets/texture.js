@@ -4,7 +4,7 @@ const loader = new THREE.TextureLoader();
 Texture = THREE.Texture;
 
 Texture.ASSETS = {
-	'Tiles': loader.load('../gfx/textures/tiles.jpg'),
-	'Crate': loader.load('../gfx/textures/crate.jpg'),
+	'tiles': loader.load('../data/Textures/tiles.jpg'),
+	'crate': loader.load('../data/Textures/crate.jpg'),
 };
 indexAssets(Texture);

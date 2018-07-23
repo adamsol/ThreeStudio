@@ -5,29 +5,6 @@ const ActorMenu = {
 	"Light": {"Point light": [PointLight], "Directional light": [DirectionalLight]},
 };
 
-function nodeIcon(actor) {
-	let icon = 'fa fa-';
-	if (actor.id == scene.id) {
-		icon += 'globe fa-lg';
-	} else if (actor.children.length) {
-		icon += 'cubes fa-lg';
-	} else {
-		icon += 'cube';
-	}
-	return icon;
-}
-
-function buildHierarchy(actor, index)
-{
-	return {
-		id: actor.id,
-		text: actor.name,
-		icon: nodeIcon(actor),
-		data: {order: index || 0},
-		children: actor.children.map(buildHierarchy)
-	};
-}
-
 function HierarchyView(container, state)
 {
 	const self = this;
@@ -46,7 +23,7 @@ function HierarchyView(container, state)
 			if (componentNames) {
 				componentNames.split(',').forEach((name) => actor.addComponent(new window[name]()));
 			}
-			self.tree.settings.core.data = buildHierarchy(scene);
+			self.tree.settings.core.data = self.buildHierarchy(scene);
 			self.tree.refresh();
 			scene.setSelection([actor.id]);
 		}
@@ -58,7 +35,7 @@ function HierarchyView(container, state)
 		core: {
 			multiple: false,
 			check_callback: true,
-			data: buildHierarchy(scene),
+			data: self.buildHierarchy(scene),
 		},
 		plugins: ['state', 'dnd'],
 		state: {key: 'hierarchy_state'},
@@ -73,6 +50,32 @@ function HierarchyView(container, state)
 	this.hierarchy.on('copy_node.jstree', this.onNodeCopy.bind(this));
 	this.hierarchy.on('move_node.jstree', this.onNodeMove.bind(this));
 	this.hierarchy.on('keydown', this.onKeyDown.bind(this));
+}
+
+HierarchyView.TITLE = "Hierarchy";
+
+HierarchyView.prototype.buildHierarchy = function(actor, index)
+{
+	return {
+		id: actor.id,
+		text: actor.name,
+		icon: this.nodeIcon(actor),
+		data: {order: index || 0},
+		children: actor.children.map(this.buildHierarchy.bind(this))
+	};
+}
+
+HierarchyView.prototype.nodeIcon = function(actor)
+{
+	let icon = 'fa fa-';
+	if (actor.id == scene.id) {
+		icon += 'globe fa-lg';
+	} else if (actor.children.length) {
+		icon += 'cubes fa-lg';
+	} else {
+		icon += 'cube';
+	}
+	return icon;
 }
 
 HierarchyView.prototype.initToolbox = function()
@@ -91,8 +94,8 @@ HierarchyView.prototype.initToolbox = function()
 	}
 	this.toolbox.html('\
 		<div class="dropdown actor-new">\
-			<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">\
-				<span class="fa fa-plus"></span>\
+			<button class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">\
+				<span class="fa fa-sm fa-plus"></span>\
 				New actor\
 			</button>\
 			{}\
@@ -167,28 +170,27 @@ HierarchyView.prototype.onNodeMove = function(event, data)
 
 HierarchyView.prototype.onKeyDown = function(event)
 {
-	if (event.keyCode == Keys.F2) { // F2
+	if (event.keyCode == Keys.F2) {
 		let selected = this.tree.get_selected();
 		if (selected.length == 1) {
 			this.tree.edit(this.tree.get_node(selected[0]));
 		}
 	}
-	else if (event.keyCode == Keys.DEL) { // Del
+	else if (event.keyCode == Keys.DEL) {
 		this.tree.delete_node(this.tree.get_selected()[0]);
 	}
-	else if (event.keyCode == Keys.C && event.ctrlKey) { // Ctrl C
+	else if (event.keyCode == Keys.C && event.ctrlKey) {
 		this.tree.copy();
 	}
-	else if (event.keyCode == Keys.X && event.ctrlKey) { // Ctrl X
+	else if (event.keyCode == Keys.X && event.ctrlKey) {
 		this.tree.cut();
 	}
-	else if (event.keyCode == Keys.V && event.ctrlKey) { // Ctrl V
+	else if (event.keyCode == Keys.V && event.ctrlKey) {
 		let node = this.tree.get_selected()[0];
 		this.tree.paste(node, 'last');
 		this.tree.deselect_node(node);
 	}
-	else if (event.keyCode == Keys.D && event.ctrlKey) { // Ctrl D
-		event.preventDefault();
+	else if (event.keyCode == Keys.D && event.ctrlKey) {
 		this.tree.get_selected(true).forEach(function(node) {
 			let parent = this.tree.get_node(node.parent);
 			this.tree.copy(node.id);

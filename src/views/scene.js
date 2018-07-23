@@ -31,22 +31,22 @@ CameraControls.prototype.update = function(dt)
 		}
 		let axis = new THREE.Vector3();
 
-		if (this.keys[Keys.W]) { // W
+		if (this.keys[Keys.W]) {
 			axis.z -= 1;
 		}
-		if (this.keys[Keys.S]) { // S
+		if (this.keys[Keys.S]) {
 			axis.z += 1;
 		}
-		if (this.keys[Keys.A]) { // A
+		if (this.keys[Keys.A]) {
 			axis.x -= 1;
 		}
-		if (this.keys[Keys.D]) { // D
+		if (this.keys[Keys.D]) {
 			axis.x += 1;
 		}
-		if (this.keys[Keys.Q]) { // Q
+		if (this.keys[Keys.Q]) {
 			axis.y -= 1;
 		}
-		if (this.keys[Keys.E]) { // E
+		if (this.keys[Keys.E]) {
 			axis.y += 1;
 		}
 		this.camera.translateOnAxis(axis.normalize(), dist);
@@ -119,6 +119,8 @@ function SceneView(container, state)
 	this.canvas.on('mousedown', this.onMouseDown.bind(this));
 	this.canvas.on('keydown', this.onKeyDown.bind(this));
 }
+
+SceneView.TITLE = "Scene";
 
 SceneView.prototype.animate = function()
 {
