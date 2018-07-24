@@ -31,14 +31,15 @@ AssetView.prototype.nodeIcon = function(file) {
 AssetView.prototype.setSelection = function(dir)
 {
 	this.assets.empty();
+	if (!dir) return;
 	readDirectorySync(dir, {}, (dir_path, folders, files) => {
 		if (dir_path != 'data') {
 			$('\
-				<a href="#" class="asset" data-type="folder" data-path="{1}" title="{0}">\
+				<a href="#" class="asset" data-type="folder" data-path="{1}">\
 					<span class="icon fa fa-{2}"></span>\
 					<span class="label">{0}</span>\
 				</a>\
-			'.format("..", path.dirname(dir_path), 'folder')).appendTo(this.assets);
+			'.format("..", path.dirname(dir_path), 'folder-open')).appendTo(this.assets);
 		}
 		folders.forEach((folder) => {
 			$('\
