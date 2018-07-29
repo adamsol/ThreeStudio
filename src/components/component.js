@@ -85,7 +85,7 @@ function serializeField(field, name, text, classes)
 					<select class="reference" data-name="{0}" data-class="{1}">{2}</select>\
 				</div></td>\
 			</tr>\
-		'.format(name, field.class.name, $.map(getAssets(field.class), ''.format.bind('<option value="{1}">{1}</option>')).join('')));
+		'.format(name, field.class.name, $.map(getAssets(field.class), ''.format.bind('<option value="{0.id}">{0.name}</option>')).join('')));
 	}
 }
 

@@ -6,9 +6,22 @@ for (let c = 65; c <= 90; ++c) {
 
 Array.prototype.extend = function(arr)
 {
-	arr.forEach((el) => {
-		this.push(el);
-	});
+	for (let x of arr) {
+		this.push(x);
+	}
+};
+
+Array.prototype.insert = function(el, f)
+{
+	f = f || (x => x);
+	// Insert element into a sorted array. O(n) for simplicity.
+	let i = 0;
+	for (; i < this.length; ++i) {
+		if (f(el) < f(this[i])) {
+			break;
+		}
+	}
+	this.splice(i, 0, el);
 };
 
 Array.prototype.remove = function(el)
@@ -16,6 +29,16 @@ Array.prototype.remove = function(el)
 	let index = this.indexOf(el);
 	this.splice(index, 1);
 };
+
+Array.prototype.flatten = function()
+{
+	let arr = [];
+	for (let x of this) {
+		arr.extend(x);
+	}
+	return arr;
+};
+
 
 Array.prototype.prop = function(prop)
 {
@@ -47,7 +70,7 @@ String.prototype.format = function()
 	});
 };
 
-let _ = undefined;
+const _ = undefined;
 
 Function.prototype.partial = function()
 {
@@ -111,4 +134,9 @@ function readDirectorySync(dir_path, options, callback)
 			readDirectorySync(abs_path, options, callback)
 		});
 	}
+}
+
+function sleep(ms)
+{
+	return new Promise(resolve => setTimeout(resolve, ms || 0));
 }

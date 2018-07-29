@@ -1,14 +1,6 @@
 
 function Actor(obj, parent)
 {
-	Object.defineProperty(this, 'name', {
-		get: function() {
-			return this.obj.name;
-		},
-		set: function(name) {
-			this.obj.name = name || '';
-		}
-	});
 	if (obj instanceof THREE.Object3D) {
 		this.obj = obj;
 	} else {
@@ -34,6 +26,15 @@ function Actor(obj, parent)
 		}
 	}, this);
 }
+
+Object.defineProperty(Actor.prototype, 'name', {
+	get: function() {
+		return this.obj.name;
+	},
+	set: function(name) {
+		this.obj.name = name || '';
+	}
+});
 
 Actor.prototype.clone = function()
 {

@@ -1,6 +1,6 @@
 
 const ComponentMenu = {
-	"Model": [Plane, Cube, Cylinder, Sphere],
+	"Model": [Box, Cylinder, Plane, Sphere],
 	"Light": [PointLight, DirectionalLight],
 };
 
@@ -128,7 +128,8 @@ InspectorView.prototype.refreshInput = function(input, force)
 	if (input.hasClass('boolean')) {
 		input.prop('checked', value);
 	} else if (input.hasClass('reference')) {
-		input.val(findAssetName(input.data('class'), value.id));
+		if (value.asset)
+		input.val(value.asset.id);
 	} else {
 		input.val(value);
 		if (input.hasClass('color')) {
@@ -152,7 +153,7 @@ InspectorView.prototype.updateValue = function(input, refresh)
 	} else if (input.hasClass('decimal')) {
 		value = !isNaN(input.val()) ? (input.val() ? parseFloat(input.val()) : input.data('default')) : undefined;
 	} else if (input.hasClass('reference')) {
-		value = getAssets(input.data('class'))[input.val()];
+		value = assetsById[input.val()].object;
 	} else {
 		value = input.val() || input.data('default');
 	}

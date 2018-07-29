@@ -1,12 +1,37 @@
 
+const textureFields = ['map'];
+
 Material = THREE.Material;
 
-Material.ASSETS = {
-	'Tiles': new THREE.MeshPhysicalMaterial({map: getAssets(Texture)['tiles']}),
-	'Crate': new THREE.MeshPhysicalMaterial({map: getAssets(Texture)['crate'], metalness: 0, roughness: 0.7}),
-	'Red': new THREE.MeshPhysicalMaterial({color: 0xD45847, metalness: 0.3, roughness: 0.6}),
-	'Green': new THREE.MeshPhysicalMaterial({color: 0x48D162, metalness: 0.3, roughness: 0.6}),
-	'Blue': new THREE.MeshPhysicalMaterial({color: 0x4479DA, metalness: 0.3, roughness: 0.6}),
-	'Normal': new THREE.MeshNormalMaterial(),
+Material.prototype.serialize = function()
+{
+	// Prevent serializing textures and images.
+	let meta = {textures: {}};
+	for (let field of textureFields) {
+		if (this[field]) {
+			meta.textures[this[field].uuid] = '';
+		}
+	}
+	let json = this.toJSON(meta);
+
+	// Output texture paths instead.
+	for (let field of textureFields) {
+		if (this[field]) {
+			json[field] = this[field].asset.path;
+		}
+	}
+	return json;
 };
-indexAssets(Material);
+Material.parse = async function(json)
+{
+	let textures = {};
+	for (let field of textureFields) {
+		if (json[field]) {
+			let asset_path = json[field];
+			textures[asset_path] = await getAsset(asset_path);
+		}
+	}
+	let loader = new THREE.MaterialLoader();
+	loader.setTextures(textures);
+	return loader.parse(json);
+};

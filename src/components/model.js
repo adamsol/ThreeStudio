@@ -13,15 +13,15 @@ Model.FIELDS = {
 };
 Model.ICON = 'gem';
 
-function Plane(material) {
-	return new Model(getAssets(Geometry)['Plane'], material);
+function Box() {
+	return new Model(getAssetSync('Geometries', 'Box.geom'), getAssetSync('Materials', 'Red.mat'));
 }
-function Cube(material) {
-	return new Model(getAssets(Geometry)['Cube'], material);
+function Cylinder() {
+	return new Model(getAssetSync('Geometries', 'Cylinder.geom'), getAssetSync('Materials', 'Red.mat'));
 }
-function Cylinder(material) {
-	return new Model(getAssets(Geometry)['Cylinder'], material);
+function Plane() {
+	return new Model(getAssetSync('Geometries', 'Plane.geom'), getAssetSync('Materials', 'Red.mat'));
 }
-function Sphere(material) {
-	return new Model(getAssets(Geometry)['Sphere'], material);
+function Sphere() {
+	return new Model(getAssetSync('Geometries', 'Sphere.geom'), getAssetSync('Materials', 'Red.mat'));
 }

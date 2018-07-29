@@ -1,0 +1,18 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Material",
+		"generator": "Material.toJSON"
+	},
+	"uuid": "220127DA-859E-4AA6-9615-A95E648DBFC4",
+	"type": "MeshPhysicalMaterial",
+	"color": 13916231,
+	"roughness": 0.6,
+	"metalness": 0.3,
+	"emissive": 0,
+	"clearCoat": 0,
+	"clearCoatRoughness": 0,
+	"depthFunc": 3,
+	"depthTest": true,
+	"depthWrite": true
+}

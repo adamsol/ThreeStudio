@@ -6,7 +6,8 @@
 		<script>
 			fs = require('fs-extra');
 			file = require('file');
-			path = require('path');
+			path = require('path').posix;
+			path.split = p => p.split(/[\/\\]+/);
 			window.$ = window.jQuery = require('jquery');
 		</script>
 

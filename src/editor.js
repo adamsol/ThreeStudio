@@ -1,39 +1,48 @@
 
 const electron = require('electron');
 
-let actor;
+async function initScene()
+{
+	let actor;
 
-actor = new Actor('Ground');
-actor.transform.position.set(0, -1, 0);
-actor.transform.scale.set(10, 1, 10);
-actor.addComponent(new Model(getAssets(Geometry)['Cube'], getAssets(Material)['Tiles']));
+	actor = new Actor('Ground');
+	actor.transform.position.set(0, -1, 0);
+	actor.transform.scale.set(10, 1, 10);
+	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'Tiles.mat')));
 
-actor = new Actor('Wooden box');
-actor.transform.position.set(0, 1, 0);
-actor.addComponent(new Model(getAssets(Geometry)['Cube'], getAssets(Material)['Crate']));
+	actor = new Actor('Wooden box');
+	actor.transform.position.set(0, 1, 0);
+	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'Crate.mat')));
 
-actor = new Actor('Torus knot', actor);
-actor.transform.position.set(3, 0, 0);
-actor.transform.scale.set(0.5, 0.5, 0.5);
-actor.addComponent(new Model(getAssets(Geometry)['TorusKnot'], getAssets(Material)['Green']));
+	actor = new Actor('Torus knot', actor);
+	actor.transform.position.set(3, 0, 0);
+	actor.transform.scale.set(0.5, 0.5, 0.5);
+	actor.addComponent(new Model(await getAsset('Geometries', 'TorusKnot.geom'), await getAsset('Materials', 'Green.mat')));
 
-actor = new Actor('Dodecahedron', actor);
-actor.transform.position.set(0, 3, 0);
-actor.addComponent(new Model(getAssets(Geometry)['Dodecahedron'], getAssets(Material)['Blue']));
+	actor = new Actor('Dodecahedron', actor);
+	actor.transform.position.set(0, 3, 0);
+	actor.addComponent(new Model(await getAsset('Geometries', 'Dodecahedron.geom'), await getAsset('Materials', 'Blue.mat')));
 
-actor = new Actor('Point light');
-actor.transform.position.set(1.5, 3, 2);
-actor.addComponent(new PointLight(0xffe9ee, 1, 10));
+	actor = new Actor('Point light');
+	actor.transform.position.set(1.5, 3, 2);
+	actor.addComponent(new PointLight(0xffe9ee, 1, 10));
 
-actor = new Actor('Directional light');
-actor.transform.position.set(-10, 10, -5);
-let dir_light = new DirectionalLight(0x888888);
-actor.obj.lookAt(dir_light.target.position);
-dir_light.add(dir_light.target);
-dir_light.target.position.set(0, 0, actor.transform.position.length());
-actor.addComponent(dir_light);
+	actor = new Actor('Directional light');
+	actor.transform.position.set(-10, 10, -5);
+	let dir_light = new DirectionalLight(0x888888);
+	actor.obj.lookAt(dir_light.target.position);
+	dir_light.add(dir_light.target);
+	dir_light.target.position.set(0, 0, actor.transform.position.length());
+	actor.addComponent(dir_light);
 
-scene.obj.add(new THREE.AmbientLight(0x222222));
+	scene.obj.add(new THREE.AmbientLight(0x222222));
+
+	for (let view of layout.root.getComponentsByName('hierarchy')) {
+		view.refresh();
+	}
+}
+
+initScene();
 
 const views = {
 	'scene': SceneView,

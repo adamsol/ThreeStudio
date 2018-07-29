@@ -1,7 +1,7 @@
 
 const ActorMenu = {
 	"Empty": [],
-	"Model": {"Plane": [Plane], "Cube": [Cube], "Cylinder": [Cylinder], "Sphere": [Sphere]},
+	"Model": {"Box": [Box], "Cylinder": [Cylinder], "Plane": [Plane], "Sphere": [Sphere]},
 	"Light": {"Point light": [PointLight], "Directional light": [DirectionalLight]},
 };
 
@@ -23,8 +23,7 @@ function HierarchyView(container, state)
 			if (componentNames) {
 				componentNames.split(',').forEach((name) => actor.addComponent(new window[name]()));
 			}
-			self.tree.settings.core.data = self.buildHierarchy(scene);
-			self.tree.refresh();
+			self.refresh();
 			scene.setSelection([actor.id]);
 		}
 	});
@@ -41,7 +40,6 @@ function HierarchyView(container, state)
 		state: {key: 'hierarchy_state'},
 	});
 	this.tree = this.hierarchy.jstree(true);
-	jstree = this.tree;  // for debugging
 
 	this.hierarchy.on('create_node.jstree', this.onNodeCreate.bind(this));
 	this.hierarchy.on('rename_node.jstree', this.onNodeRename.bind(this));
@@ -53,6 +51,13 @@ function HierarchyView(container, state)
 }
 
 HierarchyView.TITLE = "Hierarchy";
+
+
+HierarchyView.prototype.refresh = function()
+{
+	this.tree.settings.core.data = this.buildHierarchy(scene);
+	this.tree.refresh();
+}
 
 HierarchyView.prototype.buildHierarchy = function(actor, index)
 {

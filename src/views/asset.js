@@ -6,7 +6,7 @@ function AssetView(container, state)
 
 	this.assets = $('<div class="assets"></div>').appendTo(this.container);
 
-	this.assets.on('click', 'a.asset', function() {
+	this.assets.on('click', 'a.asset', async function() {
 		if ($(this).data('type') == 'folder') {
 			project.setSelection($(this).data('path'));
 		}
@@ -16,8 +16,8 @@ function AssetView(container, state)
 AssetView.TITLE = "Assets";
 
 AssetView.prototype.nodeIcon = function(file) {
-	let ext = path.extname(file);
-	if (['.jpg', '.jpeg', '.png', '.gif', 'tiff', '.tif'].includes(ext)) {
+	let ext = path.extname(file).lower();
+	if (extensions.image.includes(ext)) {
 		return 'image';
 	} else if (['.geom'].includes(ext)) {
 		return 'cube';
