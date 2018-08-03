@@ -1,7 +1,7 @@
 
 Light = THREE.Light;
 Light.FIELDS = {
-	color: Field.Color('FFFFFF'),
+	color: Field.Color(),
 	intensity: Field.Decimal(1.0),
 	castShadow: Field.Boolean(false),
 };

@@ -5,7 +5,7 @@ const ActorMenu = {
 	"Light": {"Point light": [PointLight], "Directional light": [DirectionalLight]},
 };
 
-function HierarchyView(container, state)
+function SceneHierarchyView(container, state)
 {
 	const self = this;
 	this.container = container.getElement();
@@ -37,7 +37,7 @@ function HierarchyView(container, state)
 			data: self.buildHierarchy(scene),
 		},
 		plugins: ['state', 'dnd'],
-		state: {key: 'hierarchy_state'},
+		state: {key: 'scene-hierarchy_state'},
 	});
 	this.tree = this.hierarchy.jstree(true);
 
@@ -50,16 +50,18 @@ function HierarchyView(container, state)
 	this.hierarchy.on('keydown', this.onKeyDown.bind(this));
 }
 
-HierarchyView.TITLE = "Hierarchy";
+SceneHierarchyView.NAME = 'scene-hierarchy';
+SceneHierarchyView.TITLE = "Scene Hierarchy";
 
+views[SceneHierarchyView.NAME] = SceneHierarchyView;
 
-HierarchyView.prototype.refresh = function()
+SceneHierarchyView.prototype.refresh = function()
 {
 	this.tree.settings.core.data = this.buildHierarchy(scene);
 	this.tree.refresh();
 }
 
-HierarchyView.prototype.buildHierarchy = function(actor, index)
+SceneHierarchyView.prototype.buildHierarchy = function(actor, index)
 {
 	return {
 		id: actor.id,
@@ -70,7 +72,7 @@ HierarchyView.prototype.buildHierarchy = function(actor, index)
 	};
 }
 
-HierarchyView.prototype.nodeIcon = function(actor)
+SceneHierarchyView.prototype.nodeIcon = function(actor)
 {
 	let icon = 'fa fa-';
 	if (actor.id == scene.id) {
@@ -83,7 +85,7 @@ HierarchyView.prototype.nodeIcon = function(actor)
 	return icon;
 }
 
-HierarchyView.prototype.initToolbox = function()
+SceneHierarchyView.prototype.initToolbox = function()
 {
 	let self = this;
 	function submenu(actors) {
@@ -108,26 +110,26 @@ HierarchyView.prototype.initToolbox = function()
 	'.format(submenu(ActorMenu)));
 };
 
-HierarchyView.prototype.onNodeCreate = function(event, data)
+SceneHierarchyView.prototype.onNodeCreate = function(event, data)
 {
 };
 
-HierarchyView.prototype.onNodeRename = function(event, data)
+SceneHierarchyView.prototype.onNodeRename = function(event, data)
 {
 	scene.getActor(data.node.id).name = data.text;
 };
 
-HierarchyView.prototype.onNodeDelete = function(event, data)
+SceneHierarchyView.prototype.onNodeDelete = function(event, data)
 {
 	scene.getActor(data.node.id).delete();
 };
 
-HierarchyView.prototype.onNodeChange = function(event, data)
+SceneHierarchyView.prototype.onNodeChange = function(event, data)
 {
 	scene.setSelection(this.tree.get_selected());
 };
 
-HierarchyView.prototype.onNodeCopy = function(event, data)
+SceneHierarchyView.prototype.onNodeCopy = function(event, data)
 {
 	let new_actor = scene.getActor(data.original.id).clone();
 	new_actor.setParent(scene.getActor(data.parent));
@@ -157,7 +159,7 @@ HierarchyView.prototype.onNodeCopy = function(event, data)
 	$('#'+new_node.a_attr.id).focus();
 };
 
-HierarchyView.prototype.onNodeMove = function(event, data)
+SceneHierarchyView.prototype.onNodeMove = function(event, data)
 {
 	if (data.parent != data.old_parent) {
 		let node = data.node;
@@ -173,7 +175,7 @@ HierarchyView.prototype.onNodeMove = function(event, data)
 	}
 };
 
-HierarchyView.prototype.onKeyDown = function(event)
+SceneHierarchyView.prototype.onKeyDown = function(event)
 {
 	if (event.keyCode == Keys.F2) {
 		let selected = this.tree.get_selected();
@@ -205,7 +207,7 @@ HierarchyView.prototype.onKeyDown = function(event)
 	}
 };
 
-HierarchyView.prototype.setSelection = function(actors)
+SceneHierarchyView.prototype.setSelection = function(actors)
 {
 	this.tree.deselect_all(true);
 	this.tree.select_node(actors.prop('id'), true);

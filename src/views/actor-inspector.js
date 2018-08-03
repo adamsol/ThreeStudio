@@ -4,7 +4,7 @@ const ComponentMenu = {
 	"Light": [PointLight, DirectionalLight],
 };
 
-function InspectorView(container, state)
+function ActorInspectorView(container, state)
 {
 	const self = this;
 	this.container = container.getElement();
@@ -21,9 +21,9 @@ function InspectorView(container, state)
 		}
 	});
 
-	this.components = $('<div class="components"></div>').appendTo(this.container);
+	this.inspector = $('<div class="inspector"></div>').appendTo(this.container);
 
-	this.components.sortable({
+	this.inspector.sortable({
 		axis: 'y',
 		handle: 'h3',
 		stop: (event, ui) => {
@@ -32,18 +32,18 @@ function InspectorView(container, state)
 		update: (event, ui) => {
 			let components = [];
 			this.components.find('.component').each(function(i) {
-				components.push(self.actor.components[$(this).data('index')]);
+				inspector.push(self.actor.components[$(this).data('index')]);
 				$(this).data('index', i);
 			});
 			self.actor.components = components;
 		},
 	});
-	this.components.on('input change keydown', '.component-value input, .component-value select', function(event) {
-		if (event.type != 'keydown' || event.which == 13) {
+	this.inspector.on('input change keydown', '.field-value input, .field-value select', function(event) {
+		if (event.type != 'keydown' || event.which == Keys.ENTER) {
 			self.updateValue($(this), event.type == 'keydown');
 		}
 	});
-	this.components.on('click', '.component-remove', function(event) {
+	this.inspector.on('click', '.component-remove', function(event) {
 		let component = $(this).closest('.component');
 		self.actor.removeComponent(component.data('index'));
 		self.serializeActor();
@@ -54,9 +54,12 @@ function InspectorView(container, state)
 	setInterval(this.refreshAll.bind(this), 50);
 }
 
-InspectorView.TITLE = "Inspector";
+ActorInspectorView.NAME = 'actor-inspector';
+ActorInspectorView.TITLE = "Actor Inspector";
 
-InspectorView.prototype.initToolbox = function()
+views[ActorInspectorView.NAME] = ActorInspectorView;
+
+ActorInspectorView.prototype.initToolbox = function()
 {
 	let self = this;
 	function submenu(components) {
@@ -81,7 +84,7 @@ InspectorView.prototype.initToolbox = function()
 	'.format(submenu(ComponentMenu)));
 };
 
-InspectorView.prototype.setSelection = function(actors)
+ActorInspectorView.prototype.setSelection = function(actors)
 {
 	if (actors.length) {
 		this.actor = actors[0];
@@ -93,44 +96,45 @@ InspectorView.prototype.setSelection = function(actors)
 	}
 };
 
-InspectorView.prototype.serializeActor = function()
+ActorInspectorView.prototype.serializeActor = function()
 {
 	if (!this.actor) return;
-	this.components.html(this.actor.components.map(serializeComponent).join('\n'));
+	this.inspector.html(this.actor.components.map(serializeComponent).join('\n'));
 	jscolor.installByClassName('color');
 	this.refreshAll();
 }
 
-InspectorView.prototype.refreshAll = function(input)
+ActorInspectorView.prototype.refreshAll = function(input)
 {
 	if (!this.actor) return;
 	let self = this;
-	this.components.find('.component-value input, .component-value select').each(function() {
+	this.inspector.find('.field-value input, .field-value select').each(function() {
 		self.refreshInput($(this));
 	});
 };
 
-InspectorView.prototype.refreshInput = function(input, force)
+ActorInspectorView.prototype.refreshInput = function(input, force)
 {
 	if (input.is(':focus') && !force) {
 		return;
 	}
 	let attrs = input.data('name').split('.');
-	obj = this.actor.components[input.closest('.component').data('index')];
+	let obj = this.actor.components[input.closest('.component').data('index')];
 	for (let i = 0, n = attrs.length - 1; i < n; ++i) {
 		obj = obj[attrs[i]];
 	}
 	let attr = attrs.pop();
 	let value = obj[attr];
-	if (value._serialize) {
-		value = obj[attr]._serialize();
-	}
 	if (input.hasClass('boolean')) {
 		input.prop('checked', value);
 	} else if (input.hasClass('reference')) {
-		if (value.asset)
-		input.val(value.asset.id);
+		if (value && value.asset) {
+			input.val(value.asset.id);
+		}
 	} else {
+		if (value && value.serialize) {
+			value = value.serialize();
+		}
 		input.val(value);
 		if (input.hasClass('color')) {
 			input[0].jscolor.importColor();
@@ -138,10 +142,10 @@ InspectorView.prototype.refreshInput = function(input, force)
 	}
 };
 
-InspectorView.prototype.updateValue = function(input, refresh)
+ActorInspectorView.prototype.updateValue = function(input, refresh)
 {
 	let attrs = input.attr('data-name').split('.');
-	obj = this.actor.components[input.closest('.component').data('index')];
+	let obj = this.actor.components[input.closest('.component').data('index')];
 	for (let i = 0; i < attrs.length - 1; ++i) {
 		obj = obj[attrs[i]];
 	}
@@ -153,14 +157,14 @@ InspectorView.prototype.updateValue = function(input, refresh)
 	} else if (input.hasClass('decimal')) {
 		value = !isNaN(input.val()) ? (input.val() ? parseFloat(input.val()) : input.data('default')) : undefined;
 	} else if (input.hasClass('reference')) {
-		value = assetsById[input.val()].object;
+		value = assetsById[input.val()].object;//input.val() ? assetsById[input.val()].object : null;
 	} else {
 		value = input.val() || input.data('default');
 	}
 	if (value !== undefined) {
 		let attr = attrs.pop();
-		if (obj[attr] !== undefined && obj[attr]._parse) {
-			obj[attr]._parse(value);
+		if (obj[attr] && obj[attr].parse) {
+			obj[attr].parse(value);
 		} else {
 			obj[attr] = value;
 		}

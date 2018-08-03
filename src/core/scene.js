@@ -40,11 +40,7 @@ Scene.prototype.pickObject = function(coords, camera)
 
 Scene.prototype.setSelection = function(ids)
 {
-	let views = [];
-	views.extend(layout.root.getComponentsByName('hierarchy'));
-	views.extend(layout.root.getComponentsByName('scene'));
-	views.extend(layout.root.getComponentsByName('inspector'));
-
+	let views = layout.findViews(SceneRendererView, SceneHierarchyView, ActorInspectorView);
 	let actors = scene.getActors(ids).filter((a) => a);
 	views.forEach((view) => {
 		view.setSelection(actors);

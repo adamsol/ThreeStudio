@@ -5,13 +5,18 @@ function Project()
 {
 }
 
-Project.prototype.setSelection = function(dir)
+Project.prototype.setFolder = function(dir)
 {
-	let views = [];
-	views.extend(layout.root.getComponentsByName('project'));
-	views.extend(layout.root.getComponentsByName('assets'));
-
+	let views = layout.findViews(ProjectHierarchyView, ProjectExplorerView);
 	views.forEach((view) => {
-		view.setSelection(dir);
+		view.setFolder(dir);
+	});
+};
+
+Project.prototype.setAsset = function(asset)
+{
+	let views = layout.findViews(ProjectExplorerView, AssetInspectorView);
+	views.forEach((view) => {
+		view.setAsset(asset);
 	});
 };

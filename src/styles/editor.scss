@@ -14,7 +14,7 @@ div.toolbox {
 	padding: 4px;
 }
 
-div.components {
+div.inspector {
 	overflow-y: auto;
 
 	div.component {
@@ -40,11 +40,14 @@ div.components {
 			box-sizing: border-box;
 			padding: 0;
 		}
-		div.component-field {
-			display: flex;
-			flex-direction: row;
-		}
-		div.component-attribute {
+	}
+
+	div.field {
+		color: #ccc;
+		display: flex;
+		flex-direction: row;
+
+		div.field-name {
 			border-right: 2px solid #0C0D10;
 			box-sizing: border-box;
 			cursor: default;
@@ -52,7 +55,7 @@ div.components {
 			overflow: hidden;
 			padding: 3px;
 		}
-		div.component-value {
+		div.field-value {
 			box-sizing: border-box;
 			flex-grow: 1;
 			padding: 2px;

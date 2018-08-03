@@ -88,7 +88,7 @@ CameraControls.prototype.onKeyUp = function(event)
 	this.keys[event.keyCode] = false;
 };
 
-function SceneView(container, state)
+function SceneRendererView(container, state)
 {
 	this.canvas = container.getElement().empty();
 	this.canvas.attr('tabindex', 42).css('outline', 'none');
@@ -120,9 +120,13 @@ function SceneView(container, state)
 	this.canvas.on('keydown', this.onKeyDown.bind(this));
 }
 
-SceneView.TITLE = "Scene";
+SceneRendererView.NAME = 'scene-renderer';
+SceneRendererView.TITLE = "Scene Renderer";
+SceneRendererView.ALLOW_MULTIPLE = true;
 
-SceneView.prototype.animate = function()
+views[SceneRendererView.NAME] = SceneRendererView;
+
+SceneRendererView.prototype.animate = function()
 {
 	if (!this.renderer) return;
 
@@ -142,7 +146,7 @@ SceneView.prototype.animate = function()
 	requestAnimationFrame(this.animate.bind(this));
 };
 
-SceneView.prototype.onResize = function()
+SceneRendererView.prototype.onResize = function()
 {
 	let width = this.canvas.width(), height = this.canvas.height();
 
@@ -152,12 +156,12 @@ SceneView.prototype.onResize = function()
 	this.renderer.setSize(width, height);
 };
 
-SceneView.prototype.onDestroy = function()
+SceneRendererView.prototype.onDestroy = function()
 {
 	this.renderer = null;
 };
 
-SceneView.prototype.onMouseDown = function(event)
+SceneRendererView.prototype.onMouseDown = function(event)
 {
 	if (event.which == 1) {
 		let coords = new THREE.Vector3();
@@ -179,7 +183,7 @@ SceneView.prototype.onMouseDown = function(event)
 	}
 };
 
-SceneView.prototype.onKeyDown = function(event)
+SceneRendererView.prototype.onKeyDown = function(event)
 {
 	if (!this.controls.camera.unlocked) {
 		if (event.keyCode == Keys.Q) {
@@ -194,7 +198,7 @@ SceneView.prototype.onKeyDown = function(event)
 	}
 };
 
-SceneView.prototype.setSelection = function(actors)
+SceneRendererView.prototype.setSelection = function(actors)
 {
 	if (actors.length) {
 		this.controls.transform.attach(actors[0].obj);

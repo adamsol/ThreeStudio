@@ -2,6 +2,17 @@
 const textureFields = ['map'];
 
 Material = THREE.Material;
+MeshPhysicalMaterial = THREE.MeshPhysicalMaterial;
+
+Material.FIELDS = {
+	color: Field.Color(),
+	map: Field.Reference(Texture, true),
+};
+
+Material.prototype.update = function()
+{
+	this.needsUpdate = true;  // to rebuild shaders
+};
 
 Material.prototype.serialize = function()
 {

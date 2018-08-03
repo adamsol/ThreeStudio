@@ -14,13 +14,13 @@ div.toolbox {
   padding: 4px;
 }
 
-div.components {
+div.inspector {
   overflow-y: auto;
 }
-div.components div.component {
+div.inspector div.component {
   margin: 4px;
 }
-div.components div.component h3.component-header {
+div.inspector div.component h3.component-header {
   background-color: #0C0D10;
   color: #DDD;
   font-size: 1.2rem;
@@ -28,23 +28,24 @@ div.components div.component h3.component-header {
   padding: 3px;
   margin: 0;
 }
-div.components div.component h3.component-header.collapsed > span.fa.caret::before {
+div.inspector div.component h3.component-header.collapsed > span.fa.caret::before {
   content: "";
 }
-div.components div.component h3.component-header:not(.collapsed) > span.fa.caret::before {
+div.inspector div.component h3.component-header:not(.collapsed) > span.fa.caret::before {
   content: "";
 }
-div.components div.component div.component-body {
+div.inspector div.component div.component-body {
   background-color: #1A1B1E;
   color: #ccc;
   box-sizing: border-box;
   padding: 0;
 }
-div.components div.component div.component-field {
+div.inspector div.field {
+  color: #ccc;
   display: flex;
   flex-direction: row;
 }
-div.components div.component div.component-attribute {
+div.inspector div.field div.field-name {
   border-right: 2px solid #0C0D10;
   box-sizing: border-box;
   cursor: default;
@@ -52,38 +53,38 @@ div.components div.component div.component-attribute {
   overflow: hidden;
   padding: 3px;
 }
-div.components div.component div.component-value {
+div.inspector div.field div.field-value {
   box-sizing: border-box;
   flex-grow: 1;
   padding: 2px;
 }
-div.components div.component div.component-value table {
+div.inspector div.field div.field-value table {
   table-layout: fixed;
   width: 100%;
 }
-div.components div.component div.component-value table td div {
+div.inspector div.field div.field-value table td div {
   border-collapse: separate;
   border-spacing: 2px 0;
   display: table;
   width: 100%;
 }
-div.components div.component div.component-value span.axis {
+div.inspector div.field div.field-value span.axis {
   border-radius: 4px 0 0 4px;
   font-size: 1rem;
   cursor: default;
   display: table-cell;
   box-sizing: border-box;
 }
-div.components div.component div.component-value span.axis.x {
+div.inspector div.field div.field-value span.axis.x {
   color: #Bf5345;
 }
-div.components div.component div.component-value span.axis.y {
+div.inspector div.field div.field-value span.axis.y {
   color: #47983F;
 }
-div.components div.component div.component-value span.axis.z {
+div.inspector div.field div.field-value span.axis.z {
   color: #4E78DB;
 }
-div.components div.component div.component-value input:not([type=checkbox]), div.components div.component div.component-value select {
+div.inspector div.field div.field-value input:not([type=checkbox]), div.inspector div.field div.field-value select {
   background-color: #333;
   border: 1px solid black;
   border-radius: 0 4px 4px 0;

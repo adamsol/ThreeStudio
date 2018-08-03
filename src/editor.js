@@ -37,22 +37,14 @@ async function initScene()
 
 	scene.obj.add(new THREE.AmbientLight(0x222222));
 
-	for (let view of layout.root.getComponentsByName('hierarchy')) {
+	for (let view of layout.findViews(SceneHierarchyView)) {
 		view.refresh();
 	}
 }
 
 initScene();
 
-const views = {
-	'scene': SceneView,
-	'inspector': InspectorView,
-	'hierarchy': HierarchyView,
-	'assets': AssetView,
-	'project': ProjectView,
-};
-
-electron.ipcRenderer.send('createMenu', $.map(views, (view, name) => [name, view.TITLE]));
+electron.ipcRenderer.send('createMenu', $.map(views, view => [view.NAME, view.TITLE]));
 
 let layout;
 
@@ -76,21 +68,21 @@ const configDefault = {
 			content: [{
 				type: 'component',
 				height: 80,
-				title: views['scene'].TITLE,
-				componentName: 'scene',
+				title: SceneRendererView.TITLE,
+				componentName: SceneRendererView.NAME,
 				componentState: {},
 			}, {
 				type: 'row',
 				content: [{
 					type: 'component',
 					width: 20,
-					title: views['project'].TITLE,
-					componentName: 'project',
+					title: ProjectHierarchyView.TITLE,
+					componentName: ProjectHierarchyView.NAME,
 					componentState: {}
 				}, {
 					type: 'component',
-					title: views['assets'].TITLE,
-					componentName: 'assets',
+					title: ProjectExplorerView.TITLE,
+					componentName: ProjectExplorerView.NAME,
 					componentState: {}
 				}]
 			}]
@@ -98,14 +90,22 @@ const configDefault = {
 			type: 'column',
 			width: 30,
 			content: [{
-				type: 'component',
-				title: views['inspector'].TITLE,
-				componentName: 'inspector',
-				componentState: {}
+				type: 'row',
+				content: [{
+					type: 'component',
+					title: ActorInspectorView.TITLE,
+					componentName: ActorInspectorView.NAME,
+					componentState: {}
+				}, {
+					type: 'component',
+					title: AssetInspectorView.TITLE,
+					componentName: AssetInspectorView.NAME,
+					componentState: {}
+				}]
 			}, {
 				type: 'component',
-				title: views['hierarchy'].TITLE,
-				componentName: 'hierarchy',
+				title: SceneHierarchyView.TITLE,
+				componentName: SceneHierarchyView.NAME,
 				componentState: {}
 			}]
 		}]
@@ -122,26 +122,6 @@ $(window).on('beforeunload', () => {
     localStorage['layout_config'] = JSON.stringify(layout.toConfig());
 });
 
-function openView(name, parent)
-{
-	if (!['scene'].includes(name) && layout.root.getComponentsByName(name).length) {
-		return;
-	}
-	if (!parent) {
-		if (layout.root.contentItems.length) {
-			parent = layout.root.contentItems[0];
-		} else {
-			parent = layout.root;
-		}
-	}
-	parent.addChild({
-		type: 'component',
-		title: views[name].TITLE,
-		componentName: name,
-		componentState: {},
-	});
-}
-
 layout.on('stackCreated', (stack) => {
 	let button = $('\
 		<div class="dropdown">\
@@ -152,7 +132,7 @@ layout.on('stackCreated', (stack) => {
 		</div>\
 	'.format($.map(views, ''.format.bind('<li class="dropdown-item" data-view="{1}">{0.TITLE}</li>')).join('')));
 	button.on('click', 'li.dropdown-item', function() {
-		openView($(this).data('view'), stack);
+		layout.openView($(this).data('view'), stack);
 	});
 	stack.header.tabsContainer.append(button);
 });

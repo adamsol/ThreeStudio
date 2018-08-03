@@ -26,7 +26,7 @@ Object.defineProperty(Asset.prototype, 'path', {
 	get: function() {
 		let elements = [];
 		let asset = this;
-		while (asset) {
+		while (asset.parent) {
 			elements.unshift(asset.name);
 			asset = asset.parent;
 		}
@@ -55,17 +55,23 @@ async function onAssetLoad(assets, file, error, content)
 			object = content;
 			cls = object.constructor.name;
 		}
-		let id = ++Asset.count;
-		let asset = new Asset('file', file, assets, {
-			class: cls,
-			object: object,
-			id: id,
-		});
-		if (!assetsByClass[cls]) {
-			assetsByClass[cls] = [];
+		if (!assets.children[file]) {
+			let id = ++Asset.count;
+			let asset = new Asset('file', file, assets, {
+				class: cls,
+				object: object,
+				id: id,
+			});
+			if (!assetsByClass[cls]) {
+				assetsByClass[cls] = [];
+			}
+			assetsByClass[cls].insert(asset, a => a.name);
+			assets.children[file] = assetsById[id] = object.asset = asset;
+		} else {
+			let asset = assets.children[file];
+			Object.assign(asset.object, object);
+			asset.object.elementsNeedUpdate = true;  // for Geometry
 		}
-		assetsByClass[cls].insert(asset, a => a.name);
-		assets.children[file] = assetsById[id] = object.asset = asset;
 	} catch (error) {
 		console.error(file, error);
 		assets.children[file] = null;
@@ -124,4 +130,17 @@ function getAssets(cls)
 {
 	// TODO: handle inheritance
 	return assetsByClass[cls.name||cls];
+}
+
+function exportAsset(asset)
+{
+	let json = asset.object.serialize();
+	let str = JSON.stringify(json, null, '\t');
+	fs.writeFile(path.join('data', asset.path), str);
+}
+
+function importAsset(asset)
+{
+	let callback = onAssetLoad.partial(asset.parent, asset.name);
+	fs.readFile(path.join('data', asset.path), callback);
 }

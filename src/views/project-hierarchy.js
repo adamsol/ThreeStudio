@@ -1,5 +1,5 @@
 
-function ProjectView(container, state)
+function ProjectHierarchyView(container, state)
 {
 	const self = this;
 	this.container = container.getElement();
@@ -13,7 +13,7 @@ function ProjectView(container, state)
 			data: self.buildHierarchy(),
 		},
 		plugins: ['state'],
-		state: {key: 'project_state'},
+		state: {key: 'project-hierarchy_state'},
 	});
 	this.tree = this.hierarchy.jstree(true);
 
@@ -26,9 +26,12 @@ function ProjectView(container, state)
 	});
 }
 
-ProjectView.TITLE = "Project";
+ProjectHierarchyView.NAME = 'project-hierarchy';
+ProjectHierarchyView.TITLE = "Project Hierarchy";
 
-ProjectView.prototype.buildHierarchy = function()
+views[ProjectHierarchyView.NAME] = ProjectHierarchyView;
+
+ProjectHierarchyView.prototype.buildHierarchy = function()
 {
 	let data = [{
 		id: 'data',
@@ -47,12 +50,12 @@ ProjectView.prototype.buildHierarchy = function()
 	return data;
 }
 
-ProjectView.prototype.onNodeChange = function(event, data)
+ProjectHierarchyView.prototype.onNodeChange = function(event, data)
 {
-	project.setSelection(this.tree.get_selected()[0]);
+	project.setFolder(this.tree.get_selected()[0]);
 };
 
-ProjectView.prototype.setSelection = function(dir)
+ProjectHierarchyView.prototype.setFolder = function(dir)
 {
 	this.tree.deselect_all(true);
 	if (!dir) return;

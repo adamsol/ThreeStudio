@@ -1,5 +1,5 @@
 
-function AssetView(container, state)
+function ProjectExplorerView(container, state)
 {
 	const self = this;
 	this.container = container.getElement();
@@ -8,14 +8,19 @@ function AssetView(container, state)
 
 	this.assets.on('click', 'a.asset', async function() {
 		if ($(this).data('type') == 'folder') {
-			project.setSelection($(this).data('path'));
+			project.setFolder($(this).data('path'));
+		} else {
+			project.setAsset(getAssetSync(path.relative('data', $(this).data('path'))).asset);
 		}
 	});
 }
 
-AssetView.TITLE = "Assets";
+ProjectExplorerView.NAME = 'project-explorer';
+ProjectExplorerView.TITLE = "Project Explorer";
 
-AssetView.prototype.nodeIcon = function(file) {
+views[ProjectExplorerView.NAME] = ProjectExplorerView;
+
+ProjectExplorerView.prototype.nodeIcon = function(file) {
 	let ext = path.extname(file).lower();
 	if (extensions.image.includes(ext)) {
 		return 'image';
@@ -28,7 +33,7 @@ AssetView.prototype.nodeIcon = function(file) {
 	}
 };
 
-AssetView.prototype.setSelection = function(dir)
+ProjectExplorerView.prototype.setFolder = function(dir)
 {
 	this.assets.empty();
 	if (!dir) return;
@@ -59,3 +64,7 @@ AssetView.prototype.setSelection = function(dir)
 		});
 	});
 };
+
+ProjectExplorerView.prototype.setAsset = function(asset)
+{
+}
