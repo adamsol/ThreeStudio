@@ -95,6 +95,12 @@ div.inspector div.field div.field-value input:not([type=checkbox]), div.inspecto
   height: 18px;
   padding: 0 2px;
 }
+div.inspector div.field div.field-value input:not([type=checkbox]).ui-droppable-active, div.inspector div.field div.field-value select.ui-droppable-active {
+  border-color: #BEA11F;
+}
+div.inspector div.field div.field-value input:not([type=checkbox]).ui-droppable-active.ui-droppable-hover, div.inspector div.field div.field-value select.ui-droppable-active.ui-droppable-hover {
+  border-color: white;
+}
 
 div.hierarchy {
   overflow-y: auto;
@@ -110,27 +116,28 @@ div.assets {
   flex-direction: row;
   flex-wrap: wrap;
 }
-div.assets a.asset {
+
+a.asset {
   display: block;
   width: 6em;
   padding: 2px;
   margin: 3px;
   border-radius: 5px;
 }
-div.assets a.asset:hover {
+a.asset:hover {
   background-color: rgba(255, 255, 255, 0.1);
   text-decoration: none;
 }
-div.assets a.asset:focus {
+a.asset:focus {
   background-color: rgba(255, 255, 255, 0.18);
 }
-div.assets a.asset span.icon {
+a.asset span.icon {
   display: block;
   color: #9AA5B4;
   text-align: center;
   font-size: 5em;
 }
-div.assets a.asset span.label {
+a.asset span.label {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;

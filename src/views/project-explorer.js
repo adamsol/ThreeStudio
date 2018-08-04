@@ -10,7 +10,7 @@ function ProjectExplorerView(container, state)
 		if ($(this).data('type') == 'folder') {
 			project.setFolder($(this).data('path'));
 		} else {
-			project.setAsset(getAssetSync(path.relative('data', $(this).data('path'))).asset);
+			project.setAsset(getAssetSync($(this).data('path')).asset);
 		}
 	});
 }
@@ -64,6 +64,13 @@ ProjectExplorerView.prototype.setFolder = function(dir)
 				</a>\
 			'.format(file, path.basename(file, path.extname(file)), path.join(dir_path, file), this.nodeIcon(file))).appendTo(this.assets);
 		});
+	});
+	this.assets.find('a').draggable({
+		revert: 'invalid',
+		revertDuration: 400,
+		helper: 'clone',
+		appendTo: 'body',
+		zIndex: 1000,
 	});
 };
 

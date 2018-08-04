@@ -135,18 +135,28 @@ async function getAsset()
 function getAssetSync()
 {
 	let asset = assets;
-	for (let name of [...arguments].map(path.split).flatten()) {
+	let names = [...arguments].map(path.split).flatten();
+	if (names[0] == 'data') {
+		names.splice(0, 1);
+	}
+	for (let name of names) {
 		asset = asset.children[name];
 	}
 	return asset && asset.object;
 }
 
+function isInstance(sub, base)
+{
+	sub = window[sub] || sub;
+	base = window[base] || base;
+	return sub == base || sub.prototype instanceof base || sub.name.includes(base.name);
+}
+
 function getAssets(cls)
 {
 	let assets = [];
-	cls = window[cls] || cls;
 	$.each(assetsByClass, (c, a) => {
-		if (window[c] == cls || window[c].prototype instanceof cls || c.includes(cls.name)) {
+		if (isInstance(c, cls)) {
 			assets.extend(a);
 		}
 	});

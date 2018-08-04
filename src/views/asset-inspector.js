@@ -34,6 +34,9 @@ AssetInspectorView.TITLE = "Asset Inspector";
 
 views[AssetInspectorView.NAME] = AssetInspectorView;
 
+AssetInspectorView.prototype = Object.create(InspectorView.prototype);
+AssetInspectorView.prototype.constructor = AssetInspectorView;
+
 AssetInspectorView.prototype.initToolbox = function()
 {
 	this.toolbox.html('\
@@ -63,6 +66,7 @@ AssetInspectorView.prototype.setAsset = function(asset)
 AssetInspectorView.prototype.serializeAsset = function()
 {
 	this.inspector.html($.map(getFields(this.asset.object), serializeField).join('\n'));
+	this.serialize();
 	jscolor.installByClassName('color');
 	this.refreshAll();
 }

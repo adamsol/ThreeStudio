@@ -59,6 +59,9 @@ ActorInspectorView.TITLE = "Actor Inspector";
 
 views[ActorInspectorView.NAME] = ActorInspectorView;
 
+ActorInspectorView.prototype = Object.create(InspectorView.prototype);
+ActorInspectorView.prototype.constructor = ActorInspectorView;
+
 ActorInspectorView.prototype.initToolbox = function()
 {
 	let self = this;
@@ -98,8 +101,8 @@ ActorInspectorView.prototype.setSelection = function(actors)
 
 ActorInspectorView.prototype.serializeActor = function()
 {
-	if (!this.actor) return;
 	this.inspector.html(this.actor.components.map(serializeComponent).join('\n'));
+	this.serialize();
 	jscolor.installByClassName('color');
 	this.refreshAll();
 }
