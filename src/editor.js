@@ -8,20 +8,20 @@ async function initScene()
 	actor = new Actor('Ground');
 	actor.transform.position.set(0, -1, 0);
 	actor.transform.scale.set(10, 1, 10);
-	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'Tiles.mat')));
+	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'PhysicalTiles.mat')));
 
 	actor = new Actor('Wooden box');
 	actor.transform.position.set(0, 1, 0);
-	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'Crate.mat')));
+	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'StandardCrate.mat')));
 
 	actor = new Actor('Torus knot', actor);
 	actor.transform.position.set(3, 0, 0);
 	actor.transform.scale.set(0.5, 0.5, 0.5);
-	actor.addComponent(new Model(await getAsset('Geometries', 'TorusKnot.geom'), await getAsset('Materials', 'Green.mat')));
+	actor.addComponent(new Model(await getAsset('Geometries', 'TorusKnot.geom'), await getAsset('Materials', 'LambertGreen.mat')));
 
 	actor = new Actor('Dodecahedron', actor);
 	actor.transform.position.set(0, 3, 0);
-	actor.addComponent(new Model(await getAsset('Geometries', 'Dodecahedron.geom'), await getAsset('Materials', 'Blue.mat')));
+	actor.addComponent(new Model(await getAsset('Geometries', 'Dodecahedron.geom'), await getAsset('Materials', 'PhongBlue.mat')));
 
 	actor = new Actor('Point light');
 	actor.transform.position.set(1.5, 3, 2);
@@ -90,18 +90,15 @@ const configDefault = {
 			type: 'column',
 			width: 30,
 			content: [{
-				type: 'row',
-				content: [{
-					type: 'component',
-					title: ActorInspectorView.TITLE,
-					componentName: ActorInspectorView.NAME,
-					componentState: {}
-				}, {
-					type: 'component',
-					title: AssetInspectorView.TITLE,
-					componentName: AssetInspectorView.NAME,
-					componentState: {}
-				}]
+				type: 'component',
+				title: ActorInspectorView.TITLE,
+				componentName: ActorInspectorView.NAME,
+				componentState: {}
+			}, {
+				type: 'component',
+				title: AssetInspectorView.TITLE,
+				componentName: AssetInspectorView.NAME,
+				componentState: {}
 			}, {
 				type: 'component',
 				title: SceneHierarchyView.TITLE,

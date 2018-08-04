@@ -1,0 +1,12 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Material",
+		"generator": "Material.toJSON"
+	},
+	"uuid": "A594133F-CB36-48C5-B6BB-A2623E420BBD",
+	"type": "MeshNormalMaterial",
+	"depthFunc": 3,
+	"depthTest": true,
+	"depthWrite": true
+}

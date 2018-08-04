@@ -4,6 +4,7 @@ const Field = Object.freeze({
 	Integer: (def) => ({type: 'Integer', default: def || 0}),
 	Decimal: (def) => ({type: 'Decimal', default: def || 0}),
 	String: (def) => ({type: 'String', default: def || ''}),
+	Vector2: (def) => ({type: 'Vector2', default: def || [0, 0]}),
 	Vector3: (def) => ({type: 'Vector3', default: def || [0, 0, 0]}),
 	Color: (def) => ({type: 'Color', default: def || 'FFFFFF'}),
 	Enum: (items) => ({type: 'Enum', items: items}),
@@ -13,11 +14,13 @@ const Field = Object.freeze({
 function getFields(obj)
 {
 	let fields = {};
-	while (obj = obj.__proto__) {
-		if (obj.constructor.FIELDS) {
-			fields = $.extend({}, obj.constructor.FIELDS, fields);  // order matters
+	obj = obj.constructor;
+	do {
+		if (obj.FIELDS) {
+			fields = $.extend({}, obj.FIELDS, fields);  // order matters
 		}
-	}
+	} while (obj = obj.base || obj.prototype);
+
 	return fields;
 }
 
@@ -52,6 +55,20 @@ function serializeField(field, name, text, classes)
 				</div></td>\
 			</tr>\
 		'.format(name, field.default, field.type == 'Integer' ? 'number integer' : field.type == 'Decimal' ? 'number decimal' : ''));
+	}
+	else if (field.type == 'Vector2') {
+		return html.format('\
+			<tr>\
+				<td><div>\
+					<span class="axis x">X</span>\
+					<input class="number decimal" data-name="{0}.x" data-default="{1.0}"/>\
+				</div></td>\
+				<td><div>\
+					<span class="axis y">Y</span>\
+					<input class="number decimal" data-name="{0}.y" data-default="{1.1}"/>\
+				</div></td>\
+			</tr>\
+		'.format(name, field.default));
 	}
 	else if (field.type == 'Vector3') {
 		return html.format('\
