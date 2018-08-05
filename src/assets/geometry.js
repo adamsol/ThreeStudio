@@ -1,5 +1,6 @@
 
 Geometry = THREE.Geometry;
+BufferGeometry = THREE.BufferGeometry;
 
 BoxGeometry = THREE.BoxGeometry;
 ConeGeometry = THREE.ConeGeometry;

@@ -1,10 +1,7 @@
 
-const loaders = {
-	texture: new THREE.TextureLoader(),
-};
-
 const extensions = {
 	image: ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tga', 'tiff', '.tif'],
+	model: ['.obj', '.fbx'],
 }
 
 function Asset(type, name, parent, params)
@@ -79,6 +76,18 @@ async function onAssetLoad(assets, file, error, content)
 	}
 }
 
+function getLoader(ext)
+{
+	if (extensions.image.includes(ext)) {
+		return new THREE.TextureLoader();
+	} else if (ext == '.fbx') {
+		return new THREE.FBXLoader();
+	} else if (ext == '.obj') {
+		return new THREE.OBJLoader();
+	}
+	return null;
+}
+
 function importAssets(dir_path, assets)
 {
 	readDirectorySync(dir_path, {}, (dir_path, folders, files) => {
@@ -88,9 +97,15 @@ function importAssets(dir_path, assets)
 		files.forEach(file => {
 			let abs_path = path.join(dir_path, file);
 			let callback = onAssetLoad.partial(assets, file);
-			// Texture files are loaded by TextureLoader.
-			if (extensions.image.includes(path.extname(file).lower())) {
-				loaders.texture.load(path.join('..', abs_path), callback.partial(null), null, callback);
+			// Texture and model files are loaded by a corresponding loader.
+			let ext = path.extname(file).lower();
+			let loader = getLoader(ext);
+			if (extensions.image.includes(ext)) {
+				loader.load(path.join('..', abs_path), callback.partial(null), null, callback);
+			} else if (extensions.model.includes(ext)) {
+				loader.load(path.join('..', abs_path), (object) => {
+					callback(null, object.children[0].geometry);
+				}, null, callback);
 			} else {
 				fs.readFile(abs_path, callback);
 			}
@@ -128,8 +143,14 @@ function getAssetSync()
 
 function getAssets(cls)
 {
-	// TODO: handle inheritance
-	return assetsByClass[cls.name||cls];
+	let assets = [];
+	cls = window[cls] || cls;
+	$.each(assetsByClass, (c, a) => {
+		if (window[c] == cls || window[c].prototype instanceof cls || c.includes(cls.name)) {
+			assets.extend(a);
+		}
+	});
+	return assets;
 }
 
 function exportAsset(asset)

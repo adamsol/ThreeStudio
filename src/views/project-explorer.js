@@ -24,6 +24,8 @@ ProjectExplorerView.prototype.nodeIcon = function(file) {
 	let ext = path.extname(file).lower();
 	if (extensions.image.includes(ext)) {
 		return 'image';
+	} else if (extensions.model.includes(ext)) {
+		return 'gem';
 	} else if (['.geom'].includes(ext)) {
 		return 'cube';
 	} else if (['.mat'].includes(ext)) {

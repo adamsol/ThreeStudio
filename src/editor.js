@@ -3,14 +3,14 @@ const electron = require('electron');
 
 async function initScene()
 {
-	let actor;
+	let actor, box;
 
 	actor = new Actor('Ground');
 	actor.transform.position.set(0, -1, 0);
 	actor.transform.scale.set(10, 1, 10);
 	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'PhysicalTiles.mat')));
 
-	actor = new Actor('Wooden box');
+	actor = box = new Actor('Wooden box');
 	actor.transform.position.set(0, 1, 0);
 	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'StandardCrate.mat')));
 
@@ -22,6 +22,17 @@ async function initScene()
 	actor = new Actor('Dodecahedron', actor);
 	actor.transform.position.set(0, 3, 0);
 	actor.addComponent(new Model(await getAsset('Geometries', 'Dodecahedron.geom'), await getAsset('Materials', 'PhongBlue.mat')));
+
+	actor = new Actor('Bunny', box);
+	actor.transform.position.set(0, 2, 0);
+	actor.transform.scale.setScalar(0.004);
+	actor.addComponent(new Model(await getAsset('Models', 'stanford-bunny.fbx'), await getAsset('Materials', 'Normal.mat')));
+
+	actor = new Actor('Dragon');
+	actor.transform.position.set(-4, 0, 0);
+	actor.transform.rotation.y = Math.PI / 3;
+	actor.transform.scale.setScalar(0.4);
+	actor.addComponent(new Model(await getAsset('Models', 'stanford-dragon.obj'), await getAsset('Materials', 'StandardWhite.mat')));
 
 	actor = new Actor('Point light');
 	actor.transform.position.set(1.5, 3, 2);
