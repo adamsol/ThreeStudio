@@ -132,7 +132,6 @@ SceneRendererView.prototype.animate = function()
 
 	let dt = this.clock.getDelta();
 
-	this.controls.transform.update();
 	if (this.controls.transform.object) {
 		this.controls.transform.visible = true;
 	}
