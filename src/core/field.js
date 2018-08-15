@@ -19,13 +19,16 @@ function getFields(obj)
 		if (obj.FIELDS) {
 			fields = $.extend({}, obj.FIELDS, fields);  // order matters
 		}
-	} while (obj = obj.base || obj.prototype);
+	} while (obj = obj.base);
 
 	return fields;
 }
 
 function serializeField(field, name, text, classes)
 {
+	if (!field) {
+		return '';
+	}
 	if (text === undefined) {
 		text = name.match(/([a-zA-Z]([a-z]*|[A-Z]*))/g).map(p => p.capitalize()).join(' ');
 	}

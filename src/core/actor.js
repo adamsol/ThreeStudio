@@ -76,7 +76,7 @@ Actor.prototype.addComponent = function(component)
 	this.components.push(component);
 
 	let sprite_path;
-	if (component.isLight) {
+	if (component.isLight && !component.isAmbientLight) {
 		component.castShadow = true;
 		let sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 		sprite_path = '../gfx/sprites/' + sprite_name + '.png';

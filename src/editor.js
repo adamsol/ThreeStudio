@@ -3,7 +3,7 @@ const electron = require('electron');
 
 async function initScene()
 {
-	let actor, box;
+	let actor, box, lights;
 
 	actor = new Actor('Ground');
 	actor.transform.position.set(0, -1, 0);
@@ -34,19 +34,16 @@ async function initScene()
 	actor.transform.scale.setScalar(0.4);
 	actor.addComponent(new Model(await getAsset('Models', 'stanford-dragon.obj'), await getAsset('Materials', 'StandardWhite.mat')));
 
-	actor = new Actor('Point light');
+	actor = lights = new Actor('Lights');
+
+	actor = new Actor('Point light', lights);
 	actor.transform.position.set(1.5, 3, 2);
 	actor.addComponent(new PointLight(0xffe9ee, 1, 10));
 
-	actor = new Actor('Directional light');
+	actor = new Actor('Sun light', lights);
 	actor.transform.position.set(-10, 10, -5);
-	let dir_light = new DirectionalLight(0x888888);
-	actor.obj.lookAt(dir_light.target.position);
-	dir_light.add(dir_light.target);
-	dir_light.target.position.set(0, 0, actor.transform.position.length());
-	actor.addComponent(dir_light);
-
-	scene.obj.add(new THREE.AmbientLight(0x222222));
+	actor.addComponent(new AmbientLight(0x222222));
+	actor.addComponent(new DirectionalLight(0x888888));
 
 	for (let view of layout.findViews(SceneHierarchyView)) {
 		view.refresh();
@@ -145,7 +142,7 @@ layout.on('stackCreated', (stack) => {
 	stack.header.tabsContainer.append(button);
 });
 
-electron.ipcRenderer.on('openView', (event, data) => openView(data));
+electron.ipcRenderer.on('openView', (event, data) => layout.openView(data));
 
 electron.ipcRenderer.on('resetLayout', (event, data) => {
 	layout.destroy();

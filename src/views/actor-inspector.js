@@ -1,7 +1,7 @@
 
 const ComponentMenu = {
 	"Model": [Box, Cylinder, Plane, Sphere],
-	"Light": [PointLight, DirectionalLight],
+	"Light": [AmbientLight, DirectionalLight, PointLight],
 };
 
 function ActorInspectorView(container, state)

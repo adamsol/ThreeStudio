@@ -2,7 +2,7 @@
 const ActorMenu = {
 	"Empty": [],
 	"Model": {"Box": [Box], "Cylinder": [Cylinder], "Plane": [Plane], "Sphere": [Sphere]},
-	"Light": {"Point light": [PointLight], "Directional light": [DirectionalLight]},
+	"Light": {"Directional light": [AmbientLight, DirectionalLight], "Point light": [PointLight]},
 };
 
 function SceneHierarchyView(container, state)
