@@ -177,8 +177,10 @@ SceneRendererView.prototype.onMouseDown = function(event)
 				}
 				$(this).off('mouseup');
 			}
-		}.bind(this));
-		this.canvas.on('mousemove', this.canvas.off.bind(this.canvas, 'mouseup').lock());
+		});
+		this.canvas.on('mousemove', function(event) {
+			$(this).off('mouseup');
+		});
 	}
 };
 
