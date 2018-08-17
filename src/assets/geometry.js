@@ -73,11 +73,11 @@ Geometry.prototype.getParams = function()
 	return this.parameters;
 };
 
-Geometry.prototype.serialize = function()
+Geometry.prototype.export = function()
 {
 	return this.toJSON();
 };
-Geometry.parse = async function(json)
+Geometry.import = async function(json)
 {
 	return new THREE.ObjectLoader().parseGeometries([json])[json.uuid];
 };

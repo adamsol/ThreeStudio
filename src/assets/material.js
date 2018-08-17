@@ -64,7 +64,7 @@ Material.prototype.update = function()
 	this.needsUpdate = true;  // to rebuild shaders
 };
 
-Material.prototype.serialize = function()
+Material.prototype.export = function()
 {
 	// Prevent serializing textures and images.
 	let meta = {textures: {}};
@@ -83,7 +83,7 @@ Material.prototype.serialize = function()
 	}
 	return json;
 };
-Material.parse = async function(json)
+Material.import = async function(json)
 {
 	let textures = {};
 	for (let field of textureFields) {

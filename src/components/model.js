@@ -8,6 +8,15 @@ Model.FIELDS = {
 };
 Model.ICON = 'gem';
 
+Model.prototype.export = function()
+{
+	let json = this.toJSON().object;
+	for (let attr of ['geometry', 'material']) {
+		json[attr] = this[attr].asset.path;
+	}
+	return json;
+};
+
 function Box() {
 	return new Model(getAssetSync('Geometries', 'Box.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }

@@ -53,7 +53,7 @@ AssetInspectorView.prototype.initToolbox = function()
 
 AssetInspectorView.prototype.setAsset = function(asset)
 {
-	if (asset && typeof asset.object.serialize === 'function') {
+	if (asset && typeof asset.object.export === 'function') {
 		this.asset = asset;
 		this.serializeAsset();
 		this.container.children().show();

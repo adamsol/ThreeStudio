@@ -1,16 +1,5 @@
 
 let scene = new Scene();
-let actors = {};
-
-Object.defineProperty(THREE.Object3D.prototype, 'actor', {
-	get: function() {
-		let obj = this;
-		while (!actors[obj.id]) {
-			obj = obj.parent;
-		}
-		return actors[obj.id];
-	},
-});
 
 function Scene()
 {
@@ -23,7 +12,8 @@ function Scene()
 
 Scene.prototype.getActor = function(id)
 {
-	return actors[+id];
+	let obj = this.obj.getObjectById(+id);
+	return obj && obj.actor;
 };
 
 Scene.prototype.getActors = function(ids)
@@ -45,4 +35,22 @@ Scene.prototype.setSelection = function(ids)
 	views.forEach((view) => {
 		view.setSelection(actors);
 	});
+};
+
+Scene.prototype.export = function()
+{
+	let json = Actor.prototype.export.call(this);
+	json.version = version;
+	return json;
+};
+Scene.import = function(json)
+{
+	let scene = new Scene();
+	if (json.name) {
+		scene.name = json.name;
+	}
+	for (let obj of json.children) {
+		Actor.import(obj, scene);
+	}
+	return scene;
 };

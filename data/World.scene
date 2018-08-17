@@ -1,0 +1,312 @@
+{
+	"name": "Scene",
+	"children": [
+		{
+			"name": "Ground",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0,
+					-1,
+					0
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					10,
+					1,
+					10
+				]
+			},
+			"components": [
+				{
+					"uuid": "7386DA07-F2BD-4D24-B4E5-102CC16CED6C",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/PhysicalTiles.mat"
+				}
+			]
+		},
+		{
+			"name": "Wooden box",
+			"children": [
+				{
+					"name": "Torus knot",
+					"children": [
+						{
+							"name": "Dodecahedron",
+							"children": [],
+							"transform": {
+								"type": "Transform",
+								"position": [
+									0,
+									3,
+									0
+								],
+								"rotation": [
+									0,
+									0,
+									0,
+									"YXZ"
+								],
+								"scale": [
+									1,
+									1,
+									1
+								]
+							},
+							"components": [
+								{
+									"uuid": "69FD032C-6474-43DA-A562-CCA1212EE3B8",
+									"type": "Mesh",
+									"castShadow": true,
+									"receiveShadow": true,
+									"layers": 1,
+									"geometry": "Geometries/Dodecahedron.geom",
+									"material": "Materials/PhongBlue.mat"
+								}
+							]
+						}
+					],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							3,
+							0,
+							0
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							0.5,
+							0.5,
+							0.5
+						]
+					},
+					"components": [
+						{
+							"uuid": "FEC40710-DB83-4710-A3CA-F25349C7525F",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/TorusKnot.geom",
+							"material": "Materials/LambertGreen.mat"
+						}
+					]
+				},
+				{
+					"name": "Bunny",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0,
+							2,
+							0
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							0.004,
+							0.004,
+							0.004
+						]
+					},
+					"components": [
+						{
+							"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Models/stanford-bunny.fbx",
+							"material": "Materials/Normal.mat"
+						}
+					]
+				}
+			],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0,
+					1,
+					0
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "F078BE97-8572-4546-A0A7-32C1F1210A80",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Dragon",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					-4,
+					0,
+					0
+				],
+				"rotation": [
+					0,
+					1.0471975511965976,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					0.4,
+					0.4,
+					0.4
+				]
+			},
+			"components": [
+				{
+					"uuid": "B38EF3E7-D9D4-4C26-B61E-2C97C5D1514C",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Models/stanford-dragon.obj",
+					"material": "Materials/StandardWhite.mat"
+				}
+			]
+		},
+		{
+			"name": "Lights",
+			"children": [
+				{
+					"name": "Point light",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							1.5,
+							3,
+							2
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "1184F8F9-D864-4DB2-9D62-90C75AECF3C3",
+							"type": "PointLight",
+							"castShadow": true,
+							"layers": 1,
+							"color": 16771566,
+							"intensity": 1,
+							"distance": 10,
+							"decay": 1
+						}
+					]
+				},
+				{
+					"name": "Sun light",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							-10,
+							10,
+							-5
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "2C0BD2F7-223B-43D2-A11F-016B6A6A32D3",
+							"type": "AmbientLight",
+							"layers": 1,
+							"color": 2236962,
+							"intensity": 1
+						},
+						{
+							"uuid": "BFBD158D-E490-464D-ACF6-2F5AD7BF7F00",
+							"type": "DirectionalLight",
+							"castShadow": true,
+							"layers": 1,
+							"color": 8947848,
+							"intensity": 1
+						}
+					]
+				}
+			],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0,
+					0,
+					0
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": []
+		}
+	],
+	"version": "0.1.6"
+}

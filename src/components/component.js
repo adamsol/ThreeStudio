@@ -18,3 +18,23 @@ function serializeComponent(component, index)
 		</div>\
 	'.format(index, component.constructor.name, $.map(fields, serializeField).join('\n'), component.constructor.ICON);
 }
+
+function exportComponent(component)
+{
+	let json = component.export();
+	for (let attr of ['children', 'matrix']) {
+		delete json[attr];
+	}
+	return json;
+}
+async function importComponent(json)
+{
+	let geometries = {}, materials = {};
+	if (json.geometry) {
+		geometries[json.geometry] = await getAsset(json.geometry);
+	}
+	if (json.material) {
+		materials[json.material] = await getAsset(json.material);
+	}
+	return new THREE.ObjectLoader().parseObject(json, geometries, materials);
+}

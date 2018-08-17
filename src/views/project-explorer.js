@@ -6,11 +6,14 @@ function ProjectExplorerView(container, state)
 
 	this.assets = $('<div class="assets"></div>').appendTo(this.container);
 
-	this.assets.on('click', 'a.asset', async function() {
+	this.assets.on('click', 'a.asset', function() {
 		if ($(this).data('type') == 'folder') {
 			project.setFolder($(this).data('path'));
 		} else {
-			project.setAsset(getAssetSync($(this).data('path')).asset);
+			let object = getAssetSync($(this).data('path'));
+			if (object && object.asset) {
+				project.setAsset(object.asset);
+			}
 		}
 	});
 }
@@ -30,6 +33,8 @@ ProjectExplorerView.prototype.nodeIcon = function(file) {
 		return 'cube';
 	} else if (['.mat'].includes(ext)) {
 		return 'volleyball-ball';
+	} else if (['.scene'].includes(ext)) {
+		return 'globe';
 	} else {
 		return 'file';
 	}

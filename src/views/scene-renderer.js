@@ -102,12 +102,9 @@ function SceneRendererView(container, state)
 	this.camera.position.set(0.0, 1.0, 8.0);
 
 	this.controls = {};
-
 	this.controls.camera = new CameraControls(this.camera, this.canvas);
 
-	this.controls.transform = new THREE.TransformControls(this.camera, this.renderer.domElement);
-	this.controls.transform.space = 'local';
-	scene.obj.add(this.controls.transform);
+	this.refresh();
 
 	this.clock = new THREE.Clock();
 
@@ -125,6 +122,14 @@ SceneRendererView.TITLE = "Scene Renderer";
 SceneRendererView.ALLOW_MULTIPLE = true;
 
 views[SceneRendererView.NAME] = SceneRendererView;
+
+SceneRendererView.prototype.refresh = function()
+{
+	scene.obj.remove(this.controls.transform);
+	this.controls.transform = new THREE.TransformControls(this.camera, this.renderer.domElement);
+	this.controls.transform.space = 'local';
+	scene.obj.add(this.controls.transform);
+};
 
 SceneRendererView.prototype.animate = function()
 {
@@ -171,7 +176,7 @@ SceneRendererView.prototype.onMouseDown = function(event)
 		this.canvas.on('mouseup', function(event) {
 			if (event.which == 1) {
 				if (obj) {
-					scene.setSelection([obj.actor.id]);
+					scene.setSelection([obj.getActor().id]);
 				} else {
 					scene.setSelection([]);
 				}

@@ -1,5 +1,5 @@
 
-function Actor(obj, parent)
+function Actor(obj, parent, transform)
 {
 	if (obj instanceof THREE.Object3D) {
 		this.obj = obj;
@@ -8,7 +8,7 @@ function Actor(obj, parent)
 		this.name = obj;
 	}
 	this.id = this.obj.id;
-	actors[this.id] = this;
+	this.obj.actor = this;
 
 	this.setParent(parent, true);
 	this.children = [];
@@ -44,6 +44,7 @@ Actor.prototype.clone = function()
 
 Actor.prototype.delete = function()
 {
+	this.parent.children.remove(this);
 	this.parent.obj.remove(this.obj);
 };
 
@@ -93,6 +94,8 @@ Actor.prototype.addComponent = function(component)
 		component.castShadow = true;
 		component.receiveShadow = true;
 	}
+
+	return this;
 };
 
 Actor.prototype.removeComponent = function(index)
@@ -101,4 +104,40 @@ Actor.prototype.removeComponent = function(index)
 		this.obj.remove(this.components[index]);
 		this.components.splice(index, 1);
 	}
+};
+
+Actor.prototype.export = function()
+{
+	let json = {
+		name: this.name,
+		children: this.children.map(a => a.export()),
+	};
+	if (this.components) {
+		json.transform = this.transform.export(),
+		json.components = this.components.slice(1).map(exportComponent);
+	}
+	return json;
+};
+Actor.import = async function(json, parent)
+{
+	let obj = new THREE.Group();
+	obj.name = json.name;
+	let actor = new Actor(obj, parent);
+	Transform.import(json.transform, actor.transform);
+	json.components.forEach(async obj => {
+		actor.addComponent(await importComponent(obj));
+	});
+	for (let obj of json.children) {
+		Actor.import(obj, actor);
+	}
+	return actor;
+};
+
+THREE.Object3D.prototype.getActor = function()
+{
+	let obj = this;
+	while (!obj.actor) {
+		obj = obj.parent;
+	}
+	return obj.actor;
 };

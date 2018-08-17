@@ -1,56 +1,55 @@
 
+const version = '0.1.6';
+
 const electron = require('electron');
+const dialog = electron.remote.dialog;
 
-async function initScene()
+async function newScene()
 {
-	let actor, box, lights;
-
-	actor = new Actor('Ground');
-	actor.transform.position.set(0, -1, 0);
-	actor.transform.scale.set(10, 1, 10);
-	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'PhysicalTiles.mat')));
-
-	actor = box = new Actor('Wooden box');
-	actor.transform.position.set(0, 1, 0);
-	actor.addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'StandardCrate.mat')));
-
-	actor = new Actor('Torus knot', actor);
-	actor.transform.position.set(3, 0, 0);
-	actor.transform.scale.set(0.5, 0.5, 0.5);
-	actor.addComponent(new Model(await getAsset('Geometries', 'TorusKnot.geom'), await getAsset('Materials', 'LambertGreen.mat')));
-
-	actor = new Actor('Dodecahedron', actor);
-	actor.transform.position.set(0, 3, 0);
-	actor.addComponent(new Model(await getAsset('Geometries', 'Dodecahedron.geom'), await getAsset('Materials', 'PhongBlue.mat')));
-
-	actor = new Actor('Bunny', box);
-	actor.transform.position.set(0, 2, 0);
-	actor.transform.scale.setScalar(0.004);
-	actor.addComponent(new Model(await getAsset('Models', 'stanford-bunny.fbx'), await getAsset('Materials', 'Normal.mat')));
-
-	actor = new Actor('Dragon');
-	actor.transform.position.set(-4, 0, 0);
-	actor.transform.rotation.y = Math.PI / 3;
-	actor.transform.scale.setScalar(0.4);
-	actor.addComponent(new Model(await getAsset('Models', 'stanford-dragon.obj'), await getAsset('Materials', 'StandardWhite.mat')));
-
-	actor = lights = new Actor('Lights');
-
-	actor = new Actor('Point light', lights);
-	actor.transform.position.set(1.5, 3, 2);
-	actor.addComponent(new PointLight(0xffe9ee, 1, 10));
-
-	actor = new Actor('Sun light', lights);
-	actor.transform.position.set(-10, 10, -5);
-	actor.addComponent(new AmbientLight(0x222222));
-	actor.addComponent(new DirectionalLight(0x888888));
-
-	for (let view of layout.findViews(SceneHierarchyView)) {
+	scene = new Scene();
+	new Actor('Box').addComponent(new Model(await getAsset('Geometries', 'Box.geom'), await getAsset('Materials', 'StandardWhite.mat')));
+	new Actor('Light').addComponent(new AmbientLight(0x333333)).addComponent(new DirectionalLight(0xCCCCCC)).transform.position.set(1, 3, 2);
+	for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
 		view.refresh();
 	}
 }
-
-initScene();
+function loadScene(file_path)
+{
+	if (!file_path) {
+		dialog.showOpenDialog({filters: [{name: 'Scene', extensions: ['scene']}]}, files => {
+			if (!files) return;
+			loadScene(files[0]);
+		});
+	} else {
+		fs.readFile(file_path, (error, content) => {
+			try {
+				let json = JSON.parse(content);
+				scene = Scene.import(json);
+				scene.path = file_path;
+				for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
+					view.refresh();
+				}
+			} catch (error) {
+				console.error(file_path, error);
+				newScene();
+			}
+		});
+	}
+}
+function saveScene(file_path)
+{
+	if (!file_path) {
+		dialog.showSaveDialog({filters: [{name: 'Scene', extensions: ['scene']}]}, file => {
+			if (!file) return;
+			saveScene(file);
+		});
+	} else {
+		let json = scene.export();
+		let str = JSON.stringify(json, null, '\t');
+		fs.writeFile(file_path, str);
+		scene.path = file_path;
+	}
+}
 
 electron.ipcRenderer.send('createMenu', $.map(views, view => [view.NAME, view.TITLE]));
 
@@ -123,8 +122,11 @@ if (!localStorage['layout_config']) {
 	initLayout(JSON.parse(localStorage['layout_config']));
 }
 
+loadScene(localStorage['scene_path'] || 'data/World.scene');
+
 $(window).on('beforeunload', () => {
     localStorage['layout_config'] = JSON.stringify(layout.toConfig());
+    localStorage['scene_path'] = scene.path;
 });
 
 layout.on('stackCreated', (stack) => {
@@ -142,9 +144,22 @@ layout.on('stackCreated', (stack) => {
 	stack.header.tabsContainer.append(button);
 });
 
-electron.ipcRenderer.on('openView', (event, data) => layout.openView(data));
+electron.ipcRenderer.on('openView', (event, view) => layout.openView(view));
 
-electron.ipcRenderer.on('resetLayout', (event, data) => {
+electron.ipcRenderer.on('resetLayout', (event) => {
 	layout.destroy();
 	initLayout(configDefault);
+});
+
+electron.ipcRenderer.on('newScene', (event) => {
+	newScene();
+});
+electron.ipcRenderer.on('openScene', (event) => {
+	loadScene();
+});
+electron.ipcRenderer.on('saveScene', (event) => {
+	saveScene(scene.path);
+});
+electron.ipcRenderer.on('saveSceneAs', (event) => {
+	saveScene();
 });

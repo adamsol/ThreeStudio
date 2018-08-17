@@ -47,7 +47,7 @@ async function onAssetLoad(assets, file, error, content)
 		if (content instanceof Buffer) {
 			let data = JSON.parse(content);
 			cls = data.metadata.type;
-			object = await window[cls].parse(data);
+			object = await window[cls].import(data);
 		} else {
 			object = content;
 			cls = object.constructor.name;
@@ -106,7 +106,7 @@ function importAssets(dir_path, assets)
 				loader.load(path.join('..', abs_path), (object) => {
 					callback(null, object.children[0].geometry);
 				}, null, callback);
-			} else {
+			} else if (['.geom', '.mat'].includes(ext)) {
 				fs.readFile(abs_path, callback);
 			}
 		});
@@ -125,7 +125,7 @@ async function getAsset()
 	let asset = assets;
 	for (let name of [...arguments].map(path.split).flatten()) {
 		for (let i = 0; i < 20 && asset.children[name] === undefined; ++i) {
-			await sleep(50);
+			await sleep(100);
 		}
 		asset = asset.children[name];
 	}
@@ -165,7 +165,7 @@ function getAssets(cls)
 
 function exportAsset(asset)
 {
-	let json = asset.object.serialize();
+	let json = asset.object.export();
 	let str = JSON.stringify(json, null, '\t');
 	fs.writeFile(path.join('data', asset.path), str);
 }

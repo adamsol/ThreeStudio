@@ -43,7 +43,7 @@ app.on('ready', () =>
 {
 	createMainWindow();
 
-	function send() {
+	function execute() {
 		return () => mainWindow.webContents.send.apply(mainWindow.webContents, arguments);
 	}
 
@@ -51,11 +51,11 @@ app.on('ready', () =>
 		let view_submenu = [];
 		view_submenu.push(
 			{role: 'reload'}, {role: 'toggledevtools'}, {type: 'separator'},
-			{label: 'Reset Layout', click: send('resetLayout')}, {type: 'separator'},
+			{label: 'Reset Layout', click: execute('resetLayout')}, {type: 'separator'},
 		);
 		for (let i = 0; i < views.length; i += 2) {
 			let name = views[i], title = views[i+1];
-			view_submenu.push({label: title, click: send('openView', name)});
+			view_submenu.push({label: title, click: execute('openView', name)});
 		};
 		view_submenu.push({type: 'separator'},
 			{role: 'resetzoom'}, {role: 'zoomin'}, {role: 'zoomout'}, {type: 'separator'},
@@ -65,6 +65,8 @@ app.on('ready', () =>
 			{
 				label: 'File',
 				submenu: [
+					{label: 'New', click: execute('newScene'), accelerator: 'CmdOrCtrl+N'}, {label: 'Open', click: execute('openScene'), accelerator: 'CmdOrCtrl+O'}, {type: 'separator'},
+					{label: 'Save', click: execute('saveScene'), accelerator: 'CmdOrCtrl+S'}, {label: 'Save As', click: execute('saveSceneAs'), accelerator: 'CmdOrCtrl+Shift+S'}, {type: 'separator'},
 					{role: 'quit'},
 				],
 			},

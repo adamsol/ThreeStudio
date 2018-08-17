@@ -6,6 +6,15 @@ Light.FIELDS = {
 	castShadow: Field.Boolean(false),
 };
 
+Light.prototype.export = function()
+{
+	let json = this.toJSON().object;
+	for (let attr of ['shadow']) {
+		delete json[attr];
+	}
+	return json;
+};
+
 AmbientLight = THREE.AmbientLight;
 AmbientLight.base = Light;
 AmbientLight.FIELDS = {
