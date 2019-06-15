@@ -20,13 +20,19 @@
     "build": "electron-packager . --out=dist --asar --overwrite --all"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
+    "bootstrap": "^4.3.1",
     "electron-debug": "^1.0.0",
     "electron-window-state": "^4.1.1",
     "file": "^0.2.2",
     "fs-extra": "^5.0.0",
+    "golden-layout": "^1.5.9",
     "jquery": "^3.4.1",
+    "jquery-ui-dist": "^1.12.1",
+    "jstree": "^3.3.8",
     "npm": "^6.9.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "three": "^0.105.2"
   },
   "devDependencies": {
     "electron": "^1.8.8",
