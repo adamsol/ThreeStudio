@@ -11,7 +11,7 @@ Project.prototype.setFolder = function(dir)
 	views.forEach((view) => {
 		view.setFolder(dir);
 	});
-};
+}
 
 Project.prototype.setAsset = function(asset)
 {
@@ -19,4 +19,4 @@ Project.prototype.setAsset = function(asset)
 	views.forEach((view) => {
 		view.setAsset(asset);
 	});
-};
+}

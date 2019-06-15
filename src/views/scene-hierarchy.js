@@ -108,26 +108,26 @@ SceneHierarchyView.prototype.initToolbox = function()
 			{}\
 		</div>\
 	'.format(submenu(ActorMenu)));
-};
+}
 
 SceneHierarchyView.prototype.onNodeCreate = function(event, data)
 {
-};
+}
 
 SceneHierarchyView.prototype.onNodeRename = function(event, data)
 {
 	scene.getActor(data.node.id).name = data.text;
-};
+}
 
 SceneHierarchyView.prototype.onNodeDelete = function(event, data)
 {
 	scene.getActor(data.node.id).delete();
-};
+}
 
 SceneHierarchyView.prototype.onNodeChange = function(event, data)
 {
 	scene.setSelection(this.tree.get_selected());
-};
+}
 
 SceneHierarchyView.prototype.onNodeCopy = function(event, data)
 {
@@ -137,7 +137,7 @@ SceneHierarchyView.prototype.onNodeCopy = function(event, data)
 	let old_node = this.tree.get_node(data.original.id);
 	let new_node = data.node;
 
-	// recursively update ids and copy data to the subtree
+	// Recursively update ids and copy data to the subtree.
 	function update_nodes(old_node, new_node, actor) {
 		this.tree.set_id(new_node, actor.id);
 		new_node.data = $.extend({}, old_node.data);
@@ -149,15 +149,15 @@ SceneHierarchyView.prototype.onNodeCopy = function(event, data)
 	}
 	update_nodes.call(this, old_node, new_node, new_actor);
 
-	// update order value for the new node
+	// Update order value for the new node.
 	new_node.data.order = new_actor.parent.children.length - 1;
 
-	// focus and select the new node
+	// Focus and select the new node.
 	this.tree.deselect_node(old_node.id);
 	$('#'+old_node.a_attr.id).blur();
 	this.tree.select_node(new_node.id);
 	$('#'+new_node.a_attr.id).focus();
-};
+}
 
 SceneHierarchyView.prototype.onNodeMove = function(event, data)
 {
@@ -173,7 +173,7 @@ SceneHierarchyView.prototype.onNodeMove = function(event, data)
 		});
 		node.data.order = parent.children.length - 1;
 	}
-};
+}
 
 SceneHierarchyView.prototype.onKeyDown = function(event)
 {
@@ -205,10 +205,10 @@ SceneHierarchyView.prototype.onKeyDown = function(event)
 			this.tree.paste(parent.id, parent.children.indexOf(node.id) + 1);
 		}, this);
 	}
-};
+}
 
 SceneHierarchyView.prototype.setSelection = function(actors)
 {
 	this.tree.deselect_all(true);
 	this.tree.select_node(actors.prop('id'), true);
-};
+}

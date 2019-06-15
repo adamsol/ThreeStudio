@@ -71,13 +71,13 @@ TorusKnotGeometry.FIELDS = {
 Geometry.prototype.getParams = function()
 {
 	return this.parameters;
-};
+}
 
 Geometry.prototype.export = function()
 {
 	return this.toJSON();
-};
+}
 Geometry.import = async function(json)
 {
 	return new THREE.ObjectLoader().parseGeometries([json])[json.uuid];
-};
+}

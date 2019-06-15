@@ -53,11 +53,13 @@ ProjectHierarchyView.prototype.buildHierarchy = function()
 ProjectHierarchyView.prototype.onNodeChange = function(event, data)
 {
 	project.setFolder(this.tree.get_selected()[0]);
-};
+}
 
 ProjectHierarchyView.prototype.setFolder = function(dir)
 {
 	this.tree.deselect_all(true);
-	if (!dir) return;
+	if (!dir) {
+		return;
+	}
 	this.tree.select_node(dir, true);
-};
+}

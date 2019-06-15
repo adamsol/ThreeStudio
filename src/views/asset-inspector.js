@@ -49,7 +49,7 @@ AssetInspectorView.prototype.initToolbox = function()
 			Revert\
 		</button>\
 	');
-};
+}
 
 AssetInspectorView.prototype.setAsset = function(asset)
 {
@@ -61,7 +61,7 @@ AssetInspectorView.prototype.setAsset = function(asset)
 		this.asset = null;
 		this.container.children().hide();
 	}
-};
+}
 
 AssetInspectorView.prototype.serializeAsset = function()
 {
@@ -77,7 +77,7 @@ AssetInspectorView.prototype.refreshAll = function(input)
 	this.inspector.find('.field-value input, .field-value select').each(function() {
 		self.refreshInput($(this));
 	});
-};
+}
 
 AssetInspectorView.prototype.refreshInput = function(input, force)
 {
@@ -106,7 +106,7 @@ AssetInspectorView.prototype.refreshInput = function(input, force)
 			input[0].jscolor.importColor();
 		}
 	}
-};
+}
 
 AssetInspectorView.prototype.updateValue = function(input, refresh)
 {
@@ -139,4 +139,4 @@ AssetInspectorView.prototype.updateValue = function(input, refresh)
 	if (refresh) {
 		this.refreshInput(input, true);
 	}
-};
+}

@@ -15,7 +15,7 @@ Model.prototype.export = function()
 		json[attr] = this[attr].asset.path;
 	}
 	return json;
-};
+}
 
 function Box() {
 	return new Model(getAssetSync('Geometries', 'Box.geom'), getAssetSync('Materials', 'StandardWhite.mat'));

@@ -13,11 +13,14 @@ async function newScene()
 		view.refresh();
 	}
 }
+
 function loadScene(file_path)
 {
 	if (!file_path) {
 		dialog.showOpenDialog({filters: [{name: 'Scene', extensions: ['scene']}]}, files => {
-			if (!files) return;
+			if (!files) {
+				return;
+			}
 			loadScene(files[0]);
 		});
 	} else {
@@ -36,11 +39,14 @@ function loadScene(file_path)
 		});
 	}
 }
+
 function saveScene(file_path)
 {
 	if (!file_path) {
 		dialog.showSaveDialog({filters: [{name: 'Scene', extensions: ['scene']}]}, file => {
-			if (!file) return;
+			if (!file) {
+				return;
+			}
 			saveScene(file);
 		});
 	} else {

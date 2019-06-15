@@ -27,13 +27,15 @@ function createMainWindow()
 	mainWindow.on('closed', () => mainWindow = null);
 }
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', () =>
+{
 	if (process.platform !== 'darwin') {
 		app.quit();
 	}
 });
 
-app.on('activate', () => {
+app.on('activate', () =>
+{
 	if (!mainWindow) {
 		createMainWindow();
 	}
@@ -56,7 +58,7 @@ app.on('ready', () =>
 		for (let i = 0; i < views.length; i += 2) {
 			let name = views[i], title = views[i+1];
 			view_submenu.push({label: title, click: execute('openView', name)});
-		};
+		}
 		view_submenu.push({type: 'separator'},
 			{role: 'resetzoom'}, {role: 'zoomin'}, {role: 'zoomout'}, {type: 'separator'},
 			{role: 'togglefullscreen'},

@@ -21,11 +21,11 @@ Transform.prototype.export = function()
 		rotation: this.rotation.toArray(),
 		scale: this.scale.toArray(),
 	};
-};
+}
 Transform.import = function(json, transform)
 {
 	transform.position.fromArray(json.position);
 	transform.rotation.fromArray(json.rotation);
 	transform.scale.fromArray(json.scale);
 	return transform;
-};
+}

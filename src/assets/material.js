@@ -6,7 +6,9 @@ Material = THREE.Material;
 MeshDepthMaterial = THREE.MeshDepthMaterial;
 MeshNormalMaterial = THREE.MeshNormalMaterial;
 
-function ColorMaterial() {};
+function ColorMaterial()
+{
+}
 ColorMaterial.base = Material;
 ColorMaterial.FIELDS = {
 	color: Field.Color(),
@@ -16,7 +18,9 @@ ColorMaterial.FIELDS = {
 MeshBasicMaterial = THREE.MeshBasicMaterial;
 MeshBasicMaterial.base = ColorMaterial;
 
-function ShadedMaterial() {};
+function ShadedMaterial()
+{
+}
 ShadedMaterial.base = ColorMaterial;
 ShadedMaterial.FIELDS = {
 	emissive: Field.Color('000000'),
@@ -27,7 +31,9 @@ ShadedMaterial.FIELDS = {
 MeshLambertMaterial = THREE.MeshLambertMaterial;
 MeshLambertMaterial.base = ShadedMaterial;
 
-function FragmentShadedMaterial() {};
+function FragmentShadedMaterial()
+{
+}
 FragmentShadedMaterial.base = ShadedMaterial;
 FragmentShadedMaterial.FIELDS = {
 	normalMap: Field.Reference(Texture, true),
@@ -62,7 +68,7 @@ MeshPhysicalMaterial.FIELDS = {
 Material.prototype.update = function()
 {
 	this.needsUpdate = true;  // to rebuild shaders
-};
+}
 
 Material.prototype.export = function()
 {
@@ -82,7 +88,8 @@ Material.prototype.export = function()
 		}
 	}
 	return json;
-};
+}
+
 Material.import = async function(json)
 {
 	let textures = {};
@@ -95,4 +102,4 @@ Material.import = async function(json)
 	let loader = new THREE.MaterialLoader();
 	loader.setTextures(textures);
 	return loader.parse(json);
-};
+}

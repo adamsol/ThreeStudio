@@ -13,7 +13,7 @@ Light.prototype.export = function()
 		delete json[attr];
 	}
 	return json;
-};
+}
 
 AmbientLight = THREE.AmbientLight;
 AmbientLight.base = Light;

@@ -85,7 +85,7 @@ ActorInspectorView.prototype.initToolbox = function()
 			{}\
 		</div>\
 	'.format(submenu(ComponentMenu)));
-};
+}
 
 ActorInspectorView.prototype.setSelection = function(actors)
 {
@@ -97,7 +97,7 @@ ActorInspectorView.prototype.setSelection = function(actors)
 		this.actor = null;
 		this.container.children().hide();
 	}
-};
+}
 
 ActorInspectorView.prototype.serializeActor = function()
 {
@@ -109,12 +109,14 @@ ActorInspectorView.prototype.serializeActor = function()
 
 ActorInspectorView.prototype.refreshAll = function(input)
 {
-	if (!this.actor) return;
+	if (!this.actor) {
+		return;
+	}
 	let self = this;
 	this.inspector.find('.field-value input, .field-value select').each(function() {
 		self.refreshInput($(this));
 	});
-};
+}
 
 ActorInspectorView.prototype.refreshInput = function(input, force)
 {
@@ -143,7 +145,7 @@ ActorInspectorView.prototype.refreshInput = function(input, force)
 			input[0].jscolor.importColor();
 		}
 	}
-};
+}
 
 ActorInspectorView.prototype.updateValue = function(input, refresh)
 {
@@ -175,4 +177,4 @@ ActorInspectorView.prototype.updateValue = function(input, refresh)
 	if (refresh) {
 		this.refreshInput(input, true);
 	}
-};
+}

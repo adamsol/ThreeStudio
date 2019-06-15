@@ -51,14 +51,14 @@ CameraControls.prototype.update = function(dt)
 		}
 		this.camera.translateOnAxis(axis.normalize(), dist);
 	}
-};
+}
 
 CameraControls.prototype.onMouseDown = function(event)
 {
 	if (event.which == 3) {
 		this.unlocked = true;
 	}
-};
+}
 
 CameraControls.prototype.onMouseMove = function(event)
 {
@@ -69,24 +69,24 @@ CameraControls.prototype.onMouseMove = function(event)
 		this.camera.rotation.x -= this.speed.rotation * dv;
 	}
 	this.prev_pos = {x: event.clientX, y: event.clientY};
-};
+}
 
 CameraControls.prototype.onMouseUp = function(event)
 {
 	if (event.which == 3) {
 		this.unlocked = false;
 	}
-};
+}
 
 CameraControls.prototype.onKeyDown = function(event)
 {
 	this.keys[event.keyCode] = true;
-};
+}
 
 CameraControls.prototype.onKeyUp = function(event)
 {
 	this.keys[event.keyCode] = false;
-};
+}
 
 function SceneRendererView(container, state)
 {
@@ -129,11 +129,13 @@ SceneRendererView.prototype.refresh = function()
 	this.controls.transform = new THREE.TransformControls(this.camera, this.renderer.domElement);
 	this.controls.transform.space = 'local';
 	scene.obj.add(this.controls.transform);
-};
+}
 
 SceneRendererView.prototype.animate = function()
 {
-	if (!this.renderer) return;
+	if (!this.renderer) {
+		return;
+	}
 
 	let dt = this.clock.getDelta();
 
@@ -148,7 +150,7 @@ SceneRendererView.prototype.animate = function()
 	this.controls.transform.visible = false;
 
 	requestAnimationFrame(this.animate.bind(this));
-};
+}
 
 SceneRendererView.prototype.onResize = function()
 {
@@ -158,12 +160,12 @@ SceneRendererView.prototype.onResize = function()
 	this.camera.updateProjectionMatrix();
 
 	this.renderer.setSize(width, height);
-};
+}
 
 SceneRendererView.prototype.onDestroy = function()
 {
 	this.renderer = null;
-};
+}
 
 SceneRendererView.prototype.onMouseDown = function(event)
 {
@@ -187,7 +189,7 @@ SceneRendererView.prototype.onMouseDown = function(event)
 			$(this).off('mouseup');
 		});
 	}
-};
+}
 
 SceneRendererView.prototype.onKeyDown = function(event)
 {
@@ -202,7 +204,7 @@ SceneRendererView.prototype.onKeyDown = function(event)
 			this.controls.transform.setMode('scale');
 		}
 	}
-};
+}
 
 SceneRendererView.prototype.setSelection = function(actors)
 {
@@ -212,4 +214,4 @@ SceneRendererView.prototype.setSelection = function(actors)
 	} else {
 		this.controls.transform.detach();
 	}
-};
+}

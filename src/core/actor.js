@@ -40,13 +40,13 @@ Actor.prototype.clone = function()
 {
 	let new_obj = this.obj.clone();
 	return new Actor(new_obj, this.parent);
-};
+}
 
 Actor.prototype.delete = function()
 {
 	this.parent.children.remove(this);
 	this.parent.obj.remove(this.obj);
-};
+}
 
 Actor.prototype.setParent = function(parent, keep_local)
 {
@@ -69,7 +69,7 @@ Actor.prototype.setParent = function(parent, keep_local)
 	}
 	this.parent = parent;
 	this.parent.children.push(this);
-};
+}
 
 Actor.prototype.addComponent = function(component)
 {
@@ -96,15 +96,14 @@ Actor.prototype.addComponent = function(component)
 	}
 
 	return this;
-};
+}
 
-Actor.prototype.removeComponent = function(index)
-{
+Actor.prototype.removeComponent = function(index) {
 	if (this.components[index] !== this.transform) {
 		this.obj.remove(this.components[index]);
 		this.components.splice(index, 1);
 	}
-};
+}
 
 Actor.prototype.export = function()
 {
@@ -117,7 +116,8 @@ Actor.prototype.export = function()
 		json.components = this.components.slice(1).map(exportComponent);
 	}
 	return json;
-};
+}
+
 Actor.import = async function(json, parent)
 {
 	let obj = new THREE.Group();
@@ -131,7 +131,7 @@ Actor.import = async function(json, parent)
 		Actor.import(obj, actor);
 	}
 	return actor;
-};
+}
 
 THREE.Object3D.prototype.getActor = function()
 {
@@ -140,4 +140,4 @@ THREE.Object3D.prototype.getActor = function()
 		obj = obj.parent;
 	}
 	return obj.actor;
-};
+}

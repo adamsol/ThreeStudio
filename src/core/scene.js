@@ -14,19 +14,19 @@ Scene.prototype.getActor = function(id)
 {
 	let obj = this.obj.getObjectById(+id);
 	return obj && obj.actor;
-};
+}
 
 Scene.prototype.getActors = function(ids)
 {
 	return ids.map(this.getActor.bind(this));
-};
+}
 
 Scene.prototype.pickObject = function(coords, camera)
 {
 	this.raycaster.setFromCamera(coords, camera);
 	let intersection = this.raycaster.intersectObjects(this.children.prop('obj'), true);
 	return intersection.length ? intersection[0].object : null;
-};
+}
 
 Scene.prototype.setSelection = function(ids)
 {
@@ -35,14 +35,15 @@ Scene.prototype.setSelection = function(ids)
 	views.forEach((view) => {
 		view.setSelection(actors);
 	});
-};
+}
 
 Scene.prototype.export = function()
 {
 	let json = Actor.prototype.export.call(this);
 	json.version = version;
 	return json;
-};
+}
+
 Scene.import = function(json)
 {
 	let scene = new Scene();
@@ -53,4 +54,4 @@ Scene.import = function(json)
 		Actor.import(obj, scene);
 	}
 	return scene;
-};
+}

@@ -127,8 +127,8 @@ Color = THREE.Color;
 Color.prototype.parse = function(str)
 {
 	this.set('#'+str);
-};
+}
 Color.prototype.serialize = function()
 {
 	return this.getHexString().upper();
-};
+}

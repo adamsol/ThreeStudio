@@ -8,7 +8,7 @@ GoldenLayout.prototype.findViews = function()
 		components.extend(this.root.getComponentsByName(view.NAME || view));
 	}
 	return components;
-};
+}
 
 GoldenLayout.prototype.openView = function(view, parent)
 {
@@ -29,4 +29,4 @@ GoldenLayout.prototype.openView = function(view, parent)
 		componentName: view.NAME,
 		componentState: {},
 	});
-};
+}

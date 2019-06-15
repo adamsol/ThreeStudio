@@ -23,7 +23,8 @@ ProjectExplorerView.TITLE = "Project Explorer";
 
 views[ProjectExplorerView.NAME] = ProjectExplorerView;
 
-ProjectExplorerView.prototype.nodeIcon = function(file) {
+ProjectExplorerView.prototype.nodeIcon = function(file)
+{
 	let ext = path.extname(file).lower();
 	if (extensions.image.includes(ext)) {
 		return 'image';
@@ -38,12 +39,14 @@ ProjectExplorerView.prototype.nodeIcon = function(file) {
 	} else {
 		return 'file';
 	}
-};
+}
 
 ProjectExplorerView.prototype.setFolder = function(dir)
 {
 	this.assets.empty();
-	if (!dir) return;
+	if (!dir) {
+		return;
+	}
 	readDirectorySync(dir, {}, (dir_path, folders, files) => {
 		if (dir_path != 'data') {
 			$('\
@@ -77,7 +80,7 @@ ProjectExplorerView.prototype.setFolder = function(dir)
 		appendTo: 'body',
 		zIndex: 1000,
 	});
-};
+}
 
 ProjectExplorerView.prototype.setAsset = function(asset)
 {
