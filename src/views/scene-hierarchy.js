@@ -177,27 +177,27 @@ SceneHierarchyView.prototype.onNodeMove = function(event, data)
 
 SceneHierarchyView.prototype.onKeyDown = function(event)
 {
-	if (event.keyCode == Keys.F2) {
+	if (event.which == Keys.F2) {
 		let selected = this.tree.get_selected();
 		if (selected.length == 1) {
 			this.tree.edit(this.tree.get_node(selected[0]));
 		}
 	}
-	else if (event.keyCode == Keys.DEL) {
+	else if (event.which == Keys.DEL) {
 		this.tree.delete_node(this.tree.get_selected()[0]);
 	}
-	else if (event.keyCode == Keys.C && event.ctrlKey) {
+	else if (event.which == Keys.C && event.ctrlKey) {
 		this.tree.copy();
 	}
-	else if (event.keyCode == Keys.X && event.ctrlKey) {
+	else if (event.which == Keys.X && event.ctrlKey) {
 		this.tree.cut();
 	}
-	else if (event.keyCode == Keys.V && event.ctrlKey) {
+	else if (event.which == Keys.V && event.ctrlKey) {
 		let node = this.tree.get_selected()[0];
 		this.tree.paste(node, 'last');
 		this.tree.deselect_node(node);
 	}
-	else if (event.keyCode == Keys.D && event.ctrlKey) {
+	else if (event.which == Keys.D && event.ctrlKey) {
 		this.tree.get_selected(true).forEach(function(node) {
 			let parent = this.tree.get_node(node.parent);
 			this.tree.copy(node.id);

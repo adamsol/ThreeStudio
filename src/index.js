@@ -1,5 +1,5 @@
 
-const version = '0.1.6';
+const version = '0.2.0';
 
 const electron = require('electron');
 const dialog = electron.remote.dialog;

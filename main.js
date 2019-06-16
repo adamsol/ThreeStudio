@@ -23,7 +23,7 @@ function createMainWindow()
 	});
 	state.manage(mainWindow);
 
-	mainWindow.loadURL(`file://${__dirname}/src/editor.html`);
+	mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 	mainWindow.on('closed', () => mainWindow = null);
 }
 

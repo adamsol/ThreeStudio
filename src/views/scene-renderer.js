@@ -1,93 +1,4 @@
 
-function CameraControls(camera, container)
-{
-	this.camera = camera;
-
-	this.speed = {
-		rotation: 0.003, // radians/pixel
-		movement: 5, // units/second
-	};
-
-	this.unlocked = false;
-
-	this.keys = {};
-
-	container.on('mousedown', this.onMouseDown.bind(this));
-	$(window).on('mouseup', this.onMouseUp.bind(this));
-	$(window).on('mousemove', this.onMouseMove.bind(this));
-	container.on('keydown', this.onKeyDown.bind(this));
-	container.on('keyup', this.onKeyUp.bind(this));
-}
-
-CameraControls.prototype.update = function(dt)
-{
-	if (this.unlocked) {
-		let dist = this.speed.movement * dt;
-		if (this.keys[Keys.CTRL]) {
-			dist *= 0.3;
-		}
-		if (this.keys[Keys.SHIFT]) {
-			dist *= 3;
-		}
-		let axis = new THREE.Vector3();
-
-		if (this.keys[Keys.W]) {
-			axis.z -= 1;
-		}
-		if (this.keys[Keys.S]) {
-			axis.z += 1;
-		}
-		if (this.keys[Keys.A]) {
-			axis.x -= 1;
-		}
-		if (this.keys[Keys.D]) {
-			axis.x += 1;
-		}
-		if (this.keys[Keys.Q]) {
-			axis.y -= 1;
-		}
-		if (this.keys[Keys.E]) {
-			axis.y += 1;
-		}
-		this.camera.translateOnAxis(axis.normalize(), dist);
-	}
-}
-
-CameraControls.prototype.onMouseDown = function(event)
-{
-	if (event.which == 3) {
-		this.unlocked = true;
-	}
-}
-
-CameraControls.prototype.onMouseMove = function(event)
-{
-	if (this.unlocked && this.prev_pos) {
-		let dh = event.clientX - this.prev_pos.x;
-		let dv = event.clientY - this.prev_pos.y;
-		this.camera.rotation.y -= this.speed.rotation * dh;
-		this.camera.rotation.x -= this.speed.rotation * dv;
-	}
-	this.prev_pos = {x: event.clientX, y: event.clientY};
-}
-
-CameraControls.prototype.onMouseUp = function(event)
-{
-	if (event.which == 3) {
-		this.unlocked = false;
-	}
-}
-
-CameraControls.prototype.onKeyDown = function(event)
-{
-	this.keys[event.keyCode] = true;
-}
-
-CameraControls.prototype.onKeyUp = function(event)
-{
-	this.keys[event.keyCode] = false;
-}
-
 function SceneRendererView(container, state)
 {
 	this.canvas = container.getElement().empty();
@@ -169,14 +80,14 @@ SceneRendererView.prototype.onDestroy = function()
 
 SceneRendererView.prototype.onMouseDown = function(event)
 {
-	if (event.which == 1) {
+	if (event.which == Mouse.LEFT) {
 		let coords = new THREE.Vector3();
 		coords.x = 2 * (event.offsetX / this.canvas.innerWidth() - 0.5);
 		coords.y = -2 * (event.offsetY / this.canvas.innerHeight() - 0.5);
 		let obj = scene.pickObject(coords, this.camera);
 
 		this.canvas.on('mouseup', function(event) {
-			if (event.which == 1) {
+			if (event.which == Mouse.LEFT) {
 				if (obj) {
 					scene.setSelection([obj.getActor().id]);
 				} else {
@@ -194,13 +105,13 @@ SceneRendererView.prototype.onMouseDown = function(event)
 SceneRendererView.prototype.onKeyDown = function(event)
 {
 	if (!this.controls.camera.unlocked) {
-		if (event.keyCode == Keys.Q) {
+		if (event.which == Keys.Q) {
 			this.controls.transform.setSpace(this.controls.transform.space == 'local' ? 'world' : 'local');
-		} else if (event.keyCode == Keys.W) {
+		} else if (event.which == Keys.W) {
 			this.controls.transform.setMode('translate');
-		} else if (event.keyCode == Keys.E) {
+		} else if (event.which == Keys.E) {
 			this.controls.transform.setMode('rotate');
-		} else if (event.keyCode == Keys.R) {
+		} else if (event.which == Keys.R) {
 			this.controls.transform.setMode('scale');
 		}
 	}

@@ -1,9 +1,4 @@
 
-let Keys = {ENTER: 13, SHIFT: 16, CTRL: 17, ALT: 18, DEL: 46, F2: 113};
-for (let c = 65; c <= 90; ++c) {
-	Keys[String.fromCharCode(c)] = c;
-}
-
 Array.prototype.extend = function(arr)
 {
 	for (let x of arr) {
@@ -93,45 +88,6 @@ Function.prototype.lock = function(n)
 	let f = this;
 	return function() {
 		return f.apply(this, [].slice.call(arguments, 0, n));
-	}
-}
-
-$.jstree.core.prototype.get_children = function(obj)
-{
-	return this.get_node(obj).children.map(this.get_node.lock(1), this);
-}
-
-$.jstree.core.prototype.get_parent = function(obj)
-{
-	return this.get_node(this.get_node(obj).parent);
-}
-
-$.jstree.core.prototype.get_siblings = function(obj)
-{
-	return this.get_children(this.get_parent(obj));
-}
-
-function readDirectorySync(dir_path, options, callback)
-{
-	let folders = [], files = [];
-
-	fs.readdirSync(dir_path).forEach((name) => {
-		let abs_path = path.join(dir_path, name);
-		let stat = fs.statSync(abs_path);
-		if (stat.isDirectory()) {
-			folders.push(name);
-		} else {
-			files.push(name);
-		}
-	});
-
-	callback(dir_path, folders, files);
-
-	if (options.recursive) {
-		folders.forEach((name) => {
-			let abs_path = path.join(dir_path, name);
-			readDirectorySync(abs_path, options, callback)
-		});
 	}
 }
 
