@@ -12,6 +12,22 @@ function SceneRendererView(container, state)
 	this.camera.rotation.order = 'YXZ';
 	this.camera.position.set(0.0, 1.0, 8.0);
 
+	this.composer = new THREE.EffectComposer(this.renderer);
+	this.passes = {};
+
+	this.passes.render = new THREE.RenderPass(null, this.camera, null, 0x000000, 1);
+	this.composer.addPass(this.passes.render);
+
+	this.passes.outline = new THREE.OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), null, this.camera);
+	this.passes.outline.visibleEdgeColor = new THREE.Color(1.0, 0.4, 0.2);
+	this.passes.outline.hiddenEdgeColor = new THREE.Color(0.2, 0.08, 0.04);
+	this.composer.addPass(this.passes.outline);
+
+	this.passes.fxaa = new THREE.ShaderPass(THREE.FXAAShader);
+	this.passes.fxaa.uniforms['resolution'].value.set(1.0/window.innerWidth, 1.0/window.innerHeight);
+	this.passes.fxaa.renderToScreen = true;
+	this.composer.addPass(this.passes.fxaa);
+
 	this.controls = {};
 	this.controls.camera = new CameraControls(this.camera, this.canvas);
 
@@ -40,6 +56,12 @@ SceneRendererView.prototype.refresh = function()
 	this.controls.transform = new THREE.TransformControls(this.camera, this.renderer.domElement);
 	this.controls.transform.space = 'local';
 	scene.obj.add(this.controls.transform);
+
+	this.controls.transform.traverse((obj) => {
+		obj.isTransformControls = true;  // to be detected correctly by OutlinePass
+	});
+	this.passes.render.scene = scene.obj;
+	this.passes.outline.renderScene = scene.obj;
 }
 
 SceneRendererView.prototype.animate = function()
@@ -56,7 +78,7 @@ SceneRendererView.prototype.animate = function()
 
 	this.controls.camera.update(dt);
 
-	this.renderer.render(scene.obj, this.camera);
+	this.composer.render(dt);
 
 	this.controls.transform.visible = false;
 
@@ -71,6 +93,7 @@ SceneRendererView.prototype.onResize = function()
 	this.camera.updateProjectionMatrix();
 
 	this.renderer.setSize(width, height);
+	this.composer.setSize(width, height);
 }
 
 SceneRendererView.prototype.onDestroy = function()
@@ -125,4 +148,5 @@ SceneRendererView.prototype.setSelection = function(actors)
 	} else {
 		this.controls.transform.detach();
 	}
+	this.passes.outline.selectedObjects = actors.prop('obj');
 }
