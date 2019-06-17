@@ -23,7 +23,7 @@ CameraControls.prototype.update = function(dt)
 		let dist = this.SPEED.movement * dt;
 		let axis = new THREE.Vector3();
 
-		if (this.keys[Keys.CTRL]) {
+		if (this.keys[Keys.ALT]) {
 			dist *= 0.3;
 		}
 		if (this.keys[Keys.SHIFT]) {
