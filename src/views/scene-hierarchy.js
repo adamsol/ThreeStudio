@@ -205,6 +205,15 @@ SceneHierarchyView.prototype.onKeyDown = function(event)
 			this.tree.paste(parent.id, parent.children.indexOf(node.id) + 1);
 		}, this);
 	}
+	else if (event.which == Keys.F) {
+		let selected = this.tree.get_selected();
+		if (selected.length == 1) {
+			let node = this.tree.get_node(selected[0]);
+			for (let view of layout.findViews(SceneRendererView)) {
+				view.camera.lookAt(scene.getActor(node.id).obj.position);
+			}
+		}
+	}
 }
 
 SceneHierarchyView.prototype.setSelection = function(actors)
