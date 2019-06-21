@@ -8,15 +8,15 @@ function Project()
 Project.prototype.setFolder = function(dir)
 {
 	let views = layout.findViews(ProjectHierarchyView, ProjectExplorerView);
-	views.forEach((view) => {
+	for (let view of views) {
 		view.setFolder(dir);
-	});
+	}
 }
 
 Project.prototype.setAsset = function(asset)
 {
 	let views = layout.findViews(ProjectExplorerView, AssetInspectorView);
-	views.forEach((view) => {
+	for (let view of views) {
 		view.setAsset(asset);
-	});
+	}
 }

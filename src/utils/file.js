@@ -3,7 +3,7 @@ function readDirectorySync(dir_path, options, callback)
 {
 	let folders = [], files = [];
 
-	fs.readdirSync(dir_path).forEach((name) => {
+	for (let name of fs.readdirSync(dir_path)) {
 		let abs_path = path.join(dir_path, name);
 		let stat = fs.statSync(abs_path);
 		if (stat.isDirectory()) {
@@ -11,14 +11,14 @@ function readDirectorySync(dir_path, options, callback)
 		} else {
 			files.push(name);
 		}
-	});
+	}
 
 	callback(dir_path, folders, files);
 
 	if (options.recursive) {
-		folders.forEach((name) => {
-			let abs_path = path.join(dir_path, name);
+		for (let folder of folders) {
+			let abs_path = path.join(dir_path, folder);
 			readDirectorySync(abs_path, options, callback)
-		});
+		}
 	}
 }

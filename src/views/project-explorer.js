@@ -56,22 +56,22 @@ ProjectExplorerView.prototype.setFolder = function(dir)
 				</a>\
 			'.format("..", path.dirname(dir_path), 'folder-open')).appendTo(this.assets);
 		}
-		folders.forEach((folder) => {
+		for (let folder of folders) {
 			$('\
 				<a href="#" class="asset" data-type="folder" data-path="{1}" title="{0}">\
 					<span class="icon fa fa-{2}"></span>\
 					<span class="label">{0}</span>\
 				</a>\
 			'.format(folder, path.join(dir_path, folder), 'folder')).appendTo(this.assets);
-		});
-		files.forEach((file) => {
+		}
+		for (let file of files) {
 			$('\
 				<a href="#" class="asset" data-type="file" data-path="{2}" title="{0}">\
 					<span class="icon fa fa-{3}"></span>\
 					<span class="label">{1}</span>\
 				</a>\
 			'.format(file, path.basename(file, path.extname(file)), path.join(dir_path, file), this.nodeIcon(file))).appendTo(this.assets);
-		});
+		}
 	});
 	this.assets.find('a').draggable({
 		revert: 'invalid',

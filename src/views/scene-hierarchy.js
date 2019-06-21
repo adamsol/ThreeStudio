@@ -21,7 +21,9 @@ function SceneHierarchyView(container, state)
 			let text = $(this).text();
 			let actor = new Actor(text, scene.getActor(selected[0]));
 			if (componentNames) {
-				componentNames.split(',').forEach((name) => actor.addComponent(new window[name]()));
+				for (let name of componentNames.split(',')) {
+					actor.addComponent(new window[name]());
+				}
 			}
 			self.refresh();
 			scene.setSelection([actor.id]);
@@ -166,11 +168,11 @@ SceneHierarchyView.prototype.onNodeMove = function(event, data)
 		let actor = scene.getActor(node.id);
 		let parent = scene.getActor(data.parent);
 		actor.setParent(parent);
-		this.tree.get_siblings(node).forEach(function(sibling) {
+		for (let sibling of this.tree.get_siblings(node)) {
 			if (sibling.data.order > node.data.order) {
 				sibling.data.order -= 1;
 			}
-		});
+		}
 		node.data.order = parent.children.length - 1;
 	}
 }
@@ -198,12 +200,12 @@ SceneHierarchyView.prototype.onKeyDown = function(event)
 		this.tree.deselect_node(node);
 	}
 	else if (event.which == Keys.D && event.ctrlKey) {
-		this.tree.get_selected(true).forEach(function(node) {
+		for (let node of this.tree.get_selected(true)) {
 			let parent = this.tree.get_node(node.parent);
 			this.tree.copy(node.id);
 			this.tree.deselect_node(node.parent);
 			this.tree.paste(parent.id, parent.children.indexOf(node.id) + 1);
-		}, this);
+		}
 	}
 	else if (event.which == Keys.F) {
 		let selected = this.tree.get_selected();

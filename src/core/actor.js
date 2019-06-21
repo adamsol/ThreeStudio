@@ -18,13 +18,13 @@ function Actor(obj, parent, transform)
 	this.transform = new Transform(this.obj.position, this.obj.rotation, this.obj.scale);
 	this.components.push(this.transform);
 
-	this.obj.children.slice().forEach((child) => {
+	for (let child of this.obj.children.slice()) {
 		if (child.type === 'Group') {
 			new Actor(child, this);
 		} else {
 			this.components.push(child);
 		}
-	}, this);
+	}
 }
 
 Object.defineProperty(Actor.prototype, 'name', {
@@ -98,7 +98,8 @@ Actor.prototype.addComponent = function(component)
 	return this;
 }
 
-Actor.prototype.removeComponent = function(index) {
+Actor.prototype.removeComponent = function(index)
+{
 	if (this.components[index] !== this.transform) {
 		this.obj.remove(this.components[index]);
 		this.components.splice(index, 1);
@@ -124,9 +125,9 @@ Actor.import = async function(json, parent)
 	obj.name = json.name;
 	let actor = new Actor(obj, parent);
 	Transform.import(json.transform, actor.transform);
-	json.components.forEach(async obj => {
-		actor.addComponent(await importComponent(obj));
-	});
+	for (let obj of json.components) {
+		importComponent(obj).then(actor.addComponent.bind(actor));
+	}
 	for (let obj of json.children) {
 		Actor.import(obj, actor);
 	}

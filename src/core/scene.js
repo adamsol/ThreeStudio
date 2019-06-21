@@ -32,9 +32,9 @@ Scene.prototype.setSelection = function(ids)
 {
 	let views = layout.findViews(SceneRendererView, SceneHierarchyView, ActorInspectorView);
 	let actors = scene.getActors(ids).filter((a) => a);
-	views.forEach((view) => {
+	for (let view of views) {
 		view.setSelection(actors);
-	});
+	}
 }
 
 Scene.prototype.export = function()

@@ -91,10 +91,10 @@ function getLoader(ext)
 function importAssets(dir_path, assets)
 {
 	readDirectorySync(dir_path, {}, (dir_path, folders, files) => {
-		folders.forEach(folder => {
+		for (let folder of folders) {
 			assets.children[folder] = new Asset('folder', folder, assets);
-		});
-		files.forEach(file => {
+		}
+		for (let file of files) {
 			let abs_path = path.join(dir_path, file);
 			let callback = onAssetLoad.partial(assets, file);
 			// Texture and model files are loaded by a corresponding loader.
@@ -109,7 +109,7 @@ function importAssets(dir_path, assets)
 			} else if (['.geom', '.mat'].includes(ext)) {
 				fs.readFile(abs_path, callback);
 			}
-		});
+		}
 		$.each(assets.children, (name, asset) => {
 			if (asset.type == 'folder') {
 				importAssets(path.join(dir_path, name), asset);

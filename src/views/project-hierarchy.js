@@ -40,12 +40,14 @@ ProjectHierarchyView.prototype.buildHierarchy = function()
 		icon: 'fa fa-lg fa-folder',
 	}];
 	readDirectorySync('data', {recursive: true}, (dir_path, folders, files) => {
-		folders.forEach((folder) => data.push({
-			id: path.join(dir_path, folder),
-			parent: dir_path,
-			text: folder,
-			icon: 'fa fa-lg fa-folder',
-		}));
+		for (let folder of folders) {
+			data.push({
+				id: path.join(dir_path, folder),
+				parent: dir_path,
+				text: folder,
+				icon: 'fa fa-lg fa-folder',
+			});
+		}
 	});
 	return data;
 }
