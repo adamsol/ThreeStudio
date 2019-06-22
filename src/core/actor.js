@@ -58,10 +58,10 @@ Actor.prototype.setParent = function(parent, keep_local)
 		parent.obj.add(this.obj);
 	} else {
 		if (this.parent) {
-			THREE.SceneUtils.detach(this.obj, this.parent.obj, scene.obj);
+			scene.obj.attach(this.obj);
 		}
 		if (parent && parent !== scene) {
-			THREE.SceneUtils.attach(this.obj, scene.obj, parent.obj);
+			parent.obj.attach(this.obj);
 		}
 	}
 	if (this.parent) {

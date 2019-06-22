@@ -38,8 +38,9 @@ function SceneHierarchyView(container, state)
 			check_callback: true,
 			data: self.buildHierarchy(scene),
 		},
-		plugins: ['state', 'dnd'],
+		plugins: ['state', 'dnd', 'types'],
 		state: {key: 'scene-hierarchy_state'},
+		types: {'#': {max_children: 1}},
 	});
 	this.tree = this.hierarchy.jstree(true);
 
@@ -166,7 +167,7 @@ SceneHierarchyView.prototype.onNodeMove = function(event, data)
 	if (data.parent != data.old_parent) {
 		let node = data.node;
 		let actor = scene.getActor(node.id);
-		let parent = scene.getActor(data.parent);
+		let parent = scene.getActor(data.parent) || scene;
 		actor.setParent(parent);
 		for (let sibling of this.tree.get_siblings(node)) {
 			if (sibling.data.order > node.data.order) {
