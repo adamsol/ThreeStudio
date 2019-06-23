@@ -1,18 +1,14 @@
 
-const ActorMenu = {
-	"Empty": [],
-	"Model": {"Box": [Box], "Cylinder": [Cylinder], "Plane": [Plane], "Sphere": [Sphere]},
-	"Light": {"Directional light": [AmbientLight, DirectionalLight], "Point light": [PointLight]},
-};
-
 function SceneHierarchyView(container, state)
 {
+	View.call(this, ...arguments);
 	const self = this;
-	this.container = container.getElement();
 
-	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.container);
-	this.initToolbox();
-
+	this.initToolbox({
+		"Empty": [],
+		"Model": {"Box": [Box], "Cylinder": [Cylinder], "Plane": [Plane], "Sphere": [Sphere]},
+		"Light": {"Directional light": [AmbientLight, DirectionalLight], "Point light": [PointLight]},
+	});
 	this.toolbox.on('click', '.actor-new li[data-component-names]', function(event) {
 		let componentNames = $(this).data('component-names');
 		let selected = self.tree.get_selected();
@@ -30,20 +26,18 @@ function SceneHierarchyView(container, state)
 		}
 	});
 
-	this.hierarchy = $('<div class="hierarchy"></div>').appendTo(this.container);
-
+	this.hierarchy = $('<div class="hierarchy"></div>').appendTo(this.element);
 	this.hierarchy.jstree({
 		core: {
 			multiple: false,
 			check_callback: true,
-			data: self.buildHierarchy(scene),
+			data: this.buildHierarchy(scene),
 		},
 		plugins: ['state', 'dnd', 'types'],
 		state: {key: 'scene-hierarchy_state'},
 		types: {'#': {max_children: 1}},
 	});
 	this.tree = this.hierarchy.jstree(true);
-
 	this.hierarchy.on('create_node.jstree', this.onNodeCreate.bind(this));
 	this.hierarchy.on('rename_node.jstree', this.onNodeRename.bind(this));
 	this.hierarchy.on('delete_node.jstree', this.onNodeDelete.bind(this));
@@ -53,10 +47,38 @@ function SceneHierarchyView(container, state)
 	this.hierarchy.on('keydown', this.onKeyDown.bind(this));
 }
 
+SceneHierarchyView.prototype = Object.create(View.prototype);
+SceneHierarchyView.prototype.constructor = SceneHierarchyView;
+
 SceneHierarchyView.NAME = 'scene-hierarchy';
 SceneHierarchyView.TITLE = "Scene Hierarchy";
 
 views[SceneHierarchyView.NAME] = SceneHierarchyView;
+
+SceneHierarchyView.prototype.initToolbox = function(actor_menu)
+{
+	function buildMenu(actors) {
+		return '<ul class="dropdown-menu">{}</ul>'.format(
+			$.map(actors, (item, key) => {
+				if ($.isArray(item)) {
+					return '<li class="dropdown-item" data-component-names="{1}">{0}</li>'.format(key, item.prop('name').join(','));
+				} else {
+					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, buildMenu(item));
+				}
+			}).join('\n')
+		);
+	}
+	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.element);
+	this.toolbox.html('\
+		<div class="dropdown actor-new">\
+			<button class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">\
+				<span class="fa fa-sm fa-plus"></span>\
+				New actor\
+			</button>\
+			{}\
+		</div>\
+	'.format(buildMenu(actor_menu)));
+}
 
 SceneHierarchyView.prototype.refresh = function()
 {
@@ -69,13 +91,13 @@ SceneHierarchyView.prototype.buildHierarchy = function(actor, index)
 	return {
 		id: actor.id,
 		text: actor.name,
-		icon: this.nodeIcon(actor),
+		icon: this.getIcon(actor),
 		data: {order: index || 0},
 		children: actor.children.map(this.buildHierarchy.bind(this))
 	};
 }
 
-SceneHierarchyView.prototype.nodeIcon = function(actor)
+SceneHierarchyView.prototype.getIcon = function(actor)
 {
 	let icon = 'fa fa-';
 	if (actor.id == scene.id) {
@@ -86,31 +108,6 @@ SceneHierarchyView.prototype.nodeIcon = function(actor)
 		icon += 'cube';
 	}
 	return icon;
-}
-
-SceneHierarchyView.prototype.initToolbox = function()
-{
-	let self = this;
-	function submenu(actors) {
-		return '<ul class="dropdown-menu">{}</ul>'.format(
-			$.map(actors, (item, key) => {
-				if ($.isArray(item)) {
-					return '<li class="dropdown-item" data-component-names="{1}">{0}</li>'.format(key, item.prop('name').join(','));
-				} else {
-					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, submenu(item));
-				}
-			}).join('\n')
-		);
-	}
-	this.toolbox.html('\
-		<div class="dropdown actor-new">\
-			<button class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">\
-				<span class="fa fa-sm fa-plus"></span>\
-				New actor\
-			</button>\
-			{}\
-		</div>\
-	'.format(submenu(ActorMenu)));
 }
 
 SceneHierarchyView.prototype.onNodeCreate = function(event, data)

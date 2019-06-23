@@ -9,6 +9,7 @@ MeshNormalMaterial = THREE.MeshNormalMaterial;
 function ColorMaterial()
 {
 }
+
 ColorMaterial.base = Material;
 ColorMaterial.FIELDS = {
 	color: Field.Color(),
@@ -21,6 +22,7 @@ MeshBasicMaterial.base = ColorMaterial;
 function ShadedMaterial()
 {
 }
+
 ShadedMaterial.base = ColorMaterial;
 ShadedMaterial.FIELDS = {
 	emissive: Field.Color('000000'),
@@ -34,6 +36,7 @@ MeshLambertMaterial.base = ShadedMaterial;
 function FragmentShadedMaterial()
 {
 }
+
 FragmentShadedMaterial.base = ShadedMaterial;
 FragmentShadedMaterial.FIELDS = {
 	normalMap: Field.Reference(Texture, true),
@@ -59,6 +62,7 @@ MeshStandardMaterial.FIELDS = {
 	roughness: Field.Decimal(0.5),
 	roughnessMap: Field.Reference(Texture, true),
 };
+
 MeshPhysicalMaterial = THREE.MeshPhysicalMaterial;
 MeshPhysicalMaterial.base = MeshStandardMaterial;
 MeshPhysicalMaterial.FIELDS = {

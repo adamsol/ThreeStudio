@@ -1,18 +1,14 @@
 
-const ComponentMenu = {
-	"Model": [Box, Cylinder, Plane, Sphere],
-	"Light": [AmbientLight, DirectionalLight, PointLight],
-};
-
 function ActorInspectorView(container, state)
 {
-	const self = this;
-	this.container = container.getElement();
+	InspectorView.call(this, ...arguments);
 	this.actor = null;
+	const self = this;
 
-	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.container);
-	this.initToolbox();
-
+	this.initToolbox({
+		"Model": [Box, Cylinder, Plane, Sphere],
+		"Light": [AmbientLight, DirectionalLight, PointLight],
+	});
 	this.toolbox.on('click', '.component-add li[data-component-name]', function(event) {
 		let componentName = $(this).data('component-name');
 		if (self.actor && componentName) {
@@ -21,8 +17,7 @@ function ActorInspectorView(container, state)
 		}
 	});
 
-	this.inspector = $('<div class="inspector"></div>').appendTo(this.container);
-
+	this.inspector = $('<div class="inspector"></div>').appendTo(this.element);
 	this.inspector.sortable({
 		axis: 'y',
 		handle: 'h3',
@@ -31,8 +26,8 @@ function ActorInspectorView(container, state)
 		},
 		update: (event, ui) => {
 			let components = [];
-			this.components.find('.component').each(function(i) {
-				inspector.push(self.actor.components[$(this).data('index')]);
+			self.inspector.find('.component').each(function(i) {
+				components.push(self.actor.components[$(this).data('index')]);
 				$(this).data('index', i);
 			});
 			self.actor.components = components;
@@ -50,32 +45,32 @@ function ActorInspectorView(container, state)
 		event.stopPropagation();
 	});
 
-	this.container.children().hide();
+	this.element.children().hide();
 	setInterval(this.refreshAll.bind(this), 50);
 }
+
+ActorInspectorView.prototype = Object.create(InspectorView.prototype);
+ActorInspectorView.prototype.constructor = ActorInspectorView;
 
 ActorInspectorView.NAME = 'actor-inspector';
 ActorInspectorView.TITLE = "Actor Inspector";
 
 views[ActorInspectorView.NAME] = ActorInspectorView;
 
-ActorInspectorView.prototype = Object.create(InspectorView.prototype);
-ActorInspectorView.prototype.constructor = ActorInspectorView;
-
-ActorInspectorView.prototype.initToolbox = function()
+ActorInspectorView.prototype.initToolbox = function(component_menu)
 {
-	let self = this;
-	function submenu(components) {
+	function buildMenu(components) {
 		return '<ul class="dropdown-menu">{}</ul>'.format(
 			$.map(components, (item, key) => {
 				if ($.isFunction(item)) {
 					return '<li class="dropdown-item" data-component-name="{0}">{0}</li>'.format(item.name);
 				} else {
-					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, submenu(item));
+					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, buildMenu(item));
 				}
 			}).join('\n')
 		);
 	}
+	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.element);
 	this.toolbox.html('\
 		<div class="dropdown component-add">\
 			<button class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">\
@@ -84,7 +79,7 @@ ActorInspectorView.prototype.initToolbox = function()
 			</button>\
 			{}\
 		</div>\
-	'.format(submenu(ComponentMenu)));
+	'.format(buildMenu(component_menu)));
 }
 
 ActorInspectorView.prototype.setSelection = function(actors)
@@ -92,10 +87,10 @@ ActorInspectorView.prototype.setSelection = function(actors)
 	if (actors.length) {
 		this.actor = actors[0];
 		this.serializeActor();
-		this.container.children().show();
+		this.element.children().show();
 	} else {
 		this.actor = null;
-		this.container.children().hide();
+		this.element.children().hide();
 	}
 }
 
@@ -112,9 +107,8 @@ ActorInspectorView.prototype.refreshAll = function(input)
 	if (!this.actor) {
 		return;
 	}
-	let self = this;
-	this.inspector.find('.field-value input, .field-value select').each(function() {
-		self.refreshInput($(this));
+	this.inspector.find('.field-value input, .field-value select').each((i, input) => {
+		this.refreshInput($(input));
 	});
 }
 
@@ -162,7 +156,7 @@ ActorInspectorView.prototype.updateValue = function(input, refresh)
 	} else if (input.hasClass('decimal')) {
 		value = !isNaN(input.val()) ? (input.val() ? parseFloat(input.val()) : input.data('default')) : undefined;
 	} else if (input.hasClass('reference')) {
-		value = assetsById[input.val()].object;//input.val() ? assetsById[input.val()].object : null;
+		value = input.val() ? assetsById[input.val()].object : null;
 	} else {
 		value = input.val() || input.data('default');
 	}

@@ -1,6 +1,12 @@
 
 let views = {};
 
+function View(container, state)
+{
+	this.container = container;
+	this.element = container.getElement();
+}
+
 GoldenLayout.prototype.findViews = function()
 {
 	let components = [];

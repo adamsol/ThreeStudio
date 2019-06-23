@@ -1,24 +1,15 @@
 
 function AssetInspectorView(container, state)
 {
-	const self = this;
-	this.container = container.getElement();
+	InspectorView.call(this, ...arguments);
 	this.asset = null;
+	const self = this;
 
-	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.container);
 	this.initToolbox();
+	this.toolbox.on('click', '.asset-apply', this.applyAsset.bind(this));
+	this.toolbox.on('click', '.asset-revert', this.revertAsset.bind(this));
 
-	this.toolbox.on('click', '.asset-apply', function(event) {
-		exportAsset(self.asset);
-		importAsset(self.asset);
-		self.serializeAsset();
-	});
-	this.toolbox.on('click', '.asset-revert', function(event) {
-		importAsset(self.asset);
-		self.serializeAsset();
-	});
-
-	this.inspector = $('<div class="inspector"></div>').appendTo(this.container);
+	this.inspector = $('<div class="inspector"></div>').appendTo(this.element);
 
 	this.inspector.on('input change keydown', '.field-value input, .field-value select', function(event) {
 		if (event.type != 'keydown' || event.which == Keys.ENTER) {
@@ -26,19 +17,20 @@ function AssetInspectorView(container, state)
 		}
 	});
 
-	this.container.children().hide();
+	this.element.children().hide();
 }
+
+AssetInspectorView.prototype = Object.create(InspectorView.prototype);
+AssetInspectorView.prototype.constructor = AssetInspectorView;
 
 AssetInspectorView.NAME = 'asset-inspector';
 AssetInspectorView.TITLE = "Asset Inspector";
 
 views[AssetInspectorView.NAME] = AssetInspectorView;
 
-AssetInspectorView.prototype = Object.create(InspectorView.prototype);
-AssetInspectorView.prototype.constructor = AssetInspectorView;
-
 AssetInspectorView.prototype.initToolbox = function()
 {
+	this.toolbox = $('<div class="toolbox"></div>').appendTo(this.element);
 	this.toolbox.html('\
 		<button class="btn btn-sm btn-success asset-apply">\
 			<span class="fa fa-sm fa-check"></span>\
@@ -51,15 +43,28 @@ AssetInspectorView.prototype.initToolbox = function()
 	');
 }
 
+AssetInspectorView.prototype.applyAsset = function()
+{
+	exportAsset(this.asset);
+	importAsset(this.asset);
+	this.serializeAsset();
+}
+
+AssetInspectorView.prototype.revertAsset = function()
+{
+	importAsset(this.asset);
+	this.serializeAsset();
+}
+
 AssetInspectorView.prototype.setAsset = function(asset)
 {
 	if (asset && typeof asset.object.export === 'function') {
 		this.asset = asset;
 		this.serializeAsset();
-		this.container.children().show();
+		this.element.children().show();
 	} else {
 		this.asset = null;
-		this.container.children().hide();
+		this.element.children().hide();
 	}
 }
 
@@ -73,9 +78,8 @@ AssetInspectorView.prototype.serializeAsset = function()
 
 AssetInspectorView.prototype.refreshAll = function(input)
 {
-	let self = this;
-	this.inspector.find('.field-value input, .field-value select').each(function() {
-		self.refreshInput($(this));
+	this.inspector.find('.field-value input, .field-value select').each((i, input) => {
+		this.refreshInput($(input));
 	});
 }
 
@@ -134,7 +138,9 @@ AssetInspectorView.prototype.updateValue = function(input, refresh)
 		} else {
 			obj[attr] = value;
 		}
-		if (typeof this.asset.object.update === 'function') this.asset.object.update();
+		if (typeof this.asset.object.update === 'function') {
+			this.asset.object.update();
+		}
 	}
 	if (refresh) {
 		this.refreshInput(input, true);

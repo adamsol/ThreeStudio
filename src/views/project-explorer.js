@@ -1,11 +1,10 @@
 
 function ProjectExplorerView(container, state)
 {
+	View.call(this, ...arguments);
 	const self = this;
-	this.container = container.getElement();
 
-	this.assets = $('<div class="assets"></div>').appendTo(this.container);
-
+	this.assets = $('<div class="assets"></div>').appendTo(this.element);
 	this.assets.on('click', 'a.asset', function() {
 		if ($(this).data('type') == 'folder') {
 			project.setFolder($(this).data('path'));
@@ -18,12 +17,15 @@ function ProjectExplorerView(container, state)
 	});
 }
 
+ProjectExplorerView.prototype = Object.create(View.prototype);
+ProjectExplorerView.prototype.constructor = ProjectExplorerView;
+
 ProjectExplorerView.NAME = 'project-explorer';
 ProjectExplorerView.TITLE = "Project Explorer";
 
 views[ProjectExplorerView.NAME] = ProjectExplorerView;
 
-ProjectExplorerView.prototype.nodeIcon = function(file)
+ProjectExplorerView.prototype.getIcon = function(file)
 {
 	let ext = path.extname(file).lower();
 	if (extensions.image.includes(ext)) {
@@ -70,7 +72,7 @@ ProjectExplorerView.prototype.setFolder = function(dir)
 					<span class="icon fa fa-{3}"></span>\
 					<span class="label">{1}</span>\
 				</a>\
-			'.format(file, path.basename(file, path.extname(file)), path.join(dir_path, file), this.nodeIcon(file))).appendTo(this.assets);
+			'.format(file, path.basename(file, path.extname(file)), path.join(dir_path, file), this.getIcon(file))).appendTo(this.assets);
 		}
 	});
 	this.assets.find('a').draggable({

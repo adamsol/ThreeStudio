@@ -1,7 +1,9 @@
 
 function SceneRendererView(container, state)
 {
-	this.canvas = container.getElement().empty();
+	View.call(this, ...arguments);
+
+	this.canvas = this.element.empty();
 	this.canvas.attr('tabindex', 42).css('outline', 'none');
 
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
@@ -37,12 +39,15 @@ function SceneRendererView(container, state)
 
 	this.animate();
 
-	container.on('resize', this.onResize.bind(this));
-	container.on('destroy', this.onDestroy.bind(this));
+	this.container.on('resize', this.onResize.bind(this));
+	this.container.on('destroy', this.onDestroy.bind(this));
 
 	this.canvas.on('mousedown', this.onMouseDown.bind(this));
 	this.canvas.on('keydown', this.onKeyDown.bind(this));
 }
+
+SceneRendererView.prototype = Object.create(View.prototype);
+SceneRendererView.prototype.constructor = SceneRendererView;
 
 SceneRendererView.NAME = 'scene-renderer';
 SceneRendererView.TITLE = "Scene Renderer";

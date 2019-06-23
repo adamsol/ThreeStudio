@@ -1,30 +1,26 @@
 
 function ProjectHierarchyView(container, state)
 {
-	const self = this;
-	this.container = container.getElement();
+	View.call(this, ...arguments);
 
-	this.hierarchy = $('<div class="project"></div>').appendTo(this.container);
-
+	this.hierarchy = $('<div class="project"></div>').appendTo(this.element);
 	this.hierarchy.jstree({
 		core: {
 			multiple: false,
 			check_callback: true,
-			data: self.buildHierarchy(),
+			data: this.buildHierarchy(),
 		},
 		plugins: ['state'],
 		state: {key: 'project-hierarchy_state'},
 	});
 	this.tree = this.hierarchy.jstree(true);
-
 	this.hierarchy.on('changed.jstree', this.onNodeChange.bind(this));
 
-	$(window).on('focus', function() {
-		let data = self.buildHierarchy();
-		self.tree.settings.core.data = data;
-		self.tree.refresh();
-	});
+	$(window).on('focus', this.onFocus.bind(this));
 }
+
+ProjectHierarchyView.prototype = Object.create(View.prototype);
+ProjectHierarchyView.prototype.constructor = ProjectHierarchyView;
 
 ProjectHierarchyView.NAME = 'project-hierarchy';
 ProjectHierarchyView.TITLE = "Project Hierarchy";
@@ -50,6 +46,13 @@ ProjectHierarchyView.prototype.buildHierarchy = function()
 		}
 	});
 	return data;
+}
+
+ProjectHierarchyView.prototype.onFocus = function()
+{
+	let data = this.buildHierarchy();
+	this.tree.settings.core.data = data;
+	this.tree.refresh();
 }
 
 ProjectHierarchyView.prototype.onNodeChange = function(event, data)

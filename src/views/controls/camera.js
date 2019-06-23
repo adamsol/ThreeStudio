@@ -1,5 +1,5 @@
 
-function CameraControls(camera, container)
+function CameraControls(camera, canvas)
 {
 	this.SPEED = {
 		movement: 5.0,  // units/second
@@ -10,11 +10,11 @@ function CameraControls(camera, container)
 	this.unlocked = false;
 	this.keys = {};
 
-	container.on('mousedown', this.onMouseDown.bind(this));
+	canvas.on('mousedown', this.onMouseDown.bind(this));
 	$(window).on('mouseup', this.onMouseUp.bind(this));
 	$(window).on('mousemove', this.onMouseMove.bind(this));
-	container.on('keydown', this.onKeyDown.bind(this));
-	container.on('keyup', this.onKeyUp.bind(this));
+	canvas.on('keydown', this.onKeyDown.bind(this));
+	canvas.on('keyup', this.onKeyUp.bind(this));
 }
 
 CameraControls.prototype.update = function(dt)

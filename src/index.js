@@ -150,7 +150,9 @@ layout.on('stackCreated', (stack) => {
 	stack.header.tabsContainer.append(button);
 });
 
-electron.ipcRenderer.on('openView', (event, view) => layout.openView(view));
+electron.ipcRenderer.on('openView', (event, view) => {
+	layout.openView(view)
+});
 
 electron.ipcRenderer.on('resetLayout', (event) => {
 	layout.destroy();

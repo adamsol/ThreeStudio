@@ -145,18 +145,18 @@ function getAssetSync()
 	return asset && asset.object;
 }
 
-function isInstance(sub, base)
+function isSubclass(cls, base)
 {
-	sub = window[sub] || sub;
+	cls = window[cls] || cls;
 	base = window[base] || base;
-	return sub == base || sub.prototype instanceof base || sub.name.includes(base.name);
+	return cls == base || cls.prototype instanceof base || cls.name.endsWith(base.name);
 }
 
 function getAssets(cls)
 {
 	let assets = [];
 	$.each(assetsByClass, (c, a) => {
-		if (isInstance(c, cls)) {
+		if (isSubclass(c, cls)) {
 			assets.extend(a);
 		}
 	});
