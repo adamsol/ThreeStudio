@@ -1,10 +1,13 @@
 
+Object3D = THREE.Object3D;
+Group = THREE.Group;
+
 function Actor(obj, parent, transform)
 {
-	if (obj instanceof THREE.Object3D) {
+	if (obj instanceof Object3D) {
 		this.obj = obj;
 	} else {
-		this.obj = new THREE.Group();
+		this.obj = new Group();
 		this.name = obj;
 	}
 	this.id = this.obj.id;
@@ -121,7 +124,7 @@ Actor.prototype.export = function()
 
 Actor.import = async function(json, parent)
 {
-	let obj = new THREE.Group();
+	let obj = new Group();
 	obj.name = json.name;
 	let actor = new Actor(obj, parent);
 	Transform.import(json.transform, actor.transform);
@@ -134,7 +137,7 @@ Actor.import = async function(json, parent)
 	return actor;
 }
 
-THREE.Object3D.prototype.getActor = function()
+Object3D.prototype.getActor = function()
 {
 	let obj = this;
 	while (!obj.actor) {

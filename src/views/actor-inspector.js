@@ -8,6 +8,7 @@ function ActorInspectorView(container, state)
 	this.initToolbox({
 		"Model": [Box, Cylinder, Plane, Sphere],
 		"Light": [AmbientLight, DirectionalLight, PointLight],
+		"Script": Script,
 	});
 	this.toolbox.on('click', '.component-add li[data-component-name]', function(event) {
 		let componentName = $(this).data('component-name');

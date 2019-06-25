@@ -132,7 +132,9 @@ loadScene(localStorage['scene_path'] || 'data/World.scene');
 
 $(window).on('beforeunload', () => {
     localStorage['layout_config'] = JSON.stringify(layout.toConfig());
-    localStorage['scene_path'] = scene.path;
+    if (scene.path) {
+		localStorage['scene_path'] = scene.path;
+	}
 });
 
 layout.on('stackCreated', (stack) => {

@@ -27,14 +27,20 @@ function exportComponent(component)
 	}
 	return json;
 }
+
 async function importComponent(json)
 {
-	let geometries = {}, materials = {};
-	if (json.geometry) {
-		geometries[json.geometry] = await getAsset(json.geometry);
+	if (json.type == 'Script') {
+		return await Script.import(json);
 	}
-	if (json.material) {
-		materials[json.material] = await getAsset(json.material);
+	else {
+		let geometries = {}, materials = {};
+		if (json.geometry) {
+			geometries[json.geometry] = await getAsset(json.geometry);
+		}
+		if (json.material) {
+			materials[json.material] = await getAsset(json.material);
+		}
+		return new THREE.ObjectLoader().parseObject(json, geometries, materials);
 	}
-	return new THREE.ObjectLoader().parseObject(json, geometries, materials);
 }
