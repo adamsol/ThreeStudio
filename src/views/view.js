@@ -16,7 +16,7 @@ GoldenLayout.prototype.findViews = function()
 	return components;
 }
 
-GoldenLayout.prototype.openView = function(view, parent)
+GoldenLayout.prototype.openView = function(view, parent, state)
 {
 	view = views[view] || view;
 	if (!view.ALLOW_MULTIPLE && this.findViews(view).length) {
@@ -33,6 +33,6 @@ GoldenLayout.prototype.openView = function(view, parent)
 		type: 'component',
 		title: view.TITLE,
 		componentName: view.NAME,
-		componentState: {},
+		componentState: state || {},
 	});
 }

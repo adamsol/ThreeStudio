@@ -15,6 +15,14 @@ function ProjectExplorerView(container, state)
 			}
 		}
 	});
+	this.assets.on('dblclick', 'a.asset', function() {
+		if ($(this).data('type') == 'file') {
+			let object = getAssetSync($(this).data('path'));
+			if (object && object.asset) {
+				project.openAsset(object.asset);
+			}
+		}
+	});
 }
 
 ProjectExplorerView.prototype = Object.create(View.prototype);
@@ -38,6 +46,8 @@ ProjectExplorerView.prototype.getIcon = function(file)
 		return 'volleyball-ball';
 	} else if (['.scene'].includes(ext)) {
 		return 'globe';
+	} else if (['.js'].includes(ext)) {
+		return 'code';
 	} else {
 		return 'file';
 	}

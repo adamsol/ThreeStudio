@@ -20,3 +20,27 @@ Project.prototype.setAsset = function(asset)
 		view.setAsset(asset);
 	}
 }
+
+Project.prototype.openAsset = function(asset)
+{
+	if (isSubclass(asset.class, Code)) {
+		let file_path = asset.path;
+		let parent = null;
+		for (let view of layout.findViews(ScriptEditorView)) {
+			parent = view.container.parent.parent;
+			if (view.file_path == file_path) {
+				parent.setActiveContentItem(view.container.parent);
+				return;
+			}
+		}
+		layout.openView(ScriptEditorView, parent, {file_path: file_path})
+	}
+}
+
+Project.prototype.updateAssets = function()
+{
+	let views = layout.findViews(AssetInspectorView, ScriptEditorView);
+	for (let view of views) {
+		view.update();
+	}
+}

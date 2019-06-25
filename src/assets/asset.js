@@ -2,6 +2,7 @@
 const extensions = {
 	image: ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tga', 'tiff', '.tif'],
 	model: ['.obj', '.fbx'],
+	other: ['.geom', '.mat', '.js'],
 }
 
 function Asset(type, name, parent, params)
@@ -45,9 +46,16 @@ async function onAssetLoad(assets, file, error, content)
 	try {
 		let object, cls;
 		if (content instanceof Buffer) {
-			let data = JSON.parse(content);
-			cls = data.metadata.type;
-			object = await window[cls].import(data);
+			let ext = path.extname(file).lower();
+			if (ext == '.js') {
+				let text = content.toString('utf8');
+				object = await Code.import(text, ext);
+				cls = object.type;
+			} else {
+				let data = JSON.parse(content);
+				cls = data.metadata.type;
+				object = await window[cls].import(data, ext);
+			}
 		} else {
 			object = content;
 			cls = object.constructor.name;
@@ -106,7 +114,7 @@ function importAssets(dir_path, assets)
 				loader.load(path.join('..', abs_path), (object) => {
 					callback(null, object.children[0].geometry);
 				}, null, callback);
-			} else if (['.geom', '.mat'].includes(ext)) {
+			} else if (extensions.other.includes(ext)) {
 				fs.readFile(abs_path, callback);
 			}
 		}
@@ -165,8 +173,13 @@ function getAssets(cls)
 
 function exportAsset(asset)
 {
-	let json = asset.object.export();
-	let str = JSON.stringify(json, null, '\t');
+	let data = asset.object.export();
+	let str;
+	if ($.type(data) == 'string') {
+		str = data;
+	} else {
+		str = JSON.stringify(json, null, '\t');
+	}
 	fs.writeFile(path.join('data', asset.path), str);
 }
 

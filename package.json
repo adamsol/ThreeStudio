@@ -22,6 +22,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
     "bootstrap": "^4.3.1",
+    "codemirror": "^5.48.0",
     "electron-debug": "^1.0.0",
     "electron-window-state": "^4.1.1",
     "file": "^0.2.2",

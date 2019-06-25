@@ -6,7 +6,7 @@ ThreeStudio
 Aim of the project is to create a functional 3D editor using existing open-source web-based frameworks and libraries.
 - Application: Node.js + Electron
 - Core: HTML + CSS + JavaScript + jQuery
-- Interface: jQuery UI + jsTree + GoldenLayout + jscolor + Bootstrap + FontAwesome
+- Interface: jQuery UI + jsTree + GoldenLayout + CodeMirror + jscolor + Bootstrap + FontAwesome
 - Rendering: Three.js
 
 #### Usage: ####

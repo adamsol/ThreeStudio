@@ -119,7 +119,7 @@ div.assets {
 
 a.asset {
   display: block;
-  width: 6em;
+  width: 6.5em;
   padding: 2px;
   margin: 3px;
   border-radius: 5px;
@@ -198,6 +198,16 @@ button.btn {
 
 .jstree-anchor.jstree-clicked {
   background-color: #585C70;
+}
+
+.CodeMirror {
+  height: 100%;
+}
+.CodeMirror .CodeMirror-overlayscroll-horizontal div, .CodeMirror .CodeMirror-overlayscroll-vertical div {
+  background-color: rgba(128, 128, 128, 0.4);
+}
+.CodeMirror .CodeMirror-scrollbar-filler {
+  background-color: rgba(128, 128, 128, 0);
 }
 
 /*# sourceMappingURL=index.css.map */

@@ -47,12 +47,17 @@ AssetInspectorView.prototype.applyAsset = function()
 {
 	exportAsset(this.asset);
 	importAsset(this.asset);
-	this.serializeAsset();
+	project.updateAssets();
 }
 
 AssetInspectorView.prototype.revertAsset = function()
 {
 	importAsset(this.asset);
+	project.updateAssets();
+}
+
+AssetInspectorView.prototype.update = function()
+{
 	this.serializeAsset();
 }
 
