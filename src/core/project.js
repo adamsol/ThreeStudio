@@ -1,6 +1,4 @@
 
-let project = new Project();
-
 function Project()
 {
 }
@@ -27,9 +25,9 @@ Project.prototype.openAsset = function(asset)
 		let file_path = asset.path;
 		let parent = null;
 		for (let view of layout.findViews(ScriptEditorView)) {
-			parent = view.container.parent.parent;
+			parent = view.getTabHeader();
 			if (view.file_path == file_path) {
-				parent.setActiveContentItem(view.container.parent);
+				view.activate();
 				return;
 			}
 		}
@@ -44,3 +42,5 @@ Project.prototype.updateAssets = function()
 		view.update();
 	}
 }
+
+let project = new Project();

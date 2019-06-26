@@ -7,13 +7,27 @@ function View(container, state)
 	this.element = container.getElement();
 }
 
+View.prototype.getTabHeader = function()
+{
+	return this.container.parent.parent;
+}
+
+View.prototype.activate = function()
+{
+	this.getTabHeader().setActiveContentItem(this.container.parent);
+}
+
+View.prototype.refresh = function()
+{
+}
+
 GoldenLayout.prototype.findViews = function()
 {
-	let components = [];
+	let views = [];
 	for (let view of arguments) {
-		components.extend(this.root.getComponentsByName(view.NAME || view));
+		views.extend(this.root.getComponentsByName(view.NAME || view));
 	}
-	return components;
+	return views;
 }
 
 GoldenLayout.prototype.openView = function(view, parent, state)

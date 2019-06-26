@@ -1,14 +1,7 @@
 
 function SceneRendererView(container, state)
 {
-	View.call(this, ...arguments);
-
-	this.canvas = this.element.empty();
-	this.canvas.attr('tabindex', 42).css('outline', 'none');
-
-	this.renderer = new THREE.WebGLRenderer({antialias: true});
-	this.renderer.shadowMap.enabled = true;
-	this.canvas.append(this.renderer.domElement);
+	RendererView.call(this, ...arguments);
 
 	this.camera = new THREE.PerspectiveCamera(75, 1, 0.01, 1000);
 	this.camera.rotation.order = 'YXZ';
@@ -35,18 +28,13 @@ function SceneRendererView(container, state)
 
 	this.refresh();
 
-	this.clock = new THREE.Clock();
-
 	this.animate();
-
-	this.container.on('resize', this.onResize.bind(this));
-	this.container.on('destroy', this.onDestroy.bind(this));
 
 	this.canvas.on('mousedown', this.onMouseDown.bind(this));
 	this.canvas.on('keydown', this.onKeyDown.bind(this));
 }
 
-SceneRendererView.prototype = Object.create(View.prototype);
+SceneRendererView.prototype = Object.create(RendererView.prototype);
 SceneRendererView.prototype.constructor = SceneRendererView;
 
 SceneRendererView.NAME = 'scene-renderer';

@@ -1,6 +1,4 @@
 
-let scene = new Scene();
-
 function Scene()
 {
 	this.obj = new THREE.Scene();
@@ -55,3 +53,5 @@ Scene.import = function(json)
 	}
 	return scene;
 }
+
+let scene = new Scene();

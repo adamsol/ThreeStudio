@@ -4,6 +4,8 @@ const version = '0.2.0';
 const electron = require('electron');
 const dialog = electron.remote.dialog;
 
+let scene_path = null;
+
 async function newScene()
 {
 	scene = new Scene();
@@ -12,6 +14,7 @@ async function newScene()
 	for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
 		view.refresh();
 	}
+	scene_path = null;
 }
 
 function loadScene(file_path)
@@ -28,7 +31,7 @@ function loadScene(file_path)
 			try {
 				let json = JSON.parse(content);
 				scene = Scene.import(json);
-				scene.path = file_path;
+				scene_path = file_path;
 				for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
 					view.refresh();
 				}
@@ -53,7 +56,7 @@ function saveScene(file_path)
 		let json = scene.export();
 		let str = JSON.stringify(json, null, '\t');
 		fs.writeFile(file_path, str);
-		scene.path = file_path;
+		scene_path = file_path;
 	}
 }
 
@@ -132,8 +135,8 @@ loadScene(localStorage['scene_path'] || 'data/World.scene');
 
 $(window).on('beforeunload', () => {
     localStorage['layout_config'] = JSON.stringify(layout.toConfig());
-    if (scene.path) {
-		localStorage['scene_path'] = scene.path;
+    if (scene_path) {
+		localStorage['scene_path'] = scene_path;
 	}
 });
 
@@ -145,7 +148,7 @@ layout.on('stackCreated', (stack) => {
 			</button>\
 			<ul class="dropdown-menu">{}</ul>\
 		</div>\
-	'.format($.map(views, ''.format.bind('<li class="dropdown-item" data-view="{1}">{0.TITLE}</li>')).join('')));
+	'.format($.map(views, view => view.TITLE ? '<li class="dropdown-item" data-view="{1}">{0.TITLE}</li>'.format(view) : '').join('')));
 	button.on('click', 'li.dropdown-item', function() {
 		layout.openView($(this).data('view'), stack);
 	});
@@ -168,7 +171,7 @@ electron.ipcRenderer.on('openScene', (event) => {
 	loadScene();
 });
 electron.ipcRenderer.on('saveScene', (event) => {
-	saveScene(scene.path);
+	saveScene(scene_path);
 });
 electron.ipcRenderer.on('saveSceneAs', (event) => {
 	saveScene();

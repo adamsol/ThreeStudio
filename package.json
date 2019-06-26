@@ -1,9 +1,9 @@
 {
   "name": "three-studio",
   "productName": "ThreeStudio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "ThreeStudio",
-  "license": "GPLv3",
+  "license": "GPL-3.0-or-later",
   "author": {
     "name": "Adam Sołtysik",
     "email": "adam27.sol@gmail.com",

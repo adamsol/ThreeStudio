@@ -170,6 +170,11 @@
 					"layers": 1,
 					"geometry": "Geometries/Box.geom",
 					"material": "Materials/StandardCrate.mat"
+				},
+				{
+					"uuid": "1C417063-5E6E-4D7E-80E0-B41ED3E8B33B",
+					"type": "Script",
+					"code": "Scripts/Test.js"
 				}
 			]
 		},
@@ -308,5 +313,5 @@
 			"components": []
 		}
 	],
-	"version": "0.1.6"
+	"version": "0.2.1"
 }
