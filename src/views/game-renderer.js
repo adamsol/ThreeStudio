@@ -3,9 +3,7 @@ function GameRendererView(container, state)
 {
 	RendererView.call(this, ...arguments);
 
-	this.camera = new THREE.PerspectiveCamera(75, 1, 0.01, 1000);
-	this.camera.rotation.order = 'YXZ';
-	this.camera.position.set(0.0, 1.0, 8.0);
+	this.camera = null;
 
 	this.animate();
 }
@@ -24,12 +22,28 @@ GameRendererView.prototype.animate = function()
 		return;
 	}
 
+	this.camera = scene.obj.findObjectByType(Camera);
+	if (this.camera) {
+		let aspect = this.canvas.width() / this.canvas.height();
+		if (this.camera instanceof PerspectiveCamera) {
+			this.camera.aspect = aspect;
+		} else if (this.camera instanceof OrthographicCamera) {
+			this.camera.left = -aspect;
+			this.camera.right = aspect;
+		}
+		this.camera.updateProjectionMatrix();
+	}
+
 	if (game.running) {
 		let dt = this.clock.getDelta();
 		game.update(dt);
 	}
 
-	this.renderer.render(scene.obj, this.camera);
+	if (this.camera) {
+		this.renderer.render(scene.obj, this.camera);
+	} else {
+		this.renderer.clear();
+	}
 
 	requestAnimationFrame(this.animate.bind(this));
 }

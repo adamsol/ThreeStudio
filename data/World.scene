@@ -311,6 +311,44 @@
 				]
 			},
 			"components": []
+		},
+		{
+			"name": "Camera",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					3.9352117399340325,
+					4.411344586554734,
+					2.6398849212962086
+				],
+				"rotation": [
+					-0.6148983831019691,
+					1.038468943642648,
+					0.026553379801472127,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "FE423D5B-D388-4F88-AD67-3B25A5025DC3",
+					"type": "PerspectiveCamera",
+					"castShadow": true,
+					"layers": 1,
+					"fov": 65,
+					"zoom": 1,
+					"near": 0.1,
+					"far": 2000,
+					"focus": 10,
+					"filmGauge": 35,
+					"filmOffset": 0
+				}
+			]
 		}
 	],
 	"version": "0.2.1"

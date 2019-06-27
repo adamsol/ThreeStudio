@@ -8,6 +8,7 @@ function SceneHierarchyView(container, state)
 		"Empty": [],
 		"Model": {"Box": [Box], "Cylinder": [Cylinder], "Plane": [Plane], "Sphere": [Sphere]},
 		"Light": {"Directional light": [AmbientLight, DirectionalLight], "Point light": [PointLight]},
+		"Camera": {"Perspective camera": [PerspectiveCamera], "Orthographic camera": [OrthographicCamera]},
 	});
 	this.toolbox.on('click', '.actor-new li[data-component-names]', function(event) {
 		let componentNames = $(this).data('component-names');

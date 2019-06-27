@@ -6,6 +6,7 @@ function SceneRendererView(container, state)
 	this.camera = new THREE.PerspectiveCamera(75, 1, 0.01, 1000);
 	this.camera.rotation.order = 'YXZ';
 	this.camera.position.set(0.0, 1.0, 8.0);
+	this.camera.layers.mask = -1;  // all layers
 
 	this.composer = new THREE.EffectComposer(this.renderer);
 	this.passes = {};

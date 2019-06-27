@@ -2,6 +2,11 @@
 Object3D = THREE.Object3D;
 Group = THREE.Group;
 
+let Layers = {
+	DEFAULT: 0,
+	EDITOR_SPRITES: 16,
+}
+
 function Actor(obj, parent, transform)
 {
 	if (obj instanceof Object3D) {
@@ -79,23 +84,23 @@ Actor.prototype.addComponent = function(component)
 	this.obj.add(component);
 	this.components.push(component);
 
-	let sprite_path;
-	if (component.isLight && !component.isAmbientLight) {
-		component.castShadow = true;
-		let sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-		sprite_path = '../gfx/sprites/' + sprite_name + '.png';
-	}
-
-	if (sprite_path) {
-		let texture = new THREE.TextureLoader().load(sprite_path);
-		let material = new THREE.SpriteMaterial({map: texture, color: component.color});
-		let sprite = new THREE.Sprite(material);
-		component.add(sprite);
-	}
-
 	if (component.isMesh) {
 		component.castShadow = true;
 		component.receiveShadow = true;
+	}
+
+	if (component.isLight && !component.isAmbientLight) {
+		component.castShadow = true;
+	}
+
+	let sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+	let sprite_path = 'gfx/sprites/' + sprite_name + '.png';
+	if (fs.existsSync(sprite_path)) {
+		let texture = new THREE.TextureLoader().load('../'+sprite_path);
+		let material = new THREE.SpriteMaterial({map: texture, color: component.color});
+		let sprite = new THREE.Sprite(material);
+		sprite.layers.set(Layers.EDITOR_SPRITES);
+		component.add(sprite);
 	}
 
 	return this;
@@ -144,4 +149,22 @@ Object3D.prototype.getActor = function()
 		obj = obj.parent;
 	}
 	return obj.actor;
+}
+
+Object3D.prototype.findObjectsByType = function(type)
+{
+	type = window[type] || type;
+	let objects = [];
+	this.traverse((obj) => {
+		if (obj instanceof type) {
+			objects.push(obj);
+		}
+	});
+	return objects;
+}
+
+Object3D.prototype.findObjectByType = function(type)
+{
+	let objects = this.findObjectsByType(type);
+	return objects.length ? objects[0] : null;
 }

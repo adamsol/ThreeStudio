@@ -23,8 +23,10 @@ RendererView.prototype.onResize = function()
 {
 	let width = this.canvas.width(), height = this.canvas.height();
 
-	this.camera.aspect = width / height;
-	this.camera.updateProjectionMatrix();
+	if (this.camera) {
+		this.camera.aspect = width / height;
+		this.camera.updateProjectionMatrix();
+	}
 
 	this.renderer.setSize(width, height);
 	if (this.composer) {
