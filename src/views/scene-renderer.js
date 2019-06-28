@@ -51,9 +51,6 @@ SceneRendererView.prototype.refresh = function()
 	this.controls.transform.space = 'local';
 	scene.obj.add(this.controls.transform);
 
-	this.controls.transform.traverse((obj) => {
-		obj.isTransformControls = true;  // to be detected correctly by OutlinePass
-	});
 	this.passes.render.scene = scene.obj;
 	this.passes.outline.renderScene = scene.obj;
 }
