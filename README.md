@@ -13,3 +13,5 @@ Aim of the project is to create a functional 3D editor using existing open-sourc
 
 > npm install \
 > npm start
+
+Press `F9` or `Ctrl+P` to enter/exit game mode.
