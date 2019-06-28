@@ -178,13 +178,15 @@ function exportAsset(asset)
 	if ($.type(data) == 'string') {
 		str = data;
 	} else {
-		str = JSON.stringify(json, null, '\t');
+		str = JSON.stringify(data, null, '\t');
 	}
-	fs.writeFile(path.join('data', asset.path), str);
+	return fs.writeFile(path.join('data', asset.path), str);
 }
 
 function importAsset(asset)
 {
 	let callback = onAssetLoad.partial(asset.parent, asset.name);
-	fs.readFile(path.join('data', asset.path), callback);
+	return fs.readFile(path.join('data', asset.path)).then(content => {
+		return callback(null, content);
+	}, callback);
 }

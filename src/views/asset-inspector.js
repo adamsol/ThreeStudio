@@ -10,10 +10,9 @@ function AssetInspectorView(container, state)
 	this.toolbox.on('click', '.asset-revert', this.revertAsset.bind(this));
 
 	this.inspector = $('<div class="inspector"></div>').appendTo(this.element);
-
 	this.inspector.on('input change keydown', '.field-value input, .field-value select', function(event) {
 		if (event.type != 'keydown' || event.which == Keys.ENTER) {
-			self.updateValue($(this), event.type == 'keydown');
+			self.updateValue($(this), event.type != 'input');
 		}
 	});
 
@@ -45,15 +44,17 @@ AssetInspectorView.prototype.initToolbox = function()
 
 AssetInspectorView.prototype.applyAsset = function()
 {
-	exportAsset(this.asset);
-	importAsset(this.asset);
-	project.updateAssets();
+	exportAsset(this.asset).then(async () => {
+		await importAsset(this.asset);
+		project.updateAssets();
+	});
 }
 
 AssetInspectorView.prototype.revertAsset = function()
 {
-	importAsset(this.asset);
-	project.updateAssets();
+	importAsset(this.asset).then(() => {
+		project.updateAssets();
+	});
 }
 
 AssetInspectorView.prototype.update = function()
@@ -81,7 +82,7 @@ AssetInspectorView.prototype.serializeAsset = function()
 	this.refreshAll();
 }
 
-AssetInspectorView.prototype.refreshAll = function(input)
+AssetInspectorView.prototype.refreshAll = function()
 {
 	this.inspector.find('.field-value input, .field-value select').each((i, input) => {
 		this.refreshInput($(input));

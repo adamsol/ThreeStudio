@@ -37,7 +37,7 @@ function ActorInspectorView(container, state)
 	});
 	this.inspector.on('input change keydown', '.field-value input, .field-value select', function(event) {
 		if (event.type != 'keydown' || event.which == Keys.ENTER) {
-			self.updateValue($(this), event.type == 'keydown');
+			self.updateValue($(this), event.type != 'input');
 		}
 	});
 	this.inspector.on('click', '.component-remove', function(event) {
@@ -104,7 +104,7 @@ ActorInspectorView.prototype.serializeActor = function()
 	this.refreshAll();
 }
 
-ActorInspectorView.prototype.refreshAll = function(input)
+ActorInspectorView.prototype.refreshAll = function()
 {
 	if (!this.actor) {
 		return;

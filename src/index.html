@@ -4,7 +4,7 @@
 		<title>ThreeStudio</title>
 
 		<script>
-			fs = require('fs-extra');
+			fs = require('fs-extra');  // All fs methods return promises if the callback isn't passed.
 			file = require('file');
 			path = require('path').posix;
 			path.split = p => p.split(/[\/\\]+/);
