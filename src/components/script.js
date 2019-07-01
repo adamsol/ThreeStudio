@@ -2,7 +2,10 @@
 function Script(code)
 {
 	Object3D.call(this);
+
+	this.isScript = true;
 	this.type = 'Script';
+
 	this.code = code || null;
 }
 

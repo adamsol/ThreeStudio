@@ -22,6 +22,7 @@ Transform.prototype.export = function()
 		scale: this.scale.toArray(),
 	};
 }
+
 Transform.import = function(json, transform)
 {
 	transform.position.fromArray(json.position);

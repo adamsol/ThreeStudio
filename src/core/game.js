@@ -1,13 +1,7 @@
 
-input = {};
-
 function Game()
 {
 	this.running = false;
-	this.scripts = [];
-	this.original_scene = null;
-
-	this.resetInput();
 
 	$(document).on('keydown', this.onKeyDown.bind(this));
 	$(document).on('keyup', this.onKeyUp.bind(this));
@@ -17,36 +11,33 @@ function Game()
 	$(document).on('mousewheel', this.onMouseWheel.bind(this));
 }
 
-Game.prototype.resetInput = function()
+Game.prototype.initialize = function()
 {
-	input = {
+	this.original_scene = scene.export();
+
+	this.input = {
 		isDown: {},
 		justPressed: {},
 		mousePosition: {},
 		mouseDelta: {x: 0, y: 0},
 		mouseWheel: 0,
 	};
-}
 
-Game.prototype.initialize = function()
-{
-	this.original_scene = scene.export();
+	this.scripts = [];
 
 	scene.obj.traverse(obj => {
-		if (obj.type == 'Script') {
-			obj.functions = Function('return function(actor) {\
+		if (obj.isScript) {
+			obj.functions = Function('return function(actor, scene, input) {\
 				{}\
 				return {\
 					initialize: initialize,\
 					update: update,\
 				}\
-			};'.format(obj.code.text))()(obj.getActor());
+			};'.format(obj.code.text))()(obj.getActor(), scene.obj, this.input);
+			obj.functions.initialize();
 			this.scripts.push(obj);
 		}
 	});
-	for (let obj of this.scripts) {
-		obj.functions.initialize();
-	}
 
 	let views = layout.findViews(GameRendererView);
 	if (views.length) {
@@ -57,8 +48,6 @@ Game.prototype.initialize = function()
 		layout.openView(GameRendererView, parent);
 	}
 
-	this.resetInput();
-
 	this.running = true;
 }
 
@@ -68,8 +57,8 @@ Game.prototype.update = function(dt)
 		obj.functions.update(dt);
 	}
 
-	input.justPressed = {};
-	input.mouseWheel = 0;
+	this.input.justPressed = {};
+	this.input.mouseWheel = 0;
 }
 
 Game.prototype.stop = function()
@@ -89,7 +78,6 @@ Game.prototype.stop = function()
 		view.refresh();
 	}
 
-	this.scripts = [];
 	this.running = false;
 }
 
@@ -103,15 +91,21 @@ Game.prototype.onKeyDown = function(event)
 		}
 	}
 
-	if (!input.isDown[event.which]) {
-		input.justPressed[event.which] = true;
+	if (!this.running) {
+		return;
 	}
-	input.isDown[event.which] = true;
+	if (!this.input.isDown[event.which]) {
+		this.input.justPressed[event.which] = true;
+	}
+	this.input.isDown[event.which] = true;
 }
 
 Game.prototype.onKeyUp = function(event)
 {
-	delete input.isDown[event.which];
+	if (!this.running) {
+		return;
+	}
+	delete this.input.isDown[event.which];
 }
 
 Game.prototype.onMouseDown = function(event)
@@ -124,29 +118,42 @@ Game.prototype.onMouseDown = function(event)
 		}
 	}
 
-	if (!input.isDown[event.which]) {
-		input.justPressed[event.which] = true;
+	if (!this.running) {
+		return;
 	}
-	input.isDown[event.which] = true;
+	if (!this.input.isDown[event.which]) {
+		this.input.justPressed[event.which] = true;
+	}
+	this.input.isDown[event.which] = true;
 }
 
 Game.prototype.onMouseUp = function(event)
 {
-	delete input.isDown[event.which];
+	if (!this.running) {
+		return;
+	}
+	delete this.input.isDown[event.which];
 }
 
 Game.prototype.onMouseMove = function(event)
 {
-	if (input.mousePosition.x !== undefined) {
-		input.mouseDelta.x = event.clientX - input.mousePosition.x;
-		input.mouseDelta.y = event.clientY - input.mousePosition.y;
+	if (!this.running) {
+		return;
 	}
-	input.mousePosition.x = event.clientX;
-	input.mousePosition.y = event.clientY;
+	if (this.input.mousePosition.x !== undefined) {
+		this.input.mouseDelta.x = event.clientX - this.input.mousePosition.x;
+		this.input.mouseDelta.y = event.clientY - this.input.mousePosition.y;
+	}
+	this.input.mousePosition.x = event.clientX;
+	this.input.mousePosition.y = event.clientY;
 }
+
 Game.prototype.onMouseWheel = function(event)
 {
-	input.mouseWheel = event.originalEvent.deltaY;
+	if (!this.running) {
+		return;
+	}
+	this.input.mouseWheel = event.originalEvent.deltaY;
 }
 
 let game = new Game();
