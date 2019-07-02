@@ -74,7 +74,7 @@ Game.prototype.stop = function()
 	}
 
 	scene = Scene.import(this.original_scene);
-	for (let view of layout.findViews(SceneRendererView)) {
+	for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
 		view.refresh();
 	}
 

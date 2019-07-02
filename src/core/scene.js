@@ -51,6 +51,7 @@ Scene.import = function(json)
 	for (let obj of json.children) {
 		Actor.import(obj, scene);
 	}
+	scene.setSelection([]);
 	return scene;
 }
 
