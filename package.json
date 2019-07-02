@@ -1,7 +1,7 @@
 {
   "name": "three-studio",
   "productName": "ThreeStudio",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "ThreeStudio",
   "license": "GPL-3.0-or-later",
   "author": {
@@ -22,6 +22,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
     "bootstrap": "^4.3.1",
+    "cannon": "^0.6.2",
     "codemirror": "^5.48.0",
     "electron-debug": "^1.0.0",
     "electron-window-state": "^4.1.1",

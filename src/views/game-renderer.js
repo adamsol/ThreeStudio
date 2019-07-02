@@ -34,8 +34,8 @@ GameRendererView.prototype.animate = function()
 		this.camera.updateProjectionMatrix();
 	}
 
+	let dt = this.clock.getDelta();
 	if (game.running) {
-		let dt = this.clock.getDelta();
 		game.update(dt);
 	}
 

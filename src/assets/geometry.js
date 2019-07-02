@@ -15,9 +15,9 @@ TorusGeometry = THREE.TorusGeometry;
 TorusKnotGeometry = THREE.TorusKnotGeometry;
 
 BoxGeometry.FIELDS = {
-	width: Field.Decimal(1),
-	height: Field.Decimal(1),
-	depth: Field.Decimal(1),
+	width: Field.Decimal(2),
+	height: Field.Decimal(2),
+	depth: Field.Decimal(2),
 };
 ConeGeometry.FIELDS = {
 	radius: Field.Decimal(1),

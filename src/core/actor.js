@@ -81,9 +81,6 @@ Actor.prototype.setParent = function(parent, keep_local)
 
 Actor.prototype.addComponent = function(component)
 {
-	this.obj.add(component);
-	this.components.push(component);
-
 	if (component.isMesh) {
 		component.castShadow = true;
 		component.receiveShadow = true;
@@ -93,15 +90,24 @@ Actor.prototype.addComponent = function(component)
 		component.castShadow = true;
 	}
 
+	if (component.isBody) {
+		if (this.getComponent(Body)) {
+			return this;
+		}
+	}
+
 	let sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 	let sprite_path = 'gfx/sprites/' + sprite_name + '.png';
 	if (fs.existsSync(sprite_path)) {
-		let texture = new THREE.TextureLoader().load('../'+sprite_path);
+		let texture = new THREE.TextureLoader().load('../' + sprite_path);
 		let material = new THREE.SpriteMaterial({map: texture, color: component.color});
 		let sprite = new THREE.Sprite(material);
 		sprite.layers.set(Layers.EDITOR_SPRITES);
 		component.add(sprite);
 	}
+
+	this.obj.add(component);
+	this.components.push(component);
 
 	return this;
 }
@@ -112,6 +118,24 @@ Actor.prototype.removeComponent = function(index)
 		this.obj.remove(this.components[index]);
 		this.components.splice(index, 1);
 	}
+}
+
+Actor.prototype.getComponents = function(type)
+{
+	type = window[type] || type;
+	let components = [];
+	for (let component of this.components) {
+		if (component instanceof type) {
+			components.push(component);
+		}
+	}
+	return components;
+}
+
+Actor.prototype.getComponent = function(type)
+{
+	let components = this.getComponents(type);
+	return components.length ? components[0] : null;
 }
 
 Actor.prototype.export = function()

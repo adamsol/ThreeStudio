@@ -23,19 +23,26 @@ Game.prototype.initialize = function()
 		mouseWheel: 0,
 	};
 
+	this.world = new World();
+
+	this.bodies = [];
 	this.scripts = [];
 
 	scene.obj.traverse(obj => {
 		if (obj.isScript) {
-			obj.functions = Function('return function(actor, scene, input) {\
+			obj.functions = Function('return function(actor, scene, world, input) {\
 				{}\
 				return {\
 					initialize: initialize,\
 					update: update,\
 				}\
-			};'.format(obj.code.text))()(obj.getActor(), scene.obj, this.input);
+			};'.format(obj.code.text))()(obj.getActor(), scene.obj, this.world, this.input);
 			obj.functions.initialize();
 			this.scripts.push(obj);
+		}
+		else if (obj.isBody) {
+			this.world.addBody(obj.create());
+			this.bodies.push(obj);
 		}
 	});
 
@@ -53,8 +60,20 @@ Game.prototype.initialize = function()
 
 Game.prototype.update = function(dt)
 {
-	for (let obj of this.scripts) {
-		obj.functions.update(dt);
+	if (dt <= 0) {
+		return;
+	}
+
+	this.world.step(1.0/60, dt, 10);
+
+	for (let body of this.bodies) {
+		let actor = body.getActor();
+		actor.obj.position.copy(body.cannon.position);
+		actor.obj.quaternion.copy(body.cannon.quaternion);
+	}
+
+	for (let script of this.scripts) {
+		script.functions.update(dt);
 	}
 
 	this.input.justPressed = {};

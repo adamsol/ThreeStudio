@@ -6,7 +6,7 @@ function SceneHierarchyView(container, state)
 
 	this.initToolbox({
 		"Empty": [],
-		"Model": {"Box": [Box], "Cylinder": [Cylinder], "Plane": [Plane], "Sphere": [Sphere]},
+		"Model": {"Box": [BoxModel, Body, BoxShape], "Sphere": [SphereModel, Body, SphereShape], "Cylinder": [CylinderModel], "Plane": [PlaneModel]},
 		"Light": {"Directional light": [AmbientLight, DirectionalLight], "Point light": [PointLight]},
 		"Camera": {"Perspective camera": [PerspectiveCamera], "Orthographic camera": [OrthographicCamera]},
 	});

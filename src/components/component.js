@@ -33,6 +33,12 @@ async function importComponent(json)
 	if (json.type == 'Script') {
 		return await Script.import(json);
 	}
+	else if (json.type == 'Body') {
+		return await Body.import(json);
+	}
+	else if (json.type.includes('Shape')) {
+		return await Shape.import(json);
+	}
 	else {
 		let geometries = {}, materials = {};
 		if (json.geometry) {

@@ -17,15 +17,15 @@ Model.prototype.export = function()
 	return json;
 }
 
-function Box() {
+function BoxModel() {
 	return new Model(getAssetSync('Geometries', 'Box.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }
-function Cylinder() {
+function CylinderModel() {
 	return new Model(getAssetSync('Geometries', 'Cylinder.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }
-function Plane() {
+function PlaneModel() {
 	return new Model(getAssetSync('Geometries', 'Plane.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }
-function Sphere() {
+function SphereModel() {
 	return new Model(getAssetSync('Geometries', 'Sphere.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }

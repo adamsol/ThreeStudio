@@ -25,6 +25,18 @@
 			},
 			"components": [
 				{
+					"uuid": "A1B8B5C9-5221-4F6E-9B02-2238804F5F88",
+					"type": "Body",
+					"mass": 0
+				},
+				{
+					"uuid": "AD236A84-2959-4D6D-846F-2F2EA2556AD7",
+					"type": "BoxShape",
+					"width": 20,
+					"height": 2,
+					"depth": 20
+				},
+				{
 					"uuid": "7386DA07-F2BD-4D24-B4E5-102CC16CED6C",
 					"type": "Mesh",
 					"castShadow": true,
@@ -37,111 +49,7 @@
 		},
 		{
 			"name": "Wooden box",
-			"children": [
-				{
-					"name": "Torus knot",
-					"children": [
-						{
-							"name": "Dodecahedron",
-							"children": [],
-							"transform": {
-								"type": "Transform",
-								"position": [
-									0,
-									3,
-									0
-								],
-								"rotation": [
-									0,
-									0,
-									0,
-									"YXZ"
-								],
-								"scale": [
-									1,
-									1,
-									1
-								]
-							},
-							"components": [
-								{
-									"uuid": "69FD032C-6474-43DA-A562-CCA1212EE3B8",
-									"type": "Mesh",
-									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
-									"geometry": "Geometries/Dodecahedron.geom",
-									"material": "Materials/PhongBlue.mat"
-								}
-							]
-						}
-					],
-					"transform": {
-						"type": "Transform",
-						"position": [
-							3,
-							0,
-							0
-						],
-						"rotation": [
-							0,
-							0,
-							0,
-							"YXZ"
-						],
-						"scale": [
-							0.5,
-							0.5,
-							0.5
-						]
-					},
-					"components": [
-						{
-							"uuid": "FEC40710-DB83-4710-A3CA-F25349C7525F",
-							"type": "Mesh",
-							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
-							"geometry": "Geometries/TorusKnot.geom",
-							"material": "Materials/LambertGreen.mat"
-						}
-					]
-				},
-				{
-					"name": "Bunny",
-					"children": [],
-					"transform": {
-						"type": "Transform",
-						"position": [
-							0,
-							2,
-							0
-						],
-						"rotation": [
-							0,
-							0,
-							0,
-							"YXZ"
-						],
-						"scale": [
-							0.004,
-							0.004,
-							0.004
-						]
-					},
-					"components": [
-						{
-							"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
-							"type": "Mesh",
-							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
-							"geometry": "Models/stanford-bunny.fbx",
-							"material": "Materials/Normal.mat"
-						}
-					]
-				}
-			],
+			"children": [],
 			"transform": {
 				"type": "Transform",
 				"position": [
@@ -162,6 +70,18 @@
 				]
 			},
 			"components": [
+				{
+					"uuid": "7CBCB982-6DA1-4144-891A-CBFE429C2D9A",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "095FA61F-0999-47FA-80AF-D05F03B4145F",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
 				{
 					"uuid": "F078BE97-8572-4546-A0A7-32C1F1210A80",
 					"type": "Mesh",
@@ -221,8 +141,8 @@
 					"transform": {
 						"type": "Transform",
 						"position": [
-							1.5,
-							3,
+							2.971571094684958,
+							5.533115059100336,
 							2
 						],
 						"rotation": [
@@ -257,7 +177,7 @@
 						"type": "Transform",
 						"position": [
 							-10,
-							10,
+							13.74913269989942,
 							-5
 						],
 						"rotation": [
@@ -318,9 +238,9 @@
 			"transform": {
 				"type": "Transform",
 				"position": [
-					3.9352117399340325,
-					4.411344586554734,
-					2.6398849212962086
+					5.898422082301645,
+					6.125552735727383,
+					2.921494305512451
 				],
 				"rotation": [
 					-0.6148983831019691,
@@ -349,7 +269,294 @@
 					"filmOffset": 0
 				}
 			]
+		},
+		{
+			"name": "Wooden box",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0.5594883497549092,
+					4.030656034420478,
+					0.9356913854471685
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "B85E15B4-AF2E-4A0F-BA51-1638B94733C7",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "3DBD50EB-D4A5-4620-BD14-3356E8C4D59D",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
+				{
+					"uuid": "2F4607AA-9954-4A7E-8DC7-0C2D6540A3F5",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Wooden box",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0.43919993197081386,
+					6.516863805020529,
+					0.42689795286861265
+				],
+				"rotation": [
+					0,
+					-2.325157639332205,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "F3989A64-29EE-4A8F-8469-1985FFBA496A",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "988083CE-4BBD-4741-B385-9D7E82E6C0FF",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
+				{
+					"uuid": "9D757687-59CF-4313-966E-14FEFA1F60E7",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Wooden box",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0.3239684478853216,
+					9.221817652557869,
+					0.314932659551296
+				],
+				"rotation": [
+					2.7755575615628914e-16,
+					-1.7195534844007947,
+					0.9230344239412769,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "16049759-CE78-4D7D-A5A6-47D3DB428143",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "D3B9B1FB-92E2-4F6E-A74D-D2DE05F20970",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
+				{
+					"uuid": "B9CA3946-7FB7-43F9-93DF-765A3DAB9F44",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Wooden box",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					-0.28272517201562164,
+					12.449622611147017,
+					-0.42116989196984134
+				],
+				"rotation": [
+					-0.3652944168441099,
+					-1.5345234065925148,
+					1.5051158145724293,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "5C607916-1CA1-4A12-AA6D-7B05A30AFBA0",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "4B52C6B4-1A88-4806-8C24-1219023AA914",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
+				{
+					"uuid": "32AEC8AE-C88A-454C-9D26-F45295484896",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Torus knot",
+			"children": [
+				{
+					"name": "Dodecahedron",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0,
+							3,
+							0
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "69FD032C-6474-43DA-A562-CCA1212EE3B8",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Dodecahedron.geom",
+							"material": "Materials/PhongBlue.mat"
+						}
+					]
+				}
+			],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					5.100298089063754,
+					1,
+					0
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					0.5,
+					0.5,
+					0.5
+				]
+			},
+			"components": [
+				{
+					"uuid": "FEC40710-DB83-4710-A3CA-F25349C7525F",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/TorusKnot.geom",
+					"material": "Materials/LambertGreen.mat"
+				}
+			]
+		},
+		{
+			"name": "Bunny",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					3.608128552766231,
+					0.9698762900327893,
+					-2.465683981447418
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					0.004,
+					0.004,
+					0.004
+				]
+			},
+			"components": [
+				{
+					"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Models/stanford-bunny.fbx",
+					"material": "Materials/Normal.mat"
+				}
+			]
 		}
 	],
-	"version": "0.2.1"
+	"version": "0.2.2"
 }
