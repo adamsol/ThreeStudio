@@ -67,10 +67,7 @@ Game.prototype.update = function(dt)
 	this.world.stepSimulation(dt, 10, 1.0/60.0);
 
 	for (let body of this.bodies) {
-		let actor = body.getActor();
-		let transform = body.ammo.getCenterOfMassTransform();
-		actor.obj.position.copy(transform.getOrigin().threeVector3());
-		actor.obj.quaternion.copy(transform.getRotation().threeQuaternion());
+		body.update();
 	}
 
 	for (let script of this.scripts) {

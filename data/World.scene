@@ -30,11 +30,11 @@
 					"mass": 0
 				},
 				{
-					"uuid": "CEE0FA86-631D-439E-8D14-274AC7900D21",
+					"uuid": "8763FC6A-29E3-48DF-BBE8-57DEF0529A89",
 					"type": "BoxShape",
-					"width": 20,
+					"width": 2,
 					"height": 2,
-					"depth": 20
+					"depth": 2
 				},
 				{
 					"uuid": "7386DA07-F2BD-4D24-B4E5-102CC16CED6C",
@@ -44,52 +44,6 @@
 					"layers": 1,
 					"geometry": "Geometries/Box.geom",
 					"material": "Materials/PhysicalTiles.mat"
-				}
-			]
-		},
-		{
-			"name": "Wooden box",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					0,
-					1,
-					2.536700119046241
-				],
-				"rotation": [
-					0,
-					0,
-					0,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "7CBCB982-6DA1-4144-891A-CBFE429C2D9A",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "2F3E1E73-D1E0-47E3-8D8E-828DA1A4BC3C",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "F078BE97-8572-4546-A0A7-32C1F1210A80",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
 				}
 			]
 		},
@@ -374,18 +328,203 @@
 			]
 		},
 		{
-			"name": "Wooden box",
-			"children": [],
+			"name": "Stack1",
+			"children": [
+				{
+					"name": "Wooden box",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0,
+							1,
+							0.3
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "7CBCB982-6DA1-4144-891A-CBFE429C2D9A",
+							"type": "Body",
+							"mass": 1
+						},
+						{
+							"uuid": "EF43F609-8756-4D4D-B04F-E8F9AB0C5E85",
+							"type": "BoxShape",
+							"width": 2,
+							"height": 2,
+							"depth": 2
+						},
+						{
+							"uuid": "F078BE97-8572-4546-A0A7-32C1F1210A80",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Box.geom",
+							"material": "Materials/StandardCrate.mat"
+						}
+					]
+				},
+				{
+					"name": "Wooden box",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0,
+							3,
+							-0.5
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "91C86871-00B4-4060-B29E-4E302D115753",
+							"type": "Body",
+							"mass": 1
+						},
+						{
+							"uuid": "243E99F7-0C41-4F89-8CFC-9536B4B2BE03",
+							"type": "BoxShape",
+							"width": 2,
+							"height": 2,
+							"depth": 2
+						},
+						{
+							"uuid": "86EA7F71-0557-4740-A299-717E13C353B6",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Box.geom",
+							"material": "Materials/StandardCrate.mat"
+						}
+					]
+				},
+				{
+					"name": "Wooden box",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0.2,
+							5,
+							-1
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "9EAC05C0-5FEF-406C-9B15-8F20D5B62F07",
+							"type": "Body",
+							"mass": 1
+						},
+						{
+							"uuid": "BC8384DF-74B9-44A3-A657-9D5CA18DC267",
+							"type": "BoxShape",
+							"width": 2,
+							"height": 2,
+							"depth": 2
+						},
+						{
+							"uuid": "A621062C-8B97-413C-AA5B-D921AD9DD911",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Box.geom",
+							"material": "Materials/StandardCrate.mat"
+						}
+					]
+				},
+				{
+					"name": "Wooden box",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0,
+							7,
+							0
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "80E83B7D-8B70-4C1F-8A1B-06D60EF76340",
+							"type": "Body",
+							"mass": 1
+						},
+						{
+							"uuid": "57481DFD-C5A5-40A4-B029-2394DC7FD8E4",
+							"type": "BoxShape",
+							"width": 2,
+							"height": 2,
+							"depth": 2
+						},
+						{
+							"uuid": "7C1D9DF7-B0A4-480E-9565-A779B4A90E4F",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Box.geom",
+							"material": "Materials/StandardCrate.mat"
+						}
+					]
+				}
+			],
 			"transform": {
 				"type": "Transform",
 				"position": [
+					-0.4080857780487345,
 					0,
-					3,
-					2
+					2.8850045955068997
 				],
 				"rotation": [
 					0,
-					0,
+					-0.09388130788610437,
 					0,
 					"YXZ"
 				],
@@ -395,130 +534,152 @@
 					1
 				]
 			},
-			"components": [
-				{
-					"uuid": "91C86871-00B4-4060-B29E-4E302D115753",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "39BA27D1-2D4B-4B18-A5CB-15B83903EE81",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "86EA7F71-0557-4740-A299-717E13C353B6",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
-				}
-			]
+			"components": []
 		},
 		{
-			"name": "Wooden box",
-			"children": [],
+			"name": "Stack2",
+			"children": [
+				{
+					"name": "Cylinder",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0,
+							1,
+							0
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "15B8C2B9-6DA4-4845-B0A1-D49EB96247BA",
+							"type": "Body",
+							"mass": 1
+						},
+						{
+							"uuid": "9FA33F97-3759-458E-8D62-91B94BA60159",
+							"type": "CylinderShape",
+							"radius": 1,
+							"height": 2
+						},
+						{
+							"uuid": "4AC4195D-1472-4F11-BB2F-7CF7B5E001BF",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Cylinder.geom",
+							"material": "Materials/StandardWhite.mat"
+						}
+					]
+				},
+				{
+					"name": "Cylinder",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							-0.5,
+							3,
+							0
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "19FAD36E-D577-4474-91BE-6578797644C7",
+							"type": "Body",
+							"mass": 1
+						},
+						{
+							"uuid": "8E446631-FE27-426A-8C2A-1D8106AC1A0F",
+							"type": "CylinderShape",
+							"radius": 1,
+							"height": 2
+						},
+						{
+							"uuid": "94353D63-F98E-4C34-980D-F156B16825F7",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Cylinder.geom",
+							"material": "Materials/PhongBlue.mat"
+						}
+					]
+				},
+				{
+					"name": "Cone",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							0,
+							5,
+							0
+						],
+						"rotation": [
+							0,
+							0,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							1,
+							1,
+							1
+						]
+					},
+					"components": [
+						{
+							"uuid": "AEA8944F-9384-499D-8CC9-3ED5A5701E8E",
+							"type": "Body",
+							"mass": 1
+						},
+						{
+							"uuid": "63D58C69-D6F3-424C-AE48-9068C7D62077",
+							"type": "ConeShape",
+							"radius": 1,
+							"height": 2
+						},
+						{
+							"uuid": "958252D8-927B-455C-BAAB-C98962B8A4FF",
+							"type": "Mesh",
+							"castShadow": true,
+							"receiveShadow": true,
+							"layers": 1,
+							"geometry": "Geometries/Cone.geom",
+							"material": "Materials/StandardWhite.mat"
+						}
+					]
+				}
+			],
 			"transform": {
 				"type": "Transform",
 				"position": [
-					0.2,
-					5,
-					1
-				],
-				"rotation": [
 					0,
 					0,
-					0,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "9EAC05C0-5FEF-406C-9B15-8F20D5B62F07",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "487239BA-1B15-4699-98F6-30F63CCAEA36",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "A621062C-8B97-413C-AA5B-D921AD9DD911",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
-				}
-			]
-		},
-		{
-			"name": "Wooden box",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					0,
-					7,
-					2
-				],
-				"rotation": [
-					0,
-					0,
-					0,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "80E83B7D-8B70-4C1F-8A1B-06D60EF76340",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "F006DB4A-2633-4F68-AE9A-6A94C131600B",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "7C1D9DF7-B0A4-480E-9565-A779B4A90E4F",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
-				}
-			]
-		},
-		{
-			"name": "Cylinder",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					0,
-					1,
 					-2
 				],
 				"rotation": [
@@ -533,118 +694,7 @@
 					1
 				]
 			},
-			"components": [
-				{
-					"uuid": "15B8C2B9-6DA4-4845-B0A1-D49EB96247BA",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "A5454884-862E-4BF7-998F-63D9188AA1CB",
-					"type": "CylinderShape",
-					"radius": 1,
-					"height": 2
-				},
-				{
-					"uuid": "4AC4195D-1472-4F11-BB2F-7CF7B5E001BF",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Cylinder.geom",
-					"material": "Materials/StandardWhite.mat"
-				}
-			]
-		},
-		{
-			"name": "Cylinder",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					-0.5,
-					3,
-					-2
-				],
-				"rotation": [
-					0,
-					0,
-					0,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "19FAD36E-D577-4474-91BE-6578797644C7",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "C9D46054-2EF1-47F7-85C4-D30A1DDFF027",
-					"type": "CylinderShape",
-					"radius": 1,
-					"height": 2
-				},
-				{
-					"uuid": "94353D63-F98E-4C34-980D-F156B16825F7",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Cylinder.geom",
-					"material": "Materials/PhongBlue.mat"
-				}
-			]
-		},
-		{
-			"name": "Cone",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					0,
-					5,
-					-2
-				],
-				"rotation": [
-					0,
-					0,
-					0,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "AEA8944F-9384-499D-8CC9-3ED5A5701E8E",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "64CE6828-23B0-4603-B0CB-DC00CEB98A14",
-					"type": "ConeShape",
-					"radius": 1,
-					"height": 2
-				},
-				{
-					"uuid": "958252D8-927B-455C-BAAB-C98962B8A4FF",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Cone.geom",
-					"material": "Materials/StandardWhite.mat"
-				}
-			]
+			"components": []
 		}
 	],
 	"version": "0.2.2"

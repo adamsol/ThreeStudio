@@ -23,8 +23,10 @@ Body.prototype.create = function()
 	let actor = this.getActor();
 
 	let transform = new Ammo.btTransform();
-	transform.setOrigin(actor.obj.position.btVector3());
-	transform.setRotation(actor.obj.quaternion.btQuaternion());
+	let position = new THREE.Vector3();
+	transform.setOrigin(this.getWorldPosition(position).btVector3());
+	let quaternion = new THREE.Quaternion();
+	transform.setRotation(this.getWorldQuaternion(quaternion).btQuaternion());
 	let motion_state = new Ammo.btDefaultMotionState(transform);
 
 	let compound_shape = new Ammo.btCompoundShape();
@@ -33,6 +35,8 @@ Body.prototype.create = function()
 		transform.setIdentity();
 		compound_shape.addChildShape(transform, shape.create());
 	}
+	let scale = new THREE.Vector3();
+	compound_shape.setLocalScaling(actor.obj.getWorldScale(scale).btVector3());
 
 	let inertia = new Ammo.btVector3();
 	compound_shape.calculateLocalInertia(this.mass, inertia);
@@ -41,6 +45,24 @@ Body.prototype.create = function()
 	this.ammo = new Ammo.btRigidBody(body_info);
 
 	return this.ammo;
+}
+
+Body.prototype.update = function()
+{
+	let actor = this.getActor();
+	let parent = actor.obj.parent;
+
+	if (parent) {
+		scene.obj.attach(actor.obj);
+	}
+
+	let transform = this.ammo.getCenterOfMassTransform();
+	actor.obj.position.copy(transform.getOrigin().threeVector3());
+	actor.obj.quaternion.copy(transform.getRotation().threeQuaternion());
+
+	if (parent) {
+		parent.attach(actor.obj);
+	}
 }
 
 Body.prototype.export = function()
