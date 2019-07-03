@@ -14,6 +14,15 @@ function Shape()
 Shape.prototype = Object.create(Object3D.prototype);
 Shape.prototype.constructor = Shape;
 
+Shape.prototype.copy = function(source)
+{
+	Object3D.prototype.copy.call(this, source);
+	for (let name of Object.keys(getFields(this))) {
+		this[name] = source[name];
+	}
+	return this;
+}
+
 Shape.prototype.export = function()
 {
 	let json = this.toJSON().object;

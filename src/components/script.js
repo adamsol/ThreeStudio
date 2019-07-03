@@ -17,6 +17,15 @@ Script.FIELDS = {
 };
 Script.ICON = 'code';
 
+Script.prototype.copy = function(source)
+{
+	Object3D.prototype.copy.call(this, source);
+	for (let name of Object.keys(getFields(this))) {
+		this[name] = source[name];
+	}
+	return this;
+}
+
 Script.prototype.export = function()
 {
 	return {

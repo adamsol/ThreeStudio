@@ -65,6 +65,15 @@ Body.prototype.update = function()
 	}
 }
 
+Body.prototype.copy = function(source)
+{
+	Object3D.prototype.copy.call(this, source);
+	for (let name of Object.keys(getFields(this))) {
+		this[name] = source[name];
+	}
+	return this;
+}
+
 Body.prototype.export = function()
 {
 	let json = this.toJSON().object;
