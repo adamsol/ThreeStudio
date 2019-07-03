@@ -20,9 +20,12 @@ Model.prototype.export = function()
 function BoxModel() {
 	return new Model(getAssetSync('Geometries', 'Box.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }
+function SphereModel() {
+	return new Model(getAssetSync('Geometries', 'Sphere.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
+}
 function CylinderModel() {
 	return new Model(getAssetSync('Geometries', 'Cylinder.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }
-function SphereModel() {
-	return new Model(getAssetSync('Geometries', 'Sphere.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
+function ConeModel() {
+	return new Model(getAssetSync('Geometries', 'Cone.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }

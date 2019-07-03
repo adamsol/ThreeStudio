@@ -88,6 +88,15 @@ Actor.prototype.addComponent = function(component)
 
 	if (component.isLight && !component.isAmbientLight) {
 		component.castShadow = true;
+
+		if (component.isDirectionalLight) {
+			component.shadow.camera.left = -10;
+			component.shadow.camera.right = 10;
+			component.shadow.camera.bottom = -10;
+			component.shadow.camera.top = 10;
+			component.shadow.mapSize.width = 1024;
+			component.shadow.mapSize.height = 1024;
+		}
 	}
 
 	if (component.isBody) {

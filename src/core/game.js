@@ -41,7 +41,7 @@ Game.prototype.initialize = function()
 			this.scripts.push(obj);
 		}
 		else if (obj.isBody) {
-			this.world.addBody(obj.create());
+			this.world.addRigidBody(obj.create());
 			this.bodies.push(obj);
 		}
 	});
@@ -64,12 +64,13 @@ Game.prototype.update = function(dt)
 		return;
 	}
 
-	this.world.step(1.0/60, dt, 10);
+	this.world.stepSimulation(dt, 10, 1.0/60.0);
 
 	for (let body of this.bodies) {
 		let actor = body.getActor();
-		actor.obj.position.copy(body.cannon.position);
-		actor.obj.quaternion.copy(body.cannon.quaternion);
+		let transform = body.ammo.getCenterOfMassTransform();
+		actor.obj.position.copy(transform.getOrigin().threeVector3());
+		actor.obj.quaternion.copy(transform.getRotation().threeQuaternion());
 	}
 
 	for (let script of this.scripts) {

@@ -7,7 +7,7 @@ function Body()
 	this.type = 'Body';
 
 	this.mass = 1;
-	this.cannon = null;
+	this.ammo = null;
 }
 
 Body.prototype = Object.create(Object3D.prototype);
@@ -21,15 +21,26 @@ Body.ICON = 'bowling-ball';
 Body.prototype.create = function()
 {
 	let actor = this.getActor();
-	this.cannon = new CANNON.Body({
-		mass: this.mass,
-		position: actor.obj.position,
-		quaternion: actor.obj.quaternion,
-	});
+
+	let transform = new Ammo.btTransform();
+	transform.setOrigin(actor.obj.position.btVector3());
+	transform.setRotation(actor.obj.quaternion.btQuaternion());
+	let motion_state = new Ammo.btDefaultMotionState(transform);
+
+	let compound_shape = new Ammo.btCompoundShape();
 	for (let shape of actor.getComponents(Shape)) {
-		this.cannon.addShape(shape.create());
+		let transform = new Ammo.btTransform();
+		transform.setIdentity();
+		compound_shape.addChildShape(transform, shape.create());
 	}
-	return this.cannon;
+
+	let inertia = new Ammo.btVector3();
+	compound_shape.calculateLocalInertia(this.mass, inertia);
+
+	let body_info = new Ammo.btRigidBodyConstructionInfo(this.mass, motion_state, compound_shape, inertia);
+	this.ammo = new Ammo.btRigidBody(body_info);
+
+	return this.ammo;
 }
 
 Body.prototype.export = function()

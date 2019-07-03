@@ -14,7 +14,7 @@ const Field = Object.freeze({
 function getFields(obj)
 {
 	let fields = {};
-	obj = obj.constructor;
+	obj = obj instanceof Function ? obj : obj.constructor;
 	do {
 		if (obj.FIELDS) {
 			fields = $.extend({}, obj.FIELDS, fields);  // order matters

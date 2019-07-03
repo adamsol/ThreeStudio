@@ -14,7 +14,7 @@ function update(dt)
 	if (input.justPressed[Keys.MINUS]) {
 		speed -= 1;
 	}
-	speed += input.mouseWheel / 10;
+	speed += input.mouseWheel / 50;
 
 	actor.transform.rotation.y += dt * speed;
 }

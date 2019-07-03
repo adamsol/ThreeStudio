@@ -3,9 +3,8 @@ function SphereShape()
 {
 	Shape.call(this);
 
+	this.isSphereShape = true;
 	this.type = 'SphereShape';
-
-	this.radius = 1;
 }
 
 SphereShape.prototype = Object.create(Shape.prototype);
@@ -18,14 +17,5 @@ SphereShape.ICON = 'shapes';
 
 SphereShape.prototype.create = function()
 {
-	return new CANNON.Sphere(this.radius);
-}
-
-SphereShape.prototype.export = function()
-{
-	let json = Shape.prototype.export.call(this);
-	for (let attr of ['radius']) {
-		json[attr] = this[attr];
-	}
-	return json;
+	return new Ammo.btSphereShape(this.radius);
 }

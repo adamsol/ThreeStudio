@@ -6,10 +6,10 @@ function ActorInspectorView(container, state)
 	const self = this;
 
 	this.initToolbox({
-		"Model": [BoxModel, SphereModel, CylinderModel],
+		"Model": [BoxModel, SphereModel, CylinderModel, ConeModel],
 		"Light": [AmbientLight, DirectionalLight, PointLight],
 		"Camera": [PerspectiveCamera, OrthographicCamera],
-		"Physics": [Body, BoxShape, SphereShape],
+		"Physics": [Body, BoxShape, SphereShape, CylinderShape, ConeShape],
 		"Script": Script,
 	});
 	this.toolbox.on('click', '.component-add li[data-component-name]', function(event) {

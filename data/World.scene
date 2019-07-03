@@ -30,7 +30,7 @@
 					"mass": 0
 				},
 				{
-					"uuid": "AD236A84-2959-4D6D-846F-2F2EA2556AD7",
+					"uuid": "CEE0FA86-631D-439E-8D14-274AC7900D21",
 					"type": "BoxShape",
 					"width": 20,
 					"height": 2,
@@ -55,7 +55,7 @@
 				"position": [
 					0,
 					1,
-					0
+					2.536700119046241
 				],
 				"rotation": [
 					0,
@@ -76,7 +76,7 @@
 					"mass": 1
 				},
 				{
-					"uuid": "095FA61F-0999-47FA-80AF-D05F03B4145F",
+					"uuid": "2F3E1E73-D1E0-47E3-8D8E-828DA1A4BC3C",
 					"type": "BoxShape",
 					"width": 2,
 					"height": 2,
@@ -90,11 +90,6 @@
 					"layers": 1,
 					"geometry": "Geometries/Box.geom",
 					"material": "Materials/StandardCrate.mat"
-				},
-				{
-					"uuid": "1C417063-5E6E-4D7E-80E0-B41ED3E8B33B",
-					"type": "Script",
-					"code": "Scripts/Test.js"
 				}
 			]
 		},
@@ -104,13 +99,13 @@
 			"transform": {
 				"type": "Transform",
 				"position": [
-					-4,
+					-5.727350845943621,
 					0,
-					0
+					3.9607401225999452
 				],
 				"rotation": [
 					0,
-					1.0471975511965976,
+					2.3789458805246024,
 					0,
 					"YXZ"
 				],
@@ -141,9 +136,9 @@
 					"transform": {
 						"type": "Transform",
 						"position": [
-							2.971571094684958,
+							3.277370321056905,
 							5.533115059100336,
-							2
+							4.908142337800964
 						],
 						"rotation": [
 							0,
@@ -238,14 +233,14 @@
 			"transform": {
 				"type": "Transform",
 				"position": [
-					5.898422082301645,
-					6.125552735727383,
-					2.921494305512451
+					9.473715451328607,
+					6.879700470949251,
+					2.1021082316915676
 				],
 				"rotation": [
-					-0.6148983831019691,
-					1.038468943642648,
-					0.026553379801472127,
+					-0.46174269475899304,
+					1.4112705136768333,
+					0.06981618768228329,
 					"YXZ"
 				],
 				"scale": [
@@ -271,14 +266,14 @@
 			]
 		},
 		{
-			"name": "Wooden box",
+			"name": "Bunny",
 			"children": [],
 			"transform": {
 				"type": "Transform",
 				"position": [
-					0.5594883497549092,
-					4.030656034420478,
-					0.9356913854471685
+					-0.06122610427497488,
+					0.9698762900327893,
+					-7.166425613717072
 				],
 				"rotation": [
 					0,
@@ -287,170 +282,25 @@
 					"YXZ"
 				],
 				"scale": [
-					1,
-					1,
-					1
+					0.004,
+					0.004,
+					0.004
 				]
 			},
 			"components": [
 				{
-					"uuid": "B85E15B4-AF2E-4A0F-BA51-1638B94733C7",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "3DBD50EB-D4A5-4620-BD14-3356E8C4D59D",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "2F4607AA-9954-4A7E-8DC7-0C2D6540A3F5",
+					"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
 					"type": "Mesh",
 					"castShadow": true,
 					"receiveShadow": true,
 					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
-				}
-			]
-		},
-		{
-			"name": "Wooden box",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					0.43919993197081386,
-					6.516863805020529,
-					0.42689795286861265
-				],
-				"rotation": [
-					0,
-					-2.325157639332205,
-					0,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "F3989A64-29EE-4A8F-8469-1985FFBA496A",
-					"type": "Body",
-					"mass": 1
+					"geometry": "Models/stanford-bunny.fbx",
+					"material": "Materials/Normal.mat"
 				},
 				{
-					"uuid": "988083CE-4BBD-4741-B385-9D7E82E6C0FF",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "9D757687-59CF-4313-966E-14FEFA1F60E7",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
-				}
-			]
-		},
-		{
-			"name": "Wooden box",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					0.3239684478853216,
-					9.221817652557869,
-					0.314932659551296
-				],
-				"rotation": [
-					2.7755575615628914e-16,
-					-1.7195534844007947,
-					0.9230344239412769,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "16049759-CE78-4D7D-A5A6-47D3DB428143",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "D3B9B1FB-92E2-4F6E-A74D-D2DE05F20970",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "B9CA3946-7FB7-43F9-93DF-765A3DAB9F44",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
-				}
-			]
-		},
-		{
-			"name": "Wooden box",
-			"children": [],
-			"transform": {
-				"type": "Transform",
-				"position": [
-					-0.28272517201562164,
-					12.449622611147017,
-					-0.42116989196984134
-				],
-				"rotation": [
-					-0.3652944168441099,
-					-1.5345234065925148,
-					1.5051158145724293,
-					"YXZ"
-				],
-				"scale": [
-					1,
-					1,
-					1
-				]
-			},
-			"components": [
-				{
-					"uuid": "5C607916-1CA1-4A12-AA6D-7B05A30AFBA0",
-					"type": "Body",
-					"mass": 1
-				},
-				{
-					"uuid": "4B52C6B4-1A88-4806-8C24-1219023AA914",
-					"type": "BoxShape",
-					"width": 2,
-					"height": 2,
-					"depth": 2
-				},
-				{
-					"uuid": "32AEC8AE-C88A-454C-9D26-F45295484896",
-					"type": "Mesh",
-					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
-					"geometry": "Geometries/Box.geom",
-					"material": "Materials/StandardCrate.mat"
+					"uuid": "61F893F1-C5F9-4C23-B8E6-E1900224D671",
+					"type": "Script",
+					"code": "Scripts/Test.js"
 				}
 			]
 		},
@@ -495,9 +345,9 @@
 			"transform": {
 				"type": "Transform",
 				"position": [
-					5.100298089063754,
+					2.408484961931613,
 					1,
-					0
+					-7.007537188910542
 				],
 				"rotation": [
 					0,
@@ -524,14 +374,14 @@
 			]
 		},
 		{
-			"name": "Bunny",
+			"name": "Wooden box",
 			"children": [],
 			"transform": {
 				"type": "Transform",
 				"position": [
-					3.608128552766231,
-					0.9698762900327893,
-					-2.465683981447418
+					0,
+					3,
+					2
 				],
 				"rotation": [
 					0,
@@ -540,20 +390,259 @@
 					"YXZ"
 				],
 				"scale": [
-					0.004,
-					0.004,
-					0.004
+					1,
+					1,
+					1
 				]
 			},
 			"components": [
 				{
-					"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
+					"uuid": "91C86871-00B4-4060-B29E-4E302D115753",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "39BA27D1-2D4B-4B18-A5CB-15B83903EE81",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
+				{
+					"uuid": "86EA7F71-0557-4740-A299-717E13C353B6",
 					"type": "Mesh",
 					"castShadow": true,
 					"receiveShadow": true,
 					"layers": 1,
-					"geometry": "Models/stanford-bunny.fbx",
-					"material": "Materials/Normal.mat"
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Wooden box",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0.2,
+					5,
+					1
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "9EAC05C0-5FEF-406C-9B15-8F20D5B62F07",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "487239BA-1B15-4699-98F6-30F63CCAEA36",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
+				{
+					"uuid": "A621062C-8B97-413C-AA5B-D921AD9DD911",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Wooden box",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0,
+					7,
+					2
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "80E83B7D-8B70-4C1F-8A1B-06D60EF76340",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "F006DB4A-2633-4F68-AE9A-6A94C131600B",
+					"type": "BoxShape",
+					"width": 2,
+					"height": 2,
+					"depth": 2
+				},
+				{
+					"uuid": "7C1D9DF7-B0A4-480E-9565-A779B4A90E4F",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Box.geom",
+					"material": "Materials/StandardCrate.mat"
+				}
+			]
+		},
+		{
+			"name": "Cylinder",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0,
+					1,
+					-2
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "15B8C2B9-6DA4-4845-B0A1-D49EB96247BA",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "A5454884-862E-4BF7-998F-63D9188AA1CB",
+					"type": "CylinderShape",
+					"radius": 1,
+					"height": 2
+				},
+				{
+					"uuid": "4AC4195D-1472-4F11-BB2F-7CF7B5E001BF",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Cylinder.geom",
+					"material": "Materials/StandardWhite.mat"
+				}
+			]
+		},
+		{
+			"name": "Cylinder",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					-0.5,
+					3,
+					-2
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "19FAD36E-D577-4474-91BE-6578797644C7",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "C9D46054-2EF1-47F7-85C4-D30A1DDFF027",
+					"type": "CylinderShape",
+					"radius": 1,
+					"height": 2
+				},
+				{
+					"uuid": "94353D63-F98E-4C34-980D-F156B16825F7",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Cylinder.geom",
+					"material": "Materials/PhongBlue.mat"
+				}
+			]
+		},
+		{
+			"name": "Cone",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0,
+					5,
+					-2
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "AEA8944F-9384-499D-8CC9-3ED5A5701E8E",
+					"type": "Body",
+					"mass": 1
+				},
+				{
+					"uuid": "64CE6828-23B0-4603-B0CB-DC00CEB98A14",
+					"type": "ConeShape",
+					"radius": 1,
+					"height": 2
+				},
+				{
+					"uuid": "958252D8-927B-455C-BAAB-C98962B8A4FF",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Cone.geom",
+					"material": "Materials/StandardWhite.mat"
 				}
 			]
 		}
