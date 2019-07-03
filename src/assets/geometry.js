@@ -8,7 +8,6 @@ CylinderGeometry = THREE.CylinderGeometry;
 DodecahedronGeometry = THREE.DodecahedronGeometry;
 IcosahedronGeometry = THREE.IcosahedronGeometry;
 OctahedronGeometry = THREE.OctahedronGeometry;
-PlaneGeometry = THREE.PlaneGeometry;
 SphereGeometry = THREE.SphereGeometry;
 TetrahedronGeometry = THREE.TetrahedronGeometry;
 TorusGeometry = THREE.TorusGeometry;
@@ -40,10 +39,6 @@ IcosahedronGeometry.FIELDS = {
 };
 OctahedronGeometry.FIELDS = {
 	radius: Field.Decimal(1),
-};
-PlaneGeometry.FIELDS = {
-	width: Field.Decimal(1),
-	height: Field.Decimal(1),
 };
 SphereGeometry.FIELDS = {
 	radius: Field.Decimal(1),

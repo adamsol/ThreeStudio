@@ -23,9 +23,6 @@ function BoxModel() {
 function CylinderModel() {
 	return new Model(getAssetSync('Geometries', 'Cylinder.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }
-function PlaneModel() {
-	return new Model(getAssetSync('Geometries', 'Plane.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
-}
 function SphereModel() {
 	return new Model(getAssetSync('Geometries', 'Sphere.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }
