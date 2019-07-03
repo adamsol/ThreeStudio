@@ -192,9 +192,9 @@
 					2.1021082316915676
 				],
 				"rotation": [
-					-0.46174269475899304,
-					1.4112705136768333,
-					0.06981618768228329,
+					-0.3596651485432718,
+					1.4188826809873958,
+					0.044600232571647004,
 					"YXZ"
 				],
 				"scale": [
@@ -260,62 +260,32 @@
 		},
 		{
 			"name": "Torus knot",
-			"children": [
-				{
-					"name": "Dodecahedron",
-					"children": [],
-					"transform": {
-						"type": "Transform",
-						"position": [
-							0,
-							3,
-							0
-						],
-						"rotation": [
-							0,
-							0,
-							0,
-							"YXZ"
-						],
-						"scale": [
-							1,
-							1,
-							1
-						]
-					},
-					"components": [
-						{
-							"uuid": "69FD032C-6474-43DA-A562-CCA1212EE3B8",
-							"type": "Mesh",
-							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
-							"geometry": "Geometries/Dodecahedron.geom",
-							"material": "Materials/PhongBlue.mat"
-						}
-					]
-				}
-			],
+			"children": [],
 			"transform": {
 				"type": "Transform",
 				"position": [
-					2.408484961931613,
-					1,
-					-7.007537188910542
+					1.0264573049494663,
+					6.4720619743235295,
+					-2.122980872113079
 				],
 				"rotation": [
-					0,
+					-1.5343557226152895,
 					0,
 					0,
 					"YXZ"
 				],
 				"scale": [
-					0.5,
-					0.5,
-					0.5
+					1,
+					1,
+					1
 				]
 			},
 			"components": [
+				{
+					"uuid": "555ED65E-60AB-4392-9939-6D84CB117C0A",
+					"type": "Body",
+					"mass": 1
+				},
 				{
 					"uuid": "FEC40710-DB83-4710-A3CA-F25349C7525F",
 					"type": "Mesh",
@@ -324,6 +294,12 @@
 					"layers": 1,
 					"geometry": "Geometries/TorusKnot.geom",
 					"material": "Materials/LambertGreen.mat"
+				},
+				{
+					"uuid": "DB4E76B3-88F4-438E-96B8-BBD163D5FAB4",
+					"type": "MeshShape",
+					"geometry": "Geometries/TorusKnot.geom",
+					"convex": true
 				}
 			]
 		},
@@ -635,7 +611,7 @@
 					"transform": {
 						"type": "Transform",
 						"position": [
-							0,
+							-0.3,
 							5,
 							0
 						],
@@ -695,6 +671,51 @@
 				]
 			},
 			"components": []
+		},
+		{
+			"name": "Dodecahedron",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					-0.20578875154965615,
+					9.146442035180646,
+					1.7922698115969786
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "65E46051-DA92-44D4-8629-6B466413EF40",
+					"type": "Body",
+					"mass": 0.2
+				},
+				{
+					"uuid": "69FD032C-6474-43DA-A562-CCA1212EE3B8",
+					"type": "Mesh",
+					"castShadow": true,
+					"receiveShadow": true,
+					"layers": 1,
+					"geometry": "Geometries/Dodecahedron.geom",
+					"material": "Materials/PhongBlue.mat"
+				},
+				{
+					"uuid": "15961717-D8B8-4F53-933C-616EB6FB2985",
+					"type": "MeshShape",
+					"geometry": "Geometries/Dodecahedron.geom",
+					"convex": true
+				}
+			]
 		}
 	],
 	"version": "0.2.2"

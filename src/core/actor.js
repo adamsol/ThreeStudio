@@ -105,6 +105,13 @@ Actor.prototype.addComponent = function(component)
 		}
 	}
 
+	if (component.isMeshShape) {
+		let model = this.getComponent(Model);
+		if (model) {
+			component.geometry = model.geometry;
+		}
+	}
+
 	let sprite_name = component.type.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 	let sprite_path = 'gfx/sprites/' + sprite_name + '.png';
 	if (fs.existsSync(sprite_path)) {

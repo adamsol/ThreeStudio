@@ -7,7 +7,7 @@ function Shape()
 	this.type = 'Shape';
 
 	for (let [name, field] of Object.entries(getFields(this))) {
-		this[name] = field.default;
+		this[name] = field.default === undefined ? null : field.default;
 	}
 }
 
@@ -27,8 +27,12 @@ Shape.prototype.export = function()
 {
 	let json = this.toJSON().object;
 	delete json.layers;
-	for (let name of Object.keys(getFields(this))) {
-		json[name] = this[name];
+	for (let [name, field] of Object.entries(getFields(this))) {
+		if (field.type == 'Reference') {
+			json[name] = this[name].asset.path;
+		} else {
+			json[name] = this[name];
+		}
 	}
 	return json;
 }
@@ -36,8 +40,13 @@ Shape.prototype.export = function()
 Shape.import = async function(json)
 {
 	let obj = new window[json.type]();
-	for (let name of Object.keys(getFields(window[json.type]))) {
-		obj[name] = json[name];
+	obj.uuid = json.uuid;
+	for (let [name, field] of Object.entries(getFields(window[json.type]))) {
+		if (field.type == 'Reference') {
+			obj[name] = await getAsset(json[name]);
+		} else {
+			obj[name] = json[name];
+		}
 	}
 	return obj;
 }

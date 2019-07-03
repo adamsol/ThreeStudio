@@ -30,10 +30,14 @@ Body.prototype.create = function()
 	let motion_state = new Ammo.btDefaultMotionState(transform);
 
 	let compound_shape = new Ammo.btCompoundShape();
-	for (let shape of actor.getComponents(Shape)) {
+	for (let component of actor.getComponents(Shape)) {
+		let shape = component.create();
+		if (!shape) {
+			continue;
+		}
 		let transform = new Ammo.btTransform();
 		transform.setIdentity();
-		compound_shape.addChildShape(transform, shape.create());
+		compound_shape.addChildShape(transform, shape);
 	}
 	let scale = new THREE.Vector3();
 	compound_shape.setLocalScaling(actor.obj.getWorldScale(scale).btVector3());
@@ -43,6 +47,8 @@ Body.prototype.create = function()
 
 	let body_info = new Ammo.btRigidBodyConstructionInfo(this.mass, motion_state, compound_shape, inertia);
 	this.ammo = new Ammo.btRigidBody(body_info);
+	this.ammo.setSleepingThresholds(0.1, 1.0);
+	this.ammo.setDamping(0.2, 0.1);
 
 	return this.ammo;
 }

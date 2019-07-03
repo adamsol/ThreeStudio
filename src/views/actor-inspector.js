@@ -9,7 +9,7 @@ function ActorInspectorView(container, state)
 		"Model": [BoxModel, SphereModel, CylinderModel, ConeModel],
 		"Light": [AmbientLight, DirectionalLight, PointLight],
 		"Camera": [PerspectiveCamera, OrthographicCamera],
-		"Physics": [Body, BoxShape, SphereShape, CylinderShape, ConeShape],
+		"Physics": [Body, BoxShape, SphereShape, CylinderShape, ConeShape, MeshShape],
 		"Script": Script,
 	});
 	this.toolbox.on('click', '.component-add li[data-component-name]', function(event) {
