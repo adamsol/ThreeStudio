@@ -4,8 +4,12 @@ function SceneRendererView(container, state)
 	RendererView.call(this, ...arguments);
 
 	this.camera = new THREE.PerspectiveCamera(75, 1, 0.01, 1000);
-	this.camera.rotation.order = 'YXZ';
-	this.camera.position.set(0.0, 1.0, 8.0);
+	if (state.camera) {
+		this.camera.position.fromArray(state.camera.position);
+		this.camera.rotation.fromArray(state.camera.rotation);
+	} else {
+		this.camera.rotation.order = 'YXZ';
+	}
 	this.camera.layers.mask = -1;  // all layers
 
 	this.composer = new THREE.EffectComposer(this.renderer);
@@ -68,6 +72,7 @@ SceneRendererView.prototype.animate = function()
 	}
 
 	this.controls.camera.update(dt);
+	this.container.extendState({camera: {position: this.camera.position.toArray(), rotation: this.camera.rotation.toArray()}});
 
 	this.composer.render(dt);
 
