@@ -10,11 +10,16 @@ Model.ICON = 'gem';
 
 Model.prototype.export = function()
 {
-	let json = this.toJSON().object;
-	for (let attr of ['geometry', 'material']) {
-		json[attr] = this[attr].asset.path;
+	// Mesh.toJSON() takes very much time, since it tries to serialize geometry and textures.
+	return {
+		uuid: this.uuid,
+		type: this.type,
+		castShadow: this.castShadow,
+		receiveShadow: this.receiveShadow,
+		layers: this.layers.mask,
+		geometry: this.geometry.asset.path,
+		material: this.material.asset.path,
 	}
-	return json;
 }
 
 function BoxModel() {
