@@ -25,7 +25,6 @@ Game.prototype.initialize = function()
 
 	this.world = new World();
 
-	this.bodies = [];
 	this.scripts = [];
 
 	scene.obj.traverse(obj => {
@@ -41,8 +40,7 @@ Game.prototype.initialize = function()
 			this.scripts.push(obj);
 		}
 		else if (obj.isBody) {
-			this.world.addRigidBody(obj.create());
-			this.bodies.push(obj);
+			this.world.addActor(obj.getActor());
 		}
 	});
 
@@ -64,11 +62,7 @@ Game.prototype.update = function(dt)
 		return;
 	}
 
-	this.world.stepSimulation(dt, 10, 1.0/60.0);
-
-	for (let body of this.bodies) {
-		body.update();
-	}
+	this.world.update(dt);
 
 	for (let script of this.scripts) {
 		script.functions.update(dt);

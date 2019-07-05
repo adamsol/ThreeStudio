@@ -1534,6 +1534,36 @@
 					"mass": 3
 				}
 			]
+		},
+		{
+			"name": "BallSpawner",
+			"children": [],
+			"transform": {
+				"type": "Transform",
+				"position": [
+					0,
+					0,
+					0
+				],
+				"rotation": [
+					0,
+					0,
+					0,
+					"YXZ"
+				],
+				"scale": [
+					1,
+					1,
+					1
+				]
+			},
+			"components": [
+				{
+					"uuid": "A7B15C13-4A50-440F-809F-0ADFFE000B53",
+					"type": "Script",
+					"code": "Scripts/Balls.js"
+				}
+			]
 		}
 	],
 	"version": "0.2.2"

@@ -24,9 +24,9 @@ Body.prototype.create = function()
 
 	let transform = new Ammo.btTransform();
 	let position = new THREE.Vector3();
-	transform.setOrigin(this.getWorldPosition(position).btVector3());
+	transform.setOrigin(actor.obj.getWorldPosition(position).btVector3());
 	let quaternion = new THREE.Quaternion();
-	transform.setRotation(this.getWorldQuaternion(quaternion).btQuaternion());
+	transform.setRotation(actor.obj.getWorldQuaternion(quaternion).btQuaternion());
 	let motion_state = new Ammo.btDefaultMotionState(transform);
 
 	let compound_shape = new Ammo.btCompoundShape();
