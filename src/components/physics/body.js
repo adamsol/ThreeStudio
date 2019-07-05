@@ -30,15 +30,41 @@ Body.prototype.create = function()
 	let motion_state = new Ammo.btDefaultMotionState(transform);
 
 	let compound_shape = new Ammo.btCompoundShape();
-	for (let component of actor.getComponents(Shape)) {
-		let shape = component.create();
-		if (!shape) {
-			continue;
+
+	let objects = [];
+	// We store objects in an array, because then we may detach and attach them later to calculate local transform.
+	actor.obj.traverse(obj => {
+		if (obj.actor) {
+			objects.push(obj);
 		}
-		let transform = new Ammo.btTransform();
-		transform.setIdentity();
-		compound_shape.addChildShape(transform, shape);
+	});
+	for (let obj of objects) {
+		for (let component of obj.actor.getComponents(Shape)) {
+			let shape = component.create();
+			if (!shape) {
+				continue;
+			}
+
+			let parent = obj.parent;
+			if (obj !== actor.obj && parent !== actor.obj) {
+				actor.obj.attach(obj);
+			}
+
+			let transform = new Ammo.btTransform();
+			transform.setIdentity();
+			if (obj !== actor.obj) {
+				transform.setOrigin(obj.position.btVector3());
+				transform.setRotation(obj.quaternion.btQuaternion());
+				shape.setLocalScaling(obj.scale.btVector3());
+			}
+			compound_shape.addChildShape(transform, shape);
+
+			if (obj !== actor.obj && parent !== actor.obj) {
+				parent.attach(obj);
+			}
+		}
 	}
+
 	let scale = new THREE.Vector3();
 	compound_shape.setLocalScaling(actor.obj.getWorldScale(scale).btVector3());
 
