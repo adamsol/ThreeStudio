@@ -136,6 +136,8 @@ ActorInspectorView.prototype.refreshInput = function(input, force)
 	} else {
 		if (value && value.serialize) {
 			value = value.serialize();
+		} else if (input.hasClass('decimal')) {
+			value = value.toFixed(8).replace(/\.?0*$/, '').replace(/^-0$/, '0');
 		}
 		input.val(value);
 		if (input.hasClass('color')) {
