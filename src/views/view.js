@@ -47,6 +47,6 @@ GoldenLayout.prototype.openView = function(view, parent, state)
 		type: 'component',
 		title: view.TITLE,
 		componentName: view.NAME,
-		componentState: state || {},
+		componentState: state || (typeof view.defaultState == 'function' ? view.defaultState() : {}),
 	});
 }

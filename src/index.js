@@ -148,7 +148,7 @@ layout.on('stackCreated', (stack) => {
 			</button>\
 			<ul class="dropdown-menu">{}</ul>\
 		</div>\
-	'.format($.map(views, view => view.TITLE ? '<li class="dropdown-item" data-view="{1}">{0.TITLE}</li>'.format(view) : '').join('')));
+	'.format($.map(views, view => view.TITLE ? '<li class="dropdown-item" data-view="{0.NAME}">{0.TITLE}</li>'.format(view) : '').join('')));
 	button.on('click', 'li.dropdown-item', function() {
 		layout.openView($(this).data('view'), stack);
 	});

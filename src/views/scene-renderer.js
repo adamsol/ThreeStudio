@@ -8,6 +8,7 @@ function SceneRendererView(container, state)
 		this.camera.position.fromArray(state.camera.position);
 		this.camera.rotation.fromArray(state.camera.rotation);
 	} else {
+		this.camera.position.set(0, 5, 10);
 		this.camera.rotation.order = 'YXZ';
 	}
 	this.camera.layers.mask = -1;  // all layers
@@ -47,6 +48,14 @@ SceneRendererView.TITLE = "Scene Renderer";
 SceneRendererView.ALLOW_MULTIPLE = true;
 
 views[SceneRendererView.NAME] = SceneRendererView;
+
+SceneRendererView.defaultState = function()
+{
+	for (let view of layout.findViews(SceneRendererView)) {
+		return view.container.getState();
+	}
+	return {};
+};
 
 SceneRendererView.prototype.refresh = function()
 {
