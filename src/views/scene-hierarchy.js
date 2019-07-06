@@ -30,7 +30,7 @@ function SceneHierarchyView(container, state)
 	this.hierarchy = $('<div class="hierarchy"></div>').appendTo(this.element);
 	this.hierarchy.jstree({
 		core: {
-			multiple: false,
+			multiple: true,
 			check_callback: true,
 			data: this.buildHierarchy(scene),
 		},
@@ -167,7 +167,7 @@ SceneHierarchyView.prototype.onNodeMove = function(event, data)
 		let actor = scene.getActor(node.id);
 		let parent = scene.getActor(data.parent) || scene;
 		actor.setParent(parent);
-		for (let sibling of this.tree.get_siblings(node)) {
+		for (let sibling of this.tree.get_sibling_nodes(node)) {
 			if (sibling.data.order > node.data.order) {
 				sibling.data.order -= 1;
 			}

@@ -1,15 +1,15 @@
 
-$.jstree.core.prototype.get_children = function(obj)
+$.jstree.core.prototype.get_child_nodes = function(obj)
 {
 	return this.get_node(obj).children.map(this.get_node.lock(1), this);
 }
 
-$.jstree.core.prototype.get_parent = function(obj)
+$.jstree.core.prototype.get_parent_node = function(obj)
 {
-	return this.get_node(this.get_node(obj).parent);
+	return this.get_node(this.get_parent(obj));
 }
 
-$.jstree.core.prototype.get_siblings = function(obj)
+$.jstree.core.prototype.get_sibling_nodes = function(obj)
 {
-	return this.get_children(this.get_parent(obj));
+	return this.get_child_nodes(this.get_parent(obj));
 }

@@ -53,6 +53,7 @@ SceneRendererView.prototype.refresh = function()
 	scene.obj.remove(this.controls.transform);
 	this.controls.transform = new THREE.TransformControls(this.camera, this.renderer.domElement);
 	this.controls.transform.space = 'local';
+	this.controls.transform.addEventListener('change', this.onTransformControlsChange.bind(this));
 	scene.obj.add(this.controls.transform);
 
 	this.passes.render.scene = scene.obj;
@@ -79,6 +80,24 @@ SceneRendererView.prototype.animate = function()
 	this.controls.transform.visible = false;
 
 	requestAnimationFrame(this.animate.bind(this));
+}
+
+SceneRendererView.prototype.onTransformControlsChange = function()
+{
+	if (!this.controls.transform.object) {
+		return;
+	}
+
+	// Update actors using child objects of the TransformControls center object.
+	for (let obj of this.controls.transform.object.children) {
+		let actor = obj.actor;
+		let parent = actor.parent.obj;
+		scene.obj.attach(actor.obj);
+		obj.getWorldPosition(actor.obj.position);
+		obj.getWorldQuaternion(actor.obj.quaternion);
+		obj.getWorldScale(actor.obj.scale);
+		parent.attach(actor.obj);
+	}
 }
 
 SceneRendererView.prototype.onResize = function()
@@ -108,7 +127,11 @@ SceneRendererView.prototype.onMouseDown = function(event)
 		this.canvas.on('mouseup', function(event) {
 			if (event.which == Mouse.LEFT) {
 				if (obj) {
-					scene.setSelection([obj.getActor().id]);
+					if (event.ctrlKey) {
+						scene.xorSelection([obj.getActor().id]);
+					} else {
+						scene.setSelection([obj.getActor().id]);
+					}
 				} else {
 					scene.setSelection([]);
 				}
@@ -136,13 +159,29 @@ SceneRendererView.prototype.onKeyDown = function(event)
 	}
 }
 
-SceneRendererView.prototype.setSelection = function(actors)
+SceneRendererView.prototype.setSelection = function(actors, center)
 {
 	if (actors.length) {
-		this.controls.transform.attach(actors[0].obj);
+		this.controls.transform.attach(center);
 		this.controls.transform.visible = false;
 	} else {
 		this.controls.transform.detach();
 	}
-	this.passes.outline.selectedObjects = actors.prop('obj');
+
+	let objects = [];
+	for (let actor of actors) {
+		let a = actor;
+		while (a) {
+			if (actors.includes(a.parent)) {
+				break;
+			}
+			a = a.parent;
+		}
+		// When an object and its ancestor are both controlled by OutlinePass, the object will disappear,
+		// so we leave the ancestor only.
+		if (!a) {
+			objects.push(actor.obj);
+		}
+	}
+	this.passes.outline.selectedObjects = objects;
 }
