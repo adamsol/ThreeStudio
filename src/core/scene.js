@@ -27,10 +27,15 @@ Scene.prototype.pickObject = function(coords, camera)
 	return intersection.length ? intersection[0].object : null;
 }
 
+Scene.prototype.getSelection = function()
+{
+	return this.getActors(this.selection.ids).filter(a => a);
+}
+
 Scene.prototype.setSelection = function(ids)
 {
 	this.selection.ids = ids;
-	let actors = this.getActors(ids).filter(a => a);
+	let actors = this.getSelection();
 
 	if (this.selection.center) {
 		this.obj.remove(this.selection.center);
@@ -64,7 +69,7 @@ Scene.prototype.setSelection = function(ids)
 		this.selection.center = center;
 	}
 
-	let views = layout.findViews(SceneRendererView, SceneHierarchyView, ActorInspectorView);
+	let views = layout.findViews(SceneRendererView, SceneHierarchyView, ActorInspectorView, CSGEditorView);
 	for (let view of views) {
 		view.setSelection(actors, this.selection.center);
 	}

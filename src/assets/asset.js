@@ -36,6 +36,28 @@ let assets = new Asset('folder', 'data');
 let assetsById = {};
 let assetsByClass = {};
 
+function addAsset(object, cls, name, parent)
+{
+	parent = parent || assets;
+	if (!assets.children[name]) {
+		let id = ++Asset.count;
+		let asset = new Asset('file', name, parent, {
+			class: cls,
+			object: object,
+			id: id,
+		});
+		if (!assetsByClass[cls]) {
+			assetsByClass[cls] = [];
+		}
+		assetsByClass[cls].insert(asset, a => a.name);
+		parent.children[name] = assetsById[id] = object.asset = asset;
+	} else {
+		let asset = parent.children[name];
+		Object.assign(asset.object, object);
+		asset.object.elementsNeedUpdate = true;  // for Geometry
+	}
+}
+
 async function onAssetLoad(assets, file, error, content)
 {
 	if (error) {
@@ -60,24 +82,9 @@ async function onAssetLoad(assets, file, error, content)
 			object = content;
 			cls = object.constructor.name;
 		}
-		if (!assets.children[file]) {
-			let id = ++Asset.count;
-			let asset = new Asset('file', file, assets, {
-				class: cls,
-				object: object,
-				id: id,
-			});
-			if (!assetsByClass[cls]) {
-				assetsByClass[cls] = [];
-			}
-			assetsByClass[cls].insert(asset, a => a.name);
-			assets.children[file] = assetsById[id] = object.asset = asset;
-		} else {
-			let asset = assets.children[file];
-			Object.assign(asset.object, object);
-			asset.object.elementsNeedUpdate = true;  // for Geometry
-		}
-	} catch (error) {
+		addAsset(object, cls, file, assets);
+	}
+	catch (error) {
 		console.error(file, error);
 		assets.children[file] = null;
 		return;

@@ -7,8 +7,7 @@ Aim of the project is to create a functional 3D editor using existing open-sourc
 - Application: Node.js + Electron
 - Core: HTML + CSS + JavaScript + jQuery
 - Interface: jQuery UI + jsTree + GoldenLayout + CodeMirror + jscolor + Bootstrap + FontAwesome
-- Rendering: Three.js
-- Physics: ammo.js
+- Rendering and physics: Three.js + ammo.js + csg.js
 
 #### Usage: ####
 

@@ -12,6 +12,7 @@ html, body {
 
 div.toolbox {
 	padding: 4px;
+	color: #DDD;
 }
 
 div.inspector {
@@ -195,6 +196,11 @@ ul.dropdown-menu li {
 
 button.btn {
 	box-shadow: none !important;
+}
+
+input[type=checkbox] {
+	position: relative;
+	top: 2px;
 }
 
 .jstree {

@@ -63,17 +63,17 @@ TorusKnotGeometry.FIELDS = {
 	q: Field.Integer(4),
 };
 
-Geometry.prototype.getParams = function()
+Geometry.prototype.getParams = BufferGeometry.prototype.export = function()
 {
 	return this.parameters;
 }
 
-Geometry.prototype.export = function()
+Geometry.prototype.export = BufferGeometry.prototype.export = function()
 {
 	return this.toJSON();
 }
 
-Geometry.import = async function(json)
+Geometry.import = BufferGeometry.import = async function(json)
 {
 	return new THREE.ObjectLoader().parseGeometries([json])[json.uuid];
 }

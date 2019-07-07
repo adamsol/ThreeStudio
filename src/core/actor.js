@@ -136,13 +136,21 @@ Actor.prototype.removeComponent = function(index)
 	}
 }
 
-Actor.prototype.getComponents = function(type)
+Actor.prototype.getComponents = function(type, recursive)
 {
 	type = window[type] || type;
 	let components = [];
-	for (let component of this.components) {
-		if (component instanceof type) {
-			components.push(component);
+	if (recursive) {
+		this.obj.traverse(obj => {
+			if (obj instanceof type) {
+				components.push(obj);
+			}
+		});
+	} else {
+		for (let component of this.components) {
+			if (component instanceof type) {
+				components.push(component);
+			}
 		}
 	}
 	return components;
