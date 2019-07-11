@@ -7,7 +7,7 @@ function SceneHierarchyView(container, state)
 	this.initToolbox({
 		"Empty": [],
 		"Model": {"Box": [BoxModel, Body, BoxShape], "Sphere": [SphereModel, Body, SphereShape], "Cylinder": [CylinderModel, Body, CylinderShape], "Cone": [ConeModel, Body, ConeShape]},
-		"Light": {"Directional light": [AmbientLight, DirectionalLight], "Point light": [PointLight]},
+		"Light": {"Ambient light": [AmbientLight], "Hemisphere light": [HemisphereLight], "Directional light": [DirectionalLight], "Point light": [PointLight], "Spot light": [SpotLight]},
 		"Camera": {"Perspective camera": [PerspectiveCamera], "Orthographic camera": [OrthographicCamera]},
 	});
 	this.toolbox.on('click', '.actor-new li[data-component-names]', function(event) {

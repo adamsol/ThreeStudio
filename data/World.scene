@@ -158,6 +158,43 @@
 							"intensity": 1
 						}
 					]
+				},
+				{
+					"name": "Spot light",
+					"children": [],
+					"transform": {
+						"type": "Transform",
+						"position": [
+							-3.7325288050854906,
+							7.782542383120784,
+							10.36563565256924
+						],
+						"rotation": [
+							0,
+							-3.0233083714842257,
+							0,
+							"YXZ"
+						],
+						"scale": [
+							0.9999999999999999,
+							1,
+							0.9999999999999999
+						]
+					},
+					"components": [
+						{
+							"uuid": "E01D79D0-D41F-48DD-B3CC-ECD85462EFA1",
+							"type": "SpotLight",
+							"castShadow": true,
+							"layers": 1,
+							"color": 15462399,
+							"intensity": 1,
+							"distance": 50,
+							"angle": 0.4,
+							"decay": 1,
+							"penumbra": 0.1
+						}
+					]
 				}
 			],
 			"transform": {

@@ -7,7 +7,7 @@ function ActorInspectorView(container, state)
 
 	this.initToolbox({
 		"Model": [BoxModel, SphereModel, CylinderModel, ConeModel],
-		"Light": [AmbientLight, DirectionalLight, PointLight],
+		"Light": [AmbientLight, DirectionalLight, HemisphereLight, PointLight, SpotLight],
 		"Camera": [PerspectiveCamera, OrthographicCamera],
 		"Physics": [Body, BoxShape, SphereShape, CylinderShape, ConeShape, MeshShape],
 		"Script": Script,
