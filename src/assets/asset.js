@@ -2,7 +2,7 @@
 const extensions = {
 	image: ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tga', 'tiff', '.tif'],
 	model: ['.obj', '.fbx'],
-	other: ['.geom', '.mat', '.js'],
+	other: ['.geom', '.mat', '.phxmat', '.js'],
 }
 
 function Asset(type, name, parent, params)
@@ -75,7 +75,7 @@ async function onAssetLoad(assets, file, error, content)
 				cls = object.type;
 			} else {
 				let data = JSON.parse(content);
-				cls = data.metadata.type;
+				cls = data.metadata && data.metadata.type || data.type;
 				object = await window[cls].import(data, ext);
 			}
 		} else {

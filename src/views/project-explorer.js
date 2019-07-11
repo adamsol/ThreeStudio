@@ -44,6 +44,8 @@ ProjectExplorerView.prototype.getIcon = function(file)
 		return 'cube';
 	} else if (['.mat'].includes(ext)) {
 		return 'volleyball-ball';
+	} else if (['.phxmat'].includes(ext)) {
+		return 'table-tennis';
 	} else if (['.scene'].includes(ext)) {
 		return 'globe';
 	} else if (['.js'].includes(ext)) {

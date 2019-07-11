@@ -7,6 +7,8 @@ function Body()
 	this.type = 'Body';
 
 	this.mass = 1;
+	this.material = getAssetSync('Physics', 'Default.phxmat');
+
 	this.ammo = null;
 }
 
@@ -15,6 +17,7 @@ Body.prototype.constructor = Body;
 
 Body.FIELDS = {
 	mass: Field.Decimal(1),
+	material: Field.Reference(PhysicsMaterial, true),
 };
 Body.ICON = 'bowling-ball';
 
@@ -74,7 +77,11 @@ Body.prototype.create = function()
 	let body_info = new Ammo.btRigidBodyConstructionInfo(this.mass, motion_state, compound_shape, inertia);
 	this.ammo = new Ammo.btRigidBody(body_info);
 	this.ammo.setSleepingThresholds(0.1, 1.0);
-	this.ammo.setDamping(0.2, 0.1);
+	if (this.material) {
+		this.ammo.setFriction(this.material.staticFriction, this.material.rollingFriction);
+		this.ammo.setRestitution(this.material.restitution);
+		this.ammo.setDamping(this.material.linearDamping, this.material.angularDamping);
+	}
 
 	return this.ammo;
 }
@@ -108,17 +115,21 @@ Body.prototype.copy = function(source)
 
 Body.prototype.export = function()
 {
-	let json = this.toJSON().object;
-	delete json.layers;
-	for (let attr of ['mass']) {
-		json[attr] = this[attr];
-	}
-	return json;
+	return {
+		uuid: this.uuid,
+		type: this.type,
+		mass: this.mass,
+		material: this.material ? this.material.asset.path : null,
+	};
 }
 
 Body.import = async function(json)
 {
 	let obj = new Body();
-	delete json.layers;
-	return $.extend(obj, json);
+	obj.uuid = json.uuid;
+	obj.mass = json.mass;
+	if (json.material) {
+		obj.material = await getAsset(json.material);
+	}
+	return obj;
 }

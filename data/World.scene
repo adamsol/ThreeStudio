@@ -27,7 +27,8 @@
 				{
 					"uuid": "A1B8B5C9-5221-4F6E-9B02-2238804F5F88",
 					"type": "Body",
-					"mass": 0
+					"mass": 0,
+					"material": "Physics/Default.phxmat"
 				},
 				{
 					"uuid": "8763FC6A-29E3-48DF-BBE8-57DEF0529A89",
@@ -280,6 +281,11 @@
 			},
 			"components": [
 				{
+					"uuid": "61F893F1-C5F9-4C23-B8E6-E1900224D671",
+					"type": "Script",
+					"code": "Scripts/Test.js"
+				},
+				{
 					"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
 					"type": "Mesh",
 					"castShadow": true,
@@ -287,11 +293,6 @@
 					"layers": 1,
 					"geometry": "Models/stanford-bunny.fbx",
 					"material": "Materials/Normal.mat"
-				},
-				{
-					"uuid": "61F893F1-C5F9-4C23-B8E6-E1900224D671",
-					"type": "Script",
-					"code": "Scripts/Test.js"
 				}
 			]
 		},
@@ -321,7 +322,8 @@
 				{
 					"uuid": "555ED65E-60AB-4392-9939-6D84CB117C0A",
 					"type": "Body",
-					"mass": 1
+					"mass": 1,
+					"material": "Physics/Default.phxmat"
 				},
 				{
 					"uuid": "FEC40710-DB83-4710-A3CA-F25349C7525F",
@@ -369,7 +371,8 @@
 						{
 							"uuid": "7CBCB982-6DA1-4144-891A-CBFE429C2D9A",
 							"type": "Body",
-							"mass": 1
+							"mass": 1,
+							"material": "Physics/Default.phxmat"
 						},
 						{
 							"uuid": "EF43F609-8756-4D4D-B04F-E8F9AB0C5E85",
@@ -415,7 +418,8 @@
 						{
 							"uuid": "91C86871-00B4-4060-B29E-4E302D115753",
 							"type": "Body",
-							"mass": 1
+							"mass": 1,
+							"material": "Physics/Default.phxmat"
 						},
 						{
 							"uuid": "243E99F7-0C41-4F89-8CFC-9536B4B2BE03",
@@ -461,7 +465,8 @@
 						{
 							"uuid": "9EAC05C0-5FEF-406C-9B15-8F20D5B62F07",
 							"type": "Body",
-							"mass": 1
+							"mass": 1,
+							"material": "Physics/Default.phxmat"
 						},
 						{
 							"uuid": "BC8384DF-74B9-44A3-A657-9D5CA18DC267",
@@ -507,7 +512,8 @@
 						{
 							"uuid": "80E83B7D-8B70-4C1F-8A1B-06D60EF76340",
 							"type": "Body",
-							"mass": 1
+							"mass": 1,
+							"material": "Physics/Default.phxmat"
 						},
 						{
 							"uuid": "57481DFD-C5A5-40A4-B029-2394DC7FD8E4",
@@ -578,7 +584,8 @@
 						{
 							"uuid": "15B8C2B9-6DA4-4845-B0A1-D49EB96247BA",
 							"type": "Body",
-							"mass": 1
+							"mass": 1,
+							"material": "Physics/Default.phxmat"
 						},
 						{
 							"uuid": "9FA33F97-3759-458E-8D62-91B94BA60159",
@@ -623,7 +630,8 @@
 						{
 							"uuid": "19FAD36E-D577-4474-91BE-6578797644C7",
 							"type": "Body",
-							"mass": 1
+							"mass": 1,
+							"material": "Physics/Default.phxmat"
 						},
 						{
 							"uuid": "8E446631-FE27-426A-8C2A-1D8106AC1A0F",
@@ -668,7 +676,8 @@
 						{
 							"uuid": "AEA8944F-9384-499D-8CC9-3ED5A5701E8E",
 							"type": "Body",
-							"mass": 1
+							"mass": 1,
+							"material": "Physics/Default.phxmat"
 						},
 						{
 							"uuid": "63D58C69-D6F3-424C-AE48-9068C7D62077",
@@ -735,7 +744,8 @@
 				{
 					"uuid": "65E46051-DA92-44D4-8629-6B466413EF40",
 					"type": "Body",
-					"mass": 0.2
+					"mass": 0.2,
+					"material": "Physics/Default.phxmat"
 				},
 				{
 					"uuid": "69FD032C-6474-43DA-A562-CCA1212EE3B8",
@@ -1159,7 +1169,8 @@
 				{
 					"uuid": "FDE394CF-0177-4542-A650-AAF17AED71ED",
 					"type": "Body",
-					"mass": 3
+					"mass": 3,
+					"material": "Physics/Default.phxmat"
 				}
 			]
 		},
@@ -1568,7 +1579,8 @@
 				{
 					"uuid": "82B4272B-72A5-4485-AF4F-DCB3BC448E89",
 					"type": "Body",
-					"mass": 3
+					"mass": 3,
+					"material": "Physics/Default.phxmat"
 				}
 			]
 		},

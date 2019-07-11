@@ -1,0 +1,9 @@
+{
+	"uuid": "D47B1980-1962-4202-AC87-68E9461E8AB0",
+	"type": "PhysicsMaterial",
+	"staticFriction": 0.5,
+	"rollingFriction": 0,
+	"restitution": 0,
+	"linearDamping": 0.2,
+	"angularDamping": 0.1
+}
