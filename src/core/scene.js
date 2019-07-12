@@ -61,7 +61,6 @@ Scene.prototype.setSelection = function(ids)
 		let center = new Group();
 		center.position.copy(position);
 		center.quaternion.copy(objects[0].quaternion);
-		center.scale.copy(objects[0].scale);
 		this.obj.add(center);
 		for (let obj of objects) {
 			center.attach(obj);

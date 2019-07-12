@@ -26,9 +26,9 @@ MeshShape.prototype.create = function()
 		let shape = new Ammo.btConvexHullShape();
 
 		if (this.geometry.isBufferGeometry) {
-			let array = this.geometry.getAttribute('position').array;
-			for (let i = 0; i < array.length; i += 3) {
-				shape.addPoint(new Ammo.btVector3(array[i], array[i+1], array[i+2]), i == array.length-3);
+			let positions = this.geometry.getAttribute('position').array;
+			for (let i = 0; i < positions.length; i += 3) {
+				shape.addPoint(new Ammo.btVector3(positions[i], positions[i+1], positions[i+2]), i == positions.length-3);
 			}
 		} else {
 			let vertices = this.geometry.vertices;
@@ -43,23 +43,23 @@ MeshShape.prototype.create = function()
 
 		if (this.geometry.isBufferGeometry) {
 			if (this.geometry.index) {
-				let array = this.geometry.getAttribute('position').array;
-				let index = this.geometry.index;
-				for (let i = 0; i < index.length; i += 9) {
+				let positions = this.geometry.getAttribute('position').array;
+				let indices = this.geometry.index.array;
+				for (let i = 0; i < indices.length; i += 3) {
 					mesh.addTriangle(
-						new Ammo.btVector3(array[index[i]], array[index[i+1]], array[index[i+2]]),
-						new Ammo.btVector3(array[index[i+3]], array[index[i+4]], array[index[i+5]]),
-						new Ammo.btVector3(array[index[i+6]], array[index[i+7]], array[index[i+8]]),
+						new Ammo.btVector3(positions[indices[i]*3], positions[indices[i]*3+1], positions[indices[i]*3+2]),
+						new Ammo.btVector3(positions[indices[i+1]*3], positions[indices[i+1]*3+1], positions[indices[i+1]*3+2]),
+						new Ammo.btVector3(positions[indices[i+2]*3], positions[indices[i+2]*3+1], positions[indices[i+2]*3+2]),
 						true,
 					);
 				}
 			} else {
-				let array = this.geometry.getAttribute('position').array;
-				for (let i = 0; i < array.length; i += 9) {
+				let positions = this.geometry.getAttribute('position').array;
+				for (let i = 0; i < positions.length; i += 9) {
 					mesh.addTriangle(
-						new Ammo.btVector3(array[i], array[i+1], array[i+2]),
-						new Ammo.btVector3(array[i+3], array[i+4], array[i+5]),
-						new Ammo.btVector3(array[i+6], array[i+7], array[i+8]),
+						new Ammo.btVector3(positions[i], positions[i+1], positions[i+2]),
+						new Ammo.btVector3(positions[i+3], positions[i+4], positions[i+5]),
+						new Ammo.btVector3(positions[i+6], positions[i+7], positions[i+8]),
 						true,
 					);
 				}

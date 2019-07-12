@@ -39,7 +39,7 @@ let assetsByClass = {};
 function addAsset(object, cls, name, parent)
 {
 	parent = parent || assets;
-	if (!assets.children[name]) {
+	if (!parent.children[name]) {
 		let id = ++Asset.count;
 		let asset = new Asset('file', name, parent, {
 			class: cls,

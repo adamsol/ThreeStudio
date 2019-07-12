@@ -39,20 +39,20 @@ CSG.fromGeometry = function(geometry, matrix4)
 		let uvs = geometry.getAttribute('uv').array;
 
 		if (geometry.index) {
-			let index = geometry.index;
-			for (let i = 0; i < index.length; i += 9) {
+			let indices = geometry.index.array;
+			for (let i = 0; i < indices.length; i += 3) {
 				polygons.push(new CSG.Polygon([
-					new CSGVertex(new THREE.Vector3(positions[index[i]], positions[index[i+1]], positions[index[i+2]]).applyMatrix4(matrix4), new THREE.Vector3(normals[index[i]], normals[index[i+1]], normals[index[i+2]]).applyMatrix3(matrix3), new THREE.Vector3(uvs[index[i]], uvs[index[i+1]], uvs[index[i+2]])),
-					new CSGVertex(new THREE.Vector3(positions[index[i+3]], positions[index[i+4]], positions[index[i+5]]).applyMatrix4(matrix4), new THREE.Vector3(normals[index[i+3]], normals[index[i+4]], normals[index[i+5]]).applyMatrix3(matrix3), new THREE.Vector3(uvs[index[i+3]], uvs[index[i+4]], uvs[index[i+5]])),
-					new CSGVertex(new THREE.Vector3(positions[index[i+6]], positions[index[i+7]], positions[index[i+8]]).applyMatrix4(matrix4), new THREE.Vector3(normals[index[i+6]], normals[index[i+7]], normals[index[i+8]]).applyMatrix3(matrix3), new THREE.Vector3(uvs[index[i+6]], uvs[index[i+7]], uvs[index[i+8]])),
+					new CSGVertex(new THREE.Vector3(positions[indices[i]*3], positions[indices[i]*3+1], positions[indices[i]*3+2]).applyMatrix4(matrix4), new THREE.Vector3(normals[indices[i]*3], normals[indices[i]*3+1], normals[indices[i]*3+2]).applyMatrix3(matrix3), new THREE.Vector2(uvs[indices[i]*2], uvs[indices[i]*2+1])),
+					new CSGVertex(new THREE.Vector3(positions[indices[i+1]*3], positions[indices[i+1]*3+1], positions[indices[i+1]*3+2]).applyMatrix4(matrix4), new THREE.Vector3(normals[indices[i+1]*3], normals[indices[i+1]*3+1], normals[indices[i+1]*3+2]).applyMatrix3(matrix3), new THREE.Vector2(uvs[indices[i+1]*2], uvs[indices[i+1]*2+1])),
+					new CSGVertex(new THREE.Vector3(positions[indices[i+2]*3], positions[indices[i+2]*3+1], positions[indices[i+2]*3+2]).applyMatrix4(matrix4), new THREE.Vector3(normals[indices[i+2]*3], normals[indices[i+2]*3+1], normals[indices[i+2]*3+2]).applyMatrix3(matrix3), new THREE.Vector2(uvs[indices[i+2]*2], uvs[indices[i+2]*2+1])),
 				]));
 			}
 		} else {
 			for (let i = 0; i < positions.length; i += 9) {
 				polygons.push(new CSG.Polygon([
-					new CSGVertex(new THREE.Vector3(positions[i], positions[i+1], positions[i+2]).applyMatrix4(matrix4), new THREE.Vector3(normals[i], normals[i+1], normals[i+2]).applyMatrix3(matrix3), new THREE.Vector3(uvs[i], uvs[i+1], uvs[i+2])),
-					new CSGVertex(new THREE.Vector3(positions[i+3], positions[i+4], positions[i+5]).applyMatrix4(matrix4), new THREE.Vector3(normals[i+3], normals[i+4], normals[i+5]).applyMatrix3(matrix3), new THREE.Vector3(uvs[i+3], uvs[i+4], uvs[i+5])),
-					new CSGVertex(new THREE.Vector3(positions[i+6], positions[i+7], positions[i+8]).applyMatrix4(matrix4), new THREE.Vector3(normals[i+6], normals[i+7], normals[i+8]).applyMatrix3(matrix3), new THREE.Vector3(uvs[i+6], uvs[i+7], uvs[i+8])),
+					new CSGVertex(new THREE.Vector3(positions[i], positions[i+1], positions[i+2]).applyMatrix4(matrix4), new THREE.Vector3(normals[i], normals[i+1], normals[i+2]).applyMatrix3(matrix3), new THREE.Vector2(uvs[i], uvs[i+1])),
+					new CSGVertex(new THREE.Vector3(positions[i+3], positions[i+4], positions[i+5]).applyMatrix4(matrix4), new THREE.Vector3(normals[i+3], normals[i+4], normals[i+5]).applyMatrix3(matrix3), new THREE.Vector2(uvs[i+2], uvs[i+3])),
+					new CSGVertex(new THREE.Vector3(positions[i+6], positions[i+7], positions[i+8]).applyMatrix4(matrix4), new THREE.Vector3(normals[i+6], normals[i+7], normals[i+8]).applyMatrix3(matrix3), new THREE.Vector2(uvs[i+4], uvs[i+5])),
 				]));
 			}
 		}
