@@ -16,7 +16,7 @@ function serializeComponent(component, index)
 				{2}\
 			</div>\
 		</div>\
-	'.format(index, component.constructor.name, $.map(fields, serializeField).join('\n'), component.constructor.ICON);
+	'.format(index, displayTitle(component), $.map(fields, serializeField).join('\n'), component.constructor.ICON);
 }
 
 function exportComponent(component)

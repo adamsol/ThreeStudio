@@ -66,7 +66,7 @@ ActorInspectorView.prototype.initToolbox = function(component_menu)
 		return '<ul class="dropdown-menu">{}</ul>'.format(
 			$.map(components, (item, key) => {
 				if ($.isFunction(item)) {
-					return '<li class="dropdown-item" data-component-name="{0}">{0}</li>'.format(item.name);
+					return '<li class="dropdown-item" data-component-name="{0}">{0}</li>'.format(displayTitle(item));
 				} else {
 					return '<li class="dropdown-item dropdown-toggle dropdown-submenu">{0}{1}</li>'.format(key, buildMenu(item));
 				}

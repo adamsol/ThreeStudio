@@ -30,7 +30,7 @@ function serializeField(field, name, text, classes)
 		return '';
 	}
 	if (text === undefined) {
-		text = name.match(/([a-zA-Z]([a-z]*|[A-Z]*))/g).map(p => p.capitalize()).join(' ');
+		text = displayTitle(name);
 	}
 	let html = '\
 		<div class="field {1}">\

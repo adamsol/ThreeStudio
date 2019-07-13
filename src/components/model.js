@@ -6,6 +6,7 @@ Model.FIELDS = {
 	geometry: Field.Reference(Geometry),
 	material: Field.Reference(Material),
 };
+Model.TITLE = 'Model';
 Model.ICON = 'gem';
 
 Model.prototype.export = function()
