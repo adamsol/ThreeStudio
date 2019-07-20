@@ -1,4 +1,6 @@
 
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
+
 const electron = require('electron');
 require('electron-debug')();
 const windowStateKeeper = require('electron-window-state');
@@ -16,6 +18,9 @@ function createMainWindow()
 	});
 
 	mainWindow = new electron.BrowserWindow({
+		webPreferences: {
+			nodeIntegration: true,
+		},
 		x: state.x,
 		y: state.y,
 		width: state.width,
@@ -89,5 +94,5 @@ app.on('ready', () =>
 		];
 		Menu.setApplicationMenu(Menu.buildFromTemplate(menu_template));
 	});
-	Menu.setApplicationMenu(Menu.buildFromTemplate([{}]));
+	Menu.setApplicationMenu(Menu.buildFromTemplate([{role: 'quit'}]));
 });

@@ -1,7 +1,7 @@
 {
   "name": "three-studio",
   "productName": "ThreeStudio",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "ThreeStudio",
   "license": "GPL-3.0-or-later",
   "author": {
@@ -25,8 +25,8 @@
     "bootstrap": "^4.3.1",
     "codemirror": "^5.48.0",
     "csg": "^1.0.1",
-    "electron-debug": "^1.0.0",
-    "electron-window-state": "^4.1.1",
+    "electron-debug": "^3.0.1",
+    "electron-window-state": "^5.0.3",
     "file": "^0.2.2",
     "fs-extra": "^5.0.0",
     "golden-layout": "^1.5.9",
@@ -38,8 +38,8 @@
     "three": "^0.105.2"
   },
   "devDependencies": {
-    "electron": "^1.8.8",
-    "electron-packager": "^12.2.0",
+    "electron": "^5.0.7",
+    "electron-packager": "^14.0.2",
     "xo": "^0.24.0"
   },
   "xo": {
