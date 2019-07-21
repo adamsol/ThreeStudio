@@ -99,6 +99,9 @@ ActorInspectorView.prototype.setSelection = function(actors)
 
 ActorInspectorView.prototype.serializeActor = function()
 {
+	for (let script of this.actor.getComponents(Script)) {
+		script.analyze();
+	}
 	this.inspector.html(this.actor.components.map(serializeComponent).join('\n'));
 	this.serialize();
 	jscolor.installByClassName('color');
@@ -171,6 +174,9 @@ ActorInspectorView.prototype.updateValue = function(input, refresh)
 			obj[attr].parse(value);
 		} else {
 			obj[attr] = value;
+		}
+		if (obj.isScript && attr == 'code') {
+			this.serializeActor();
 		}
 	}
 	if (refresh) {

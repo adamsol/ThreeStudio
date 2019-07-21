@@ -27,6 +27,7 @@
     "csg": "^1.0.1",
     "electron-debug": "^3.0.1",
     "electron-window-state": "^5.0.3",
+    "esprima": "^4.0.1",
     "file": "^0.2.2",
     "fs-extra": "^5.0.0",
     "golden-layout": "^1.5.9",

@@ -283,7 +283,8 @@
 				{
 					"uuid": "61F893F1-C5F9-4C23-B8E6-E1900224D671",
 					"type": "Script",
-					"code": "Scripts/Test.js"
+					"code": "Scripts/Test.js",
+					"rotation_speed": 1
 				},
 				{
 					"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
@@ -1610,10 +1611,17 @@
 				{
 					"uuid": "A7B15C13-4A50-440F-809F-0ADFFE000B53",
 					"type": "Script",
-					"code": "Scripts/Balls.js"
+					"code": "Scripts/Balls.js",
+					"origin": {
+						"x": 0,
+						"y": 1,
+						"z": 0
+					},
+					"radius": 0.3,
+					"speed": 30
 				}
 			]
 		}
 	],
-	"version": "0.2.2"
+	"version": "0.3.0"
 }

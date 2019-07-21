@@ -29,13 +29,31 @@ Game.prototype.initialize = function()
 
 	scene.obj.traverse(obj => {
 		if (obj.isScript) {
-			obj.functions = Function('return function(actor, scene, world, input) {\
-				{}\
-				return {\
-					initialize: initialize,\
-					update: update,\
-				}\
-			};'.format(obj.code.text))()(obj.getActor(), scene.obj, this.world, this.input);
+			let text = obj.code.text;
+			for (let [name, field] of Object.entries(obj.fields)) {
+				let value;
+				if (field.type == 'Vector2') {
+					value = 'new THREE.Vector2({0.x}, {0.y})'.format(obj[name]);
+				} else if (field.type == 'Vector3') {
+					value = 'new THREE.Vector3({0.x}, {0.y}, {0.z})'.format(obj[name]);
+				} else {
+					value = JSON.stringify(obj[name]);
+				}
+				text = text.replaceAt(field.data.start, field.data.end, value);
+			}
+			try {
+				obj.functions = Function('return function(actor, scene, world, input) {\
+					"use strict";\
+					{}\
+					return {\
+						initialize: initialize,\
+						update: update,\
+					}\
+				};'.format(text))()(obj.getActor(), scene.obj, this.world, this.input);
+			} catch (e) {
+				console.error(e);
+				return;
+			}
 			obj.functions.initialize();
 			this.scripts.push(obj);
 		}

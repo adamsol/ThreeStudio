@@ -1,5 +1,5 @@
 
-let speed = 1;
+let rotation_speed = 1;
 
 function initialize()
 {
@@ -9,12 +9,12 @@ function initialize()
 function update(dt)
 {
 	if (input.justPressed[Keys.PLUS]) {
-		speed += 1;
+		rotation_speed += 1;
 	}
 	if (input.justPressed[Keys.MINUS]) {
-		speed -= 1;
+		rotation_speed -= 1;
 	}
-	speed += input.mouseWheel / 50;
+	rotation_speed += input.mouseWheel / 50;
 
-	actor.transform.rotation.y += dt * speed;
+	actor.transform.rotation.y += dt * rotation_speed;
 }

@@ -64,6 +64,11 @@ String.prototype.format = function()
 	});
 }
 
+String.prototype.replaceAt = function(start, end, replacement)
+{
+    return this.substr(0, start) + replacement + this.substr(end);
+}
+
 const _ = undefined;
 
 Function.prototype.partial = function()

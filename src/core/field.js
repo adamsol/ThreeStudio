@@ -4,8 +4,8 @@ const Field = Object.freeze({
 	Integer: (def) => ({type: 'Integer', default: def || 0}),
 	Decimal: (def) => ({type: 'Decimal', default: def || 0}),
 	String: (def) => ({type: 'String', default: def || ''}),
-	Vector2: (def) => ({type: 'Vector2', default: def || [0, 0]}),
-	Vector3: (def) => ({type: 'Vector3', default: def || [0, 0, 0]}),
+	Vector2: (def) => ({type: 'Vector2', default: $.type(def) == 'array' ? def : $.type(def) == 'object' ? [def.x, def.y] : [0, 0]}),
+	Vector3: (def) => ({type: 'Vector3', default: $.type(def) == 'array' ? def : $.type(def) == 'object' ? [def.x, def.y, def.z] : [0, 0, 0]}),
 	Color: (def) => ({type: 'Color', default: def || 'FFFFFF'}),
 	Enum: (items) => ({type: 'Enum', items: items}),
 	Reference: (cls, nil) => ({type: 'Reference', class: cls, nil: nil || false}),
@@ -13,7 +13,7 @@ const Field = Object.freeze({
 
 function getFields(obj)
 {
-	let fields = {};
+	let fields = obj.isScript ? obj.fields : {};
 	obj = obj instanceof Function ? obj : obj.constructor;
 	do {
 		if (obj.FIELDS) {
