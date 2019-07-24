@@ -1611,7 +1611,7 @@
 				{
 					"uuid": "A7B15C13-4A50-440F-809F-0ADFFE000B53",
 					"type": "Script",
-					"code": "Scripts/Balls.js",
+					"code": "Scripts/Balls.pyj",
 					"origin": {
 						"x": 0,
 						"y": 1,

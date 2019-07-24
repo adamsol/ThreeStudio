@@ -37,6 +37,7 @@
     "jstree": "^3.3.8",
     "npm": "^6.9.0",
     "path": "^0.12.7",
+    "rapydscript": "^0.5.60",
     "three": "^0.105.2"
   },
   "devDependencies": {

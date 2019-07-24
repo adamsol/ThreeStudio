@@ -8,6 +8,7 @@ Aim of the project is to create a functional 3D editor using existing open-sourc
 - Core: HTML + CSS + JavaScript + jQuery
 - Interface: jQuery UI + jsTree + GoldenLayout + CodeMirror + jscolor + Bootstrap + FontAwesome
 - Rendering and physics: Three.js + ammo.js + csg.js
+- Scripting: Esprima + CofeeScript + RapydScript
 
 #### Usage: ####
 

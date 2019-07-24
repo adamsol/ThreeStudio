@@ -4,7 +4,8 @@ extensions.image = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tga', 'tiff', '.t
 extensions.model = ['.obj', '.fbx'];
 extensions.javascript = ['.js'];
 extensions.coffeescript = ['.coffee', '.cafe', '.co', '.cfs', '.cf'];
-extensions.code = [...extensions.javascript, ...extensions.coffeescript];
+extensions.rapydscript = ['.pyj', '.py'];
+extensions.code = [...extensions.javascript, ...extensions.coffeescript, ...extensions.rapydscript];
 extensions.text = ['.geom', '.mat', '.phxmat', ...extensions.code];
 
 function Asset(type, name, parent, params)

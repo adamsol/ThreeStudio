@@ -30,6 +30,7 @@ Game.prototype.initialize = function()
 	scene.obj.traverse(obj => {
 		if (obj.isScript) {
 			let text = obj.code.getJS();
+			let offset = 0;
 			for (let [name, field] of Object.entries(obj.fields)) {
 				let value;
 				if (field.type == 'Vector2') {
@@ -39,7 +40,8 @@ Game.prototype.initialize = function()
 				} else {
 					value = JSON.stringify(obj[name]);
 				}
-				text = text.replaceAt(field.data.start, field.data.end, value);
+				text = text.replaceAt(field.data.start + offset, field.data.end + offset, value);
+				offset += value.length - (field.data.end - field.data.start);
 			}
 			try {
 				obj.functions = Function('return function(actor, scene, world, input) {\

@@ -18,4 +18,7 @@ Code.import = async function(text, ext)
 	else if (extensions.coffeescript.includes(ext)) {
 		return new CoffeeScriptCode(text);
 	}
+	else if (extensions.rapydscript.includes(ext)) {
+		return new RapydScriptCode(text);
+	}
 }
