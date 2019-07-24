@@ -1,9 +1,11 @@
 
-const extensions = {
-	image: ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tga', 'tiff', '.tif'],
-	model: ['.obj', '.fbx'],
-	other: ['.geom', '.mat', '.phxmat', '.js'],
-}
+let extensions = {};
+extensions.image = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tga', 'tiff', '.tif'];
+extensions.model = ['.obj', '.fbx'];
+extensions.javascript = ['.js'];
+extensions.coffeescript = ['.coffee', '.cafe', '.co', '.cfs', '.cf'];
+extensions.code = [...extensions.javascript, ...extensions.coffeescript];
+extensions.text = ['.geom', '.mat', '.phxmat', ...extensions.code];
 
 function Asset(type, name, parent, params)
 {
@@ -69,7 +71,7 @@ async function onAssetLoad(assets, file, error, content)
 		let object, cls;
 		if (content instanceof Buffer) {
 			let ext = path.extname(file).lower();
-			if (ext == '.js') {
+			if (extensions.code.includes(ext)) {
 				let text = content.toString('utf8');
 				object = await Code.import(text, ext);
 				cls = object.type;
@@ -121,7 +123,7 @@ function importAssets(dir_path, assets)
 				loader.load(path.join('..', abs_path), (object) => {
 					callback(null, object.children[0].geometry);
 				}, null, callback);
-			} else if (extensions.other.includes(ext)) {
+			} else if (extensions.text.includes(ext)) {
 				fs.readFile(abs_path, callback);
 			}
 		}

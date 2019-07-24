@@ -283,7 +283,7 @@
 				{
 					"uuid": "61F893F1-C5F9-4C23-B8E6-E1900224D671",
 					"type": "Script",
-					"code": "Scripts/Test.js",
+					"code": "Scripts/Test.coffee",
 					"rotation_speed": 1
 				},
 				{

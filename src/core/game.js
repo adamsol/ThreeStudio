@@ -29,7 +29,7 @@ Game.prototype.initialize = function()
 
 	scene.obj.traverse(obj => {
 		if (obj.isScript) {
-			let text = obj.code.text;
+			let text = obj.code.getJS();
 			for (let [name, field] of Object.entries(obj.fields)) {
 				let value;
 				if (field.type == 'Vector2') {

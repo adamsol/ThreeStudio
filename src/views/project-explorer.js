@@ -48,7 +48,7 @@ ProjectExplorerView.prototype.getIcon = function(file)
 		return 'table-tennis';
 	} else if (['.scene'].includes(ext)) {
 		return 'globe';
-	} else if (['.js'].includes(ext)) {
+	} else if (extensions.code.includes(ext)) {
 		return 'code';
 	} else {
 		return 'file';
