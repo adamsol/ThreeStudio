@@ -116,7 +116,7 @@ Actor.prototype.addComponent = function(component, index)
 	let sprite_path = 'gfx/sprites/' + sprite_name + '.png';
 	if (fs.existsSync(sprite_path)) {
 		let texture = new THREE.TextureLoader().load('../' + sprite_path);
-		let material = new THREE.SpriteMaterial({map: texture, color: component.color});
+		let material = new THREE.SpriteMaterial({map: texture});
 		let sprite = new THREE.Sprite(material);
 		sprite.layers.set(Layers.EDITOR_SPRITES);
 		component.add(sprite);
