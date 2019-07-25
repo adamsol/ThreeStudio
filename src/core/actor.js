@@ -5,7 +5,7 @@ Group = THREE.Group;
 let Layers = {
 	DEFAULT: 0,
 	EDITOR_SPRITES: 16,
-}
+};
 
 function Actor(obj, parent, transform)
 {
@@ -79,7 +79,7 @@ Actor.prototype.setParent = function(parent, keep_local)
 	this.parent.children.push(this);
 }
 
-Actor.prototype.addComponent = function(component)
+Actor.prototype.addComponent = function(component, index)
 {
 	if (component.isMesh) {
 		component.castShadow = true;
@@ -122,8 +122,12 @@ Actor.prototype.addComponent = function(component)
 		component.add(sprite);
 	}
 
+	if (index !== undefined) {
+		this.components[index] = component;
+	} else {
+		this.components.push(component);
+	}
 	this.obj.add(component);
-	this.components.push(component);
 
 	return this;
 }
@@ -182,7 +186,9 @@ Actor.import = async function(json, parent)
 	let actor = new Actor(obj, parent);
 	Transform.import(json.transform, actor.transform);
 	for (let obj of json.components) {
-		importComponent(obj).then(actor.addComponent.bind(actor));
+		let i = actor.components.length;
+		actor.components.push(null);
+		importComponent(obj).then(actor.addComponent.bind(actor).partial(_, i));
 	}
 	for (let obj of json.children) {
 		Actor.import(obj, actor);
