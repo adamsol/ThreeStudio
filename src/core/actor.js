@@ -41,7 +41,7 @@ Object.defineProperty(Actor.prototype, 'name', {
 	},
 	set: function(name) {
 		this.obj.name = name || '';
-	}
+	},
 });
 
 Actor.prototype.clone = function()
@@ -173,7 +173,7 @@ Actor.prototype.export = function()
 		children: this.children.map(a => a.export()),
 	};
 	if (this.components) {
-		json.transform = this.transform.export(),
+		json.transform = exportComponent(this.transform);
 		json.components = this.components.slice(1).map(exportComponent);
 	}
 	return json;
@@ -188,7 +188,9 @@ Actor.import = async function(json, parent)
 	for (let obj of json.components) {
 		let i = actor.components.length;
 		actor.components.push(null);
-		importComponent(obj).then(actor.addComponent.bind(actor).partial(_, i));
+		importComponent(obj).then(component => {
+			actor.addComponent(component, i);
+		});
 	}
 	for (let obj of json.children) {
 		Actor.import(obj, actor);

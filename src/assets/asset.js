@@ -16,7 +16,7 @@ function Asset(type, name, parent, params)
 	if (type == 'folder') {
 		this.children = {};
 	}
-	if (typeof params === 'object') {
+	if (typeof params == 'object') {
 		$.extend(this, params);
 	}
 }
@@ -75,12 +75,11 @@ async function onAssetLoad(assets, file, error, content)
 			if (extensions.code.includes(ext)) {
 				let text = content.toString('utf8');
 				object = await Code.import(text, ext);
-				cls = object.type;
 			} else {
-				let data = JSON.parse(content);
-				cls = data.metadata && data.metadata.type || data.type;
-				object = await window[cls].import(data, ext);
+				let json = JSON.parse(content);
+				object = await importObject(json);
 			}
+			cls = object.type;
 		} else {
 			object = content;
 			cls = object.constructor.name;
@@ -122,6 +121,7 @@ function importAssets(dir_path, assets)
 				loader.load(path.join('..', abs_path), callback.partial(null), null, callback);
 			} else if (extensions.model.includes(ext)) {
 				loader.load(path.join('..', abs_path), (object) => {
+					object.children[0].geometry.exportable = false;
 					callback(null, object.children[0].geometry);
 				}, null, callback);
 			} else if (extensions.text.includes(ext)) {
@@ -163,11 +163,18 @@ function getAssetSync()
 	return asset && asset.object;
 }
 
-function isSubclass(cls, base)
+function getMetatype(cls)
 {
 	cls = window[cls] || cls;
-	base = window[base] || base;
-	return cls == base || cls.prototype instanceof base || cls.name.endsWith(base.name);
+	while (cls.base) {
+		cls = cls.base;
+	}
+	return cls;
+}
+
+function isSubclass(cls, base)
+{
+	return getMetatype(cls) == getMetatype(base);
 }
 
 function getAssets(cls)
@@ -183,7 +190,7 @@ function getAssets(cls)
 
 function exportAsset(asset)
 {
-	let data = asset.object.export();
+	let data = exportObject(asset.object);
 	let str;
 	if ($.type(data) == 'string') {
 		str = data;
@@ -193,7 +200,7 @@ function exportAsset(asset)
 	return fs.writeFile(path.join('data', asset.path), str);
 }
 
-function importAsset(asset)
+async function importAsset(asset)
 {
 	let callback = onAssetLoad.partial(asset.parent, asset.name);
 	return fs.readFile(path.join('data', asset.path)).then(content => {

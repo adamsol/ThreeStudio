@@ -41,8 +41,6 @@
 					"uuid": "7386DA07-F2BD-4D24-B4E5-102CC16CED6C",
 					"type": "Mesh",
 					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
 					"geometry": "Geometries/Box.geom",
 					"material": "Materials/PhysicalTiles.mat"
 				}
@@ -75,8 +73,6 @@
 					"uuid": "B38EF3E7-D9D4-4C26-B61E-2C97C5D1514C",
 					"type": "Mesh",
 					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
 					"geometry": "Models/stanford-dragon.obj",
 					"material": "Materials/StandardWhite.mat"
 				}
@@ -111,10 +107,9 @@
 						{
 							"uuid": "1184F8F9-D864-4DB2-9D62-90C75AECF3C3",
 							"type": "PointLight",
-							"castShadow": true,
-							"layers": 1,
 							"color": 16771566,
 							"intensity": 1,
+							"castShadow": true,
 							"distance": 10,
 							"decay": 1
 						}
@@ -146,17 +141,15 @@
 						{
 							"uuid": "2C0BD2F7-223B-43D2-A11F-016B6A6A32D3",
 							"type": "AmbientLight",
-							"layers": 1,
 							"color": 2236962,
 							"intensity": 1.2
 						},
 						{
 							"uuid": "BFBD158D-E490-464D-ACF6-2F5AD7BF7F00",
 							"type": "DirectionalLight",
-							"castShadow": true,
-							"layers": 1,
 							"color": 8947848,
-							"intensity": 1
+							"intensity": 1,
+							"castShadow": true
 						}
 					]
 				},
@@ -186,14 +179,13 @@
 						{
 							"uuid": "E01D79D0-D41F-48DD-B3CC-ECD85462EFA1",
 							"type": "SpotLight",
-							"castShadow": true,
-							"layers": 1,
 							"color": 15462399,
 							"intensity": 1,
-							"distance": 50,
+							"castShadow": true,
 							"angle": 0.4,
-							"decay": 1,
-							"penumbra": 0.1
+							"penumbra": 0.1,
+							"distance": 50,
+							"decay": 1
 						}
 					]
 				}
@@ -245,15 +237,9 @@
 				{
 					"uuid": "FE423D5B-D388-4F88-AD67-3B25A5025DC3",
 					"type": "PerspectiveCamera",
-					"castShadow": true,
-					"layers": 1,
-					"fov": 65,
-					"zoom": 1,
 					"near": 0.1,
 					"far": 2000,
-					"focus": 10,
-					"filmGauge": 35,
-					"filmOffset": 0
+					"fov": 65
 				}
 			]
 		},
@@ -290,8 +276,6 @@
 					"uuid": "A2AB4CBB-294A-4085-9917-3AF62A434306",
 					"type": "Mesh",
 					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
 					"geometry": "Models/stanford-bunny.fbx",
 					"material": "Materials/Normal.mat"
 				}
@@ -330,8 +314,6 @@
 					"uuid": "FEC40710-DB83-4710-A3CA-F25349C7525F",
 					"type": "Mesh",
 					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
 					"geometry": "Geometries/TorusKnot.geom",
 					"material": "Materials/LambertGreen.mat"
 				},
@@ -386,8 +368,6 @@
 							"uuid": "F078BE97-8572-4546-A0A7-32C1F1210A80",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Box.geom",
 							"material": "Materials/StandardCrate.mat"
 						}
@@ -433,8 +413,6 @@
 							"uuid": "86EA7F71-0557-4740-A299-717E13C353B6",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Box.geom",
 							"material": "Materials/StandardCrate.mat"
 						}
@@ -480,8 +458,6 @@
 							"uuid": "A621062C-8B97-413C-AA5B-D921AD9DD911",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Box.geom",
 							"material": "Materials/StandardCrate.mat"
 						}
@@ -527,8 +503,6 @@
 							"uuid": "7C1D9DF7-B0A4-480E-9565-A779B4A90E4F",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Box.geom",
 							"material": "Materials/StandardCrate.mat"
 						}
@@ -598,8 +572,6 @@
 							"uuid": "4AC4195D-1472-4F11-BB2F-7CF7B5E001BF",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Cylinder.geom",
 							"material": "Materials/StandardWhite.mat"
 						}
@@ -644,8 +616,6 @@
 							"uuid": "94353D63-F98E-4C34-980D-F156B16825F7",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Cylinder.geom",
 							"material": "Materials/PhongBlue.mat"
 						}
@@ -690,8 +660,6 @@
 							"uuid": "958252D8-927B-455C-BAAB-C98962B8A4FF",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Cone.geom",
 							"material": "Materials/StandardWhite.mat"
 						}
@@ -752,8 +720,6 @@
 					"uuid": "69FD032C-6474-43DA-A562-CCA1212EE3B8",
 					"type": "Mesh",
 					"castShadow": true,
-					"receiveShadow": true,
-					"layers": 1,
 					"geometry": "Geometries/Dodecahedron.geom",
 					"material": "Materials/PhongBlue.mat"
 				},
@@ -802,8 +768,6 @@
 							"uuid": "E83F710E-FD1A-42AC-BC2D-EA9983189730",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Box.geom",
 							"material": "Materials/StandardCrate.mat"
 						}
@@ -846,8 +810,6 @@
 									"uuid": "F39D6F8D-0108-4CA8-A7E0-6E78764D8214",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -887,8 +849,6 @@
 									"uuid": "08AAE59A-D488-4597-A101-214A09BC79C9",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -928,8 +888,6 @@
 									"uuid": "558F7EE2-148B-4F71-9BE3-86FA440547EF",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -969,8 +927,6 @@
 									"uuid": "8F65871D-0284-4C2C-B869-01F50AD459D2",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1035,8 +991,6 @@
 									"uuid": "6E363D5C-15E3-41CD-9F0D-969EBFCF07B3",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1076,8 +1030,6 @@
 									"uuid": "C3F59FAA-563D-4A2F-90CC-83799F31887B",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1117,8 +1069,6 @@
 									"uuid": "260D82BF-4DE9-4200-8EEC-4E3B6BB01694",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1212,8 +1162,6 @@
 							"uuid": "37C8CBAC-C85E-4513-8383-AC8A341B22D1",
 							"type": "Mesh",
 							"castShadow": true,
-							"receiveShadow": true,
-							"layers": 1,
 							"geometry": "Geometries/Box.geom",
 							"material": "Materials/StandardCrate.mat"
 						}
@@ -1256,8 +1204,6 @@
 									"uuid": "FF7DEA67-0AB3-4613-8972-A5AFB1CD1C64",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1297,8 +1243,6 @@
 									"uuid": "11E86789-7311-43E5-A12C-B0CCA1B3B822",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1338,8 +1282,6 @@
 									"uuid": "B68BB4F8-5299-444E-A93F-054981D55EBB",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1379,8 +1321,6 @@
 									"uuid": "4C902C44-0737-497A-B894-26171E11FFCD",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1445,8 +1385,6 @@
 									"uuid": "0CFA35AE-8FA1-4C9E-8879-A5D18E20F5EA",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1486,8 +1424,6 @@
 									"uuid": "E6B017F5-8CAB-48D6-9630-140E2E2D97BD",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}
@@ -1527,8 +1463,6 @@
 									"uuid": "D9A29347-D8C2-4301-B498-CEEF5EE15D60",
 									"type": "Mesh",
 									"castShadow": true,
-									"receiveShadow": true,
-									"layers": 1,
 									"geometry": "Geometries/Box.geom",
 									"material": "Materials/StandardCrate.mat"
 								}

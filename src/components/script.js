@@ -1,17 +1,13 @@
 
-function Script(code)
+function Script()
 {
-	Object3D.call(this);
+	Component.call(this);
 
 	this.isScript = true;
 	this.type = 'Script';
-
-	this.code = code || null;
-
-	this.analyze();
 }
 
-Script.prototype = Object.create(Object3D.prototype);
+Script.prototype = Object.create(Component.prototype);
 Script.prototype.constructor = Script;
 
 Script.FIELDS = {
@@ -19,8 +15,22 @@ Script.FIELDS = {
 };
 Script.ICON = 'code';
 
+Object.defineProperty(Script.prototype, 'code', {
+	get: function() {
+		return this._code;
+	},
+	set: function(code) {
+		this._code = code;
+		this.analyze();
+	}
+});
+
 Script.prototype.analyze = function()
 {
+	if (!this.code) {
+		this.fields = {};
+		return;
+	}
 	let text = this.code.getJS();
 	let script;
 	try {
@@ -88,38 +98,4 @@ Script.prototype.analyze = function()
 			}
 		}
 	}
-}
-
-Script.prototype.copy = function(source)
-{
-	Object3D.prototype.copy.call(this, source);
-	for (let name of Object.keys(getFields(this))) {
-		this[name] = source[name];
-	}
-	return this;
-}
-
-Script.prototype.export = function()
-{
-	let json = {
-		uuid: this.uuid,
-		type: this.type,
-		code: this.code.asset.path,
-	};
-	for (let name of Object.keys(this.fields)) {
-		json[name] = this[name];
-	}
-	return json;
-}
-
-Script.import = async function(json)
-{
-	let obj = new Script(await getAsset(json.code));
-	obj.uuid = json.uuid;
-	for (let name of Object.keys(obj.fields)) {
-		if (json[name] !== undefined) {
-			obj[name] = json[name];
-		}
-	}
-	return obj;
 }

@@ -1,4 +1,25 @@
 
+function Component()  // base class for non-Three.js components
+{
+	Object3D.call(this);
+
+	for (let [name, field] of Object.entries(getFields(this))) {
+		this[name] = field.default === undefined ? null : field.default;
+	}
+}
+
+Component.prototype = Object.create(Object3D.prototype);
+Component.prototype.constructor = Component;
+
+Component.prototype.copy = function(source)
+{
+	Object3D.prototype.copy.call(this, source);
+	for (let name of Object.keys(getFields(this))) {
+		this[name] = source[name];
+	}
+	return this;
+}
+
 function serializeComponent(component, index)
 {
 	let fields = getFields(component);
@@ -21,32 +42,10 @@ function serializeComponent(component, index)
 
 function exportComponent(component)
 {
-	let json = component.export();
-	for (let attr of ['children', 'matrix']) {
-		delete json[attr];
-	}
-	return json;
+	return exportObject(component);
 }
 
 async function importComponent(json)
 {
-	if (json.type == 'Script') {
-		return await Script.import(json);
-	}
-	else if (json.type == 'Body') {
-		return await Body.import(json);
-	}
-	else if (json.type.includes('Shape')) {
-		return await Shape.import(json);
-	}
-	else {
-		let geometries = {}, materials = {};
-		if (json.geometry) {
-			geometries[json.geometry] = await getAsset(json.geometry);
-		}
-		if (json.material) {
-			materials[json.material] = await getAsset(json.material);
-		}
-		return new THREE.ObjectLoader().parseObject(json, geometries, materials);
-	}
+	return await importObject(json);
 }

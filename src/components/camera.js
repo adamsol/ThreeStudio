@@ -6,15 +6,6 @@ Camera.FIELDS = {
 	far: Field.Decimal(2000),
 };
 
-Camera.prototype.export = function()
-{
-	let json = this.toJSON().object;
-	for (let attr of ['aspect']) {
-		delete json[attr];
-	}
-	return json;
-}
-
 PerspectiveCamera = THREE.PerspectiveCamera;
 
 PerspectiveCamera.base = Camera;

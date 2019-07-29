@@ -1,10 +1,11 @@
 
-const textureFields = ['map'];
-
 Material = THREE.Material;
 
 MeshDepthMaterial = THREE.MeshDepthMaterial;
+MeshDepthMaterial.base = Material;
+
 MeshNormalMaterial = THREE.MeshNormalMaterial;
+MeshNormalMaterial.base = Material;
 
 function ColorMaterial()
 {
@@ -74,30 +75,10 @@ Material.prototype.update = function()
 	this.needsUpdate = true;  // to rebuild shaders
 }
 
-Material.prototype.export = function()
-{
-	// Prevent serializing textures and images.
-	let meta = {textures: {}};
-	for (let field of textureFields) {
-		if (this[field]) {
-			meta.textures[this[field].uuid] = '';
-		}
-	}
-	let json = this.toJSON(meta);
-
-	// Output texture paths instead.
-	for (let field of textureFields) {
-		if (this[field]) {
-			json[field] = this[field].asset.path;
-		}
-	}
-	return json;
-}
-
 Material.import = async function(json)
 {
 	let textures = {};
-	for (let field of textureFields) {
+	for (let field of ['map', 'normalMap', 'displacementMap', 'emissiveMap', 'specularMap', 'metalnessMap', 'roughnessMap']) {
 		if (json[field]) {
 			let asset_path = json[field];
 			textures[asset_path] = await getAsset(asset_path);

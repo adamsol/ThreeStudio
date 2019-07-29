@@ -1,8 +1,6 @@
 
 function PhysicsMaterial()
 {
-	Object3D.call(this);
-
 	this.isPhysicsMaterial = true;
 	this.type = 'PhysicsMaterial';
 
@@ -11,9 +9,6 @@ function PhysicsMaterial()
 	}
 }
 
-PhysicsMaterial.prototype = Object.create(Object3D.prototype);
-PhysicsMaterial.prototype.constructor = PhysicsMaterial;
-
 PhysicsMaterial.FIELDS = {
 	staticFriction: Field.Decimal(0.5),
 	rollingFriction: Field.Decimal(),
@@ -21,18 +16,6 @@ PhysicsMaterial.FIELDS = {
 	linearDamping: Field.Decimal(0.2),
 	angularDamping: Field.Decimal(0.1),
 };
-
-PhysicsMaterial.prototype.export = function()
-{
-	let json = {
-		uuid: this.uuid,
-		type: this.type,
-	};
-	for (let attr of Object.keys(getFields(this))) {
-		json[attr] = this[attr];
-	}
-	return json;
-}
 
 PhysicsMaterial.import = async function(json)
 {

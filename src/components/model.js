@@ -1,28 +1,24 @@
 
-Model = THREE.Mesh;
+Model = Mesh = THREE.Mesh;
 
 Model.FIELDS = {
 	castShadow: Field.Boolean(true),
+	// receiveShadow: Field.Boolean(true),  // this doesn't work out of the box
 	geometry: Field.Reference(Geometry),
 	material: Field.Reference(Material),
 };
 Model.TITLE = 'Model';
 Model.ICON = 'gem';
 
-Model.prototype.export = function()
+Model.import = async function(json)
 {
-	// Mesh.toJSON() takes very much time, since it tries to serialize geometry and textures.
-	return {
-		uuid: this.uuid,
-		type: this.type,
-		castShadow: this.castShadow,
-		receiveShadow: this.receiveShadow,
-		layers: this.layers.mask,
-		geometry: this.geometry.asset.path,
-		material: this.material.asset.path,
-	}
+	let geometries = {}, materials = {};
+	geometries[json.geometry] = await getAsset(json.geometry);
+	materials[json.material] = await getAsset(json.material);
+	return new THREE.ObjectLoader().parseObject(json, geometries, materials);
 }
 
+// FIXME: these shouldn't be hardcoded
 function BoxModel() {
 	return new Model(getAssetSync('Geometries', 'Box.geom'), getAssetSync('Materials', 'StandardWhite.mat'));
 }

@@ -1,18 +1,18 @@
 
 function Body()
 {
-	Object3D.call(this);
+	Component.call(this);
 
 	this.isBody = true;
 	this.type = 'Body';
 
-	this.mass = 1;
+	// FIXME: this shouldn't be hardcoded.
 	this.material = getAssetSync('Physics', 'Default.phxmat');
 
 	this.ammo = null;
 }
 
-Body.prototype = Object.create(Object3D.prototype);
+Body.prototype = Object.create(Component.prototype);
 Body.prototype.constructor = Body;
 
 Body.FIELDS = {
@@ -102,34 +102,4 @@ Body.prototype.update = function()
 	if (parent) {
 		parent.attach(actor.obj);
 	}
-}
-
-Body.prototype.copy = function(source)
-{
-	Object3D.prototype.copy.call(this, source);
-	for (let name of Object.keys(getFields(this))) {
-		this[name] = source[name];
-	}
-	return this;
-}
-
-Body.prototype.export = function()
-{
-	return {
-		uuid: this.uuid,
-		type: this.type,
-		mass: this.mass,
-		material: this.material ? this.material.asset.path : null,
-	};
-}
-
-Body.import = async function(json)
-{
-	let obj = new Body();
-	obj.uuid = json.uuid;
-	obj.mass = json.mass;
-	if (json.material) {
-		obj.material = await getAsset(json.material);
-	}
-	return obj;
 }

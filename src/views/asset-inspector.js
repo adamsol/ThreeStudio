@@ -64,7 +64,7 @@ AssetInspectorView.prototype.update = function()
 
 AssetInspectorView.prototype.setAsset = function(asset)
 {
-	if (asset && typeof asset.object.export === 'function') {
+	if (asset && asset.object.exportable !== false) {
 		this.asset = asset;
 		this.serializeAsset();
 		this.element.children().show();
@@ -95,7 +95,7 @@ AssetInspectorView.prototype.refreshInput = function(input, force)
 		return;
 	}
 	let attrs = input.data('name').split('.');
-	let obj = typeof this.asset.object.getParams === 'function' ? this.asset.object.getParams() : this.asset.object;
+	let obj = getParameters(this.asset.object);
 	for (let i = 0, n = attrs.length - 1; i < n; ++i) {
 		obj = obj[attrs[i]];
 	}
@@ -121,7 +121,7 @@ AssetInspectorView.prototype.refreshInput = function(input, force)
 AssetInspectorView.prototype.updateValue = function(input, refresh)
 {
 	let attrs = input.attr('data-name').split('.');
-	let obj = typeof this.asset.object.getParams === 'function' ? this.asset.object.getParams() : this.asset.object;
+	let obj = getParameters(this.asset.object);
 	for (let i = 0; i < attrs.length - 1; ++i) {
 		obj = obj[attrs[i]];
 	}
@@ -144,7 +144,7 @@ AssetInspectorView.prototype.updateValue = function(input, refresh)
 		} else {
 			obj[attr] = value;
 		}
-		if (typeof this.asset.object.update === 'function') {
+		if (typeof this.asset.object.update == 'function') {
 			this.asset.object.update();
 		}
 	}

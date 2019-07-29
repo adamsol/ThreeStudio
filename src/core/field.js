@@ -21,6 +21,11 @@ function getFields(obj)
 		}
 	} while (obj = obj.base);
 
+	for (let [name, field] of Object.entries(fields)) {
+		if (field == null) {
+			delete fields[name];
+		}
+	}
 	return fields;
 }
 
@@ -120,6 +125,49 @@ function serializeField(field, name, text, classes)
 			field.nil ? '<option value="">---</option>' : '',
 			$.map(getAssets(field.class), ''.format.bind('<option value="{0.id}">{0.name}</option>')).join('')));
 	}
+}
+
+function getParameters(object)
+{
+	return typeof object.getParameters == 'function' ? object.getParameters() : object;
+}
+
+function exportObject(object)
+{
+	if (typeof object.export == 'function') {
+		return object.export();
+	}
+	let data = {
+		uuid: object.uuid,
+		type: object.type,
+	};
+	let params = getParameters(object);
+	for (let [name, field] of Object.entries(getFields(object))) {
+		if (field.type == 'Reference') {
+			data[name] = params[name] ? params[name].asset.path : null;
+		} else {
+			data[name] = params[name];
+		}
+	}
+	return data;
+}
+
+async function importObject(json)
+{
+	let cls = window[getMetatype(json.type).name];
+	if (typeof cls.import == 'function') {
+		return await cls.import(json);
+	}
+	let obj = new window[json.type]();
+	obj.uuid = json.uuid;
+	for (let [name, field] of Object.entries(getFields(obj))) {
+		if (field.type == 'Reference') {
+			obj[name] = json[name] ? await getAsset(json[name]) : null;
+		} else {
+			obj[name] = json[name];
+		}
+	}
+	return obj;
 }
 
 Color = THREE.Color;

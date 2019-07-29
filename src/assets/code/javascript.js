@@ -6,11 +6,12 @@ function JavaScriptCode(text)
 	this.type = 'JavaScriptCode';
 }
 
+JavaScriptCode.prototype = Object.create(Code.prototype);
+JavaScriptCode.prototype.constructor = JavaScriptCode;
+
 JavaScriptCode.base = Code;
 
 JavaScriptCode.prototype.getJS = function()
 {
 	return this.text;
 }
-
-JavaScriptCode.prototype.export = Code.prototype.export;

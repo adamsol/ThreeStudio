@@ -7,15 +7,6 @@ Light.FIELDS = {
 	castShadow: Field.Boolean(false),
 };
 
-Light.prototype.export = function()
-{
-	let json = this.toJSON().object;
-	for (let attr of ['shadow']) {
-		delete json[attr];
-	}
-	return json;
-}
-
 AmbientLight = THREE.AmbientLight;
 
 AmbientLight.base = Light;
@@ -68,3 +59,9 @@ SpotLight.FIELDS = {
 	decay: Field.Decimal(1.0),
 };
 SpotLight.ICON = 'lightbulb';
+
+Light.import = async function(json)
+{
+	// FIXME: why don't lights work when imported with importObject()?
+	return new THREE.ObjectLoader().parseObject(json);
+}
