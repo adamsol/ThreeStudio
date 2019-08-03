@@ -5,7 +5,7 @@ const VERSION = '0.3.0';
 const electron = require('electron');
 const dialog = electron.remote.dialog;
 
-let scene_path = null;
+let scene_path;
 
 async function newScene()
 {
@@ -15,6 +15,7 @@ async function newScene()
 	for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
 		view.refresh();
 	}
+	scene.ready = true;
 	scene_path = null;
 }
 
@@ -31,7 +32,8 @@ function loadScene(file_path)
 		fs.readFile(file_path, (error, content) => {
 			try {
 				let json = JSON.parse(content);
-				scene = Scene.import(json);
+				scene = new Scene();
+				scene.import(json);
 				scene_path = file_path;
 				for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
 					view.refresh();
@@ -46,6 +48,9 @@ function loadScene(file_path)
 
 function saveScene(file_path)
 {
+	if (!scene.ready || game.running) {
+		return;
+	}
 	if (!file_path) {
 		dialog.showSaveDialog({filters: [{name: 'Scene', extensions: ['scene']}]}, file => {
 			if (!file) {

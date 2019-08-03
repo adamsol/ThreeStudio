@@ -34,6 +34,10 @@ Scene.prototype.getSelection = function()
 
 Scene.prototype.setSelection = function(ids)
 {
+	if (!EDITOR) {
+		return;
+	}
+
 	this.selection.ids = ids;
 	let actors = this.getSelection();
 
@@ -90,17 +94,20 @@ Scene.prototype.export = function()
 	return json;
 }
 
-Scene.import = function(json)
+Scene.prototype.import = async function(json)
 {
-	let scene = new Scene();
+	this.ready = false;
 	if (json.name) {
-		scene.name = json.name;
+		this.name = json.name;
 	}
+	let promises = [];
 	for (let obj of json.children) {
-		Actor.import(obj, scene);
+		promises.push(Actor.import(obj, this));
 	}
-	scene.setSelection([]);
-	return scene;
+	this.setSelection([]);
+	return $.when(...promises).then(() => {
+		this.ready = true;
+	});
 }
 
 let scene = new Scene();

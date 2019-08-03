@@ -13,6 +13,11 @@ function Game()
 
 Game.prototype.initialize = function()
 {
+	if (this.running || !scene.ready) {
+		return;
+	}
+	this.running = true;
+
 	if (EDITOR) {
 		this.original_scene = scene.export();
 	}
@@ -80,8 +85,6 @@ Game.prototype.initialize = function()
 			layout.openView(GameRendererView, parent);
 		}
 	}
-
-	this.running = true;
 }
 
 Game.prototype.update = function(dt)
@@ -102,6 +105,10 @@ Game.prototype.update = function(dt)
 
 Game.prototype.stop = function()
 {
+	if (!this.running) {
+		return;
+	}
+
 	let stack = null;
 	for (let game of layout.findViews(GameRendererView)) {
 		stack = game.getTabHeader();
@@ -112,7 +119,9 @@ Game.prototype.stop = function()
 		}
 	}
 
-	scene = Scene.import(this.original_scene);
+	scene = new Scene();
+	scene.import(this.original_scene);
+
 	for (let view of layout.findViews(SceneRendererView, SceneHierarchyView)) {
 		view.refresh();
 	}
@@ -128,6 +137,7 @@ Game.prototype.onKeyDown = function(event)
 		} else {
 			this.stop();
 		}
+		return;
 	}
 
 	if (!this.running) {
