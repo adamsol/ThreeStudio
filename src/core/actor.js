@@ -184,18 +184,20 @@ Actor.import = async function(json, parent)
 	let obj = new Group();
 	obj.name = json.name;
 	let actor = new Actor(obj, parent);
-	Transform.import(json.transform, actor.transform);
+	let promises = [];
+
+	promises.push(Transform.import(json.transform, actor.transform));
 	for (let obj of json.components) {
 		let i = actor.components.length;
 		actor.components.push(null);
-		importComponent(obj).then(component => {
+		promises.push(importComponent(obj).then(component => {
 			actor.addComponent(component, i);
-		});
+		}));
 	}
 	for (let obj of json.children) {
-		Actor.import(obj, actor);
+		promises.push(Actor.import(obj, actor));
 	}
-	return actor;
+	return $.when(...promises).then(() => actor);
 }
 
 Object3D.prototype.getActor = function()

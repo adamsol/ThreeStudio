@@ -86,7 +86,7 @@ Scene.prototype.xorSelection = function(ids)
 Scene.prototype.export = function()
 {
 	let json = Actor.prototype.export.call(this);
-	json.version = version;
+	json.version = VERSION;
 	return json;
 }
 

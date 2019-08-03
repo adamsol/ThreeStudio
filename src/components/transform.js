@@ -23,7 +23,7 @@ Transform.prototype.export = function()
 	};
 }
 
-Transform.import = function(json, transform)
+Transform.import = async function(json, transform)
 {
 	transform.position.fromArray(json.position);
 	transform.rotation.fromArray(json.rotation);

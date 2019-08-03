@@ -12,7 +12,15 @@ Aim of the project is to create a functional 3D editor using existing open-sourc
 
 #### Usage: ####
 
-> npm install \
-> npm start
+```
+npm install
+npm start
+```
 
 Press `F9` or `Ctrl+P` to enter/exit game mode.
+
+To run the game in standalone mode:
+
+```
+npm start player
+```

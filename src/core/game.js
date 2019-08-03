@@ -13,7 +13,9 @@ function Game()
 
 Game.prototype.initialize = function()
 {
-	this.original_scene = scene.export();
+	if (EDITOR) {
+		this.original_scene = scene.export();
+	}
 
 	this.input = {
 		isDown: {},
@@ -68,13 +70,15 @@ Game.prototype.initialize = function()
 		}
 	});
 
-	let views = layout.findViews(GameRendererView);
-	if (views.length) {
-		views[0].activate();
-	} else {
-		views = layout.findViews(SceneRendererView);
-		let parent = views.length ? views[0].getTabHeader() : null;
-		layout.openView(GameRendererView, parent);
+	if (EDITOR) {
+		let views = layout.findViews(GameRendererView);
+		if (views.length) {
+			views[0].activate();
+		} else {
+			views = layout.findViews(SceneRendererView);
+			let parent = views.length ? views[0].getTabHeader() : null;
+			layout.openView(GameRendererView, parent);
+		}
 	}
 
 	this.running = true;
@@ -118,7 +122,7 @@ Game.prototype.stop = function()
 
 Game.prototype.onKeyDown = function(event)
 {
-	if (event.which == Keys.F9 || event.ctrlKey && event.which == Keys.P) {
+	if (EDITOR && (event.which == Keys.F9 || event.ctrlKey && event.which == Keys.P)) {
 		if (!this.running) {
 			this.initialize();
 		} else {
@@ -145,14 +149,6 @@ Game.prototype.onKeyUp = function(event)
 
 Game.prototype.onMouseDown = function(event)
 {
-	if (event.which == Keys.F9 || event.ctrlKey && event.which == Keys.P) {
-		if (!this.running) {
-			this.initialize();
-		} else {
-			this.stop();
-		}
-	}
-
 	if (!this.running) {
 		return;
 	}

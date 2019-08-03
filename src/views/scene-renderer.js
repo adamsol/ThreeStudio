@@ -71,10 +71,6 @@ SceneRendererView.prototype.refresh = function()
 
 SceneRendererView.prototype.animate = function()
 {
-	if (!this.renderer) {
-		return;
-	}
-
 	let dt = this.clock.getDelta();
 
 	if (this.controls.transform.object) {

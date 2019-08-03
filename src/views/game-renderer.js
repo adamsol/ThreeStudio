@@ -18,10 +18,6 @@ views[GameRendererView.NAME] = GameRendererView;
 
 GameRendererView.prototype.animate = function()
 {
-	if (!this.renderer) {
-		return;
-	}
-
 	this.camera = scene.obj.findObjectByType(Camera);
 	if (this.camera) {
 		let aspect = this.canvas.width() / this.canvas.height();

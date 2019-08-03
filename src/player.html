@@ -10,8 +10,6 @@
 			path.split = p => p.split(/[\/\\]+/);
 
 			$ = jQuery = require('jquery');
-			require('jstree');
-			GoldenLayout = require('golden-layout');
 			THREE = require('three');
 			Ammo = require('ammojs');
 			CSG = require('csg');
@@ -20,46 +18,15 @@
 			RapydScript = require('rapydscript');
 		</script>
 
-		<script src="../node_modules/jquery-ui-dist/jquery-ui.js"></script>
-		<link rel="stylesheet" href="../node_modules/jquery-ui-dist/jquery-ui.css">
-
-		<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
-
-		<link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css"/>
-
-		<link rel="stylesheet" href="../node_modules/jstree/src/themes/default/style.css">
-
-		<link rel="stylesheet" href="../node_modules/golden-layout/src/css/goldenlayout-base.css"/>
-		<link rel="stylesheet" href="../node_modules/golden-layout/src/css/goldenlayout-dark-theme.css"/>
-
-		<script src="../node_modules/codemirror/lib/codemirror.js"></script>
-		<script src="../node_modules/codemirror/mode/javascript/javascript.js"></script>
-		<script src="../node_modules/codemirror/addon/scroll/simplescrollbars.js"></script>
-		<link rel="stylesheet" href="../node_modules/codemirror/lib/codemirror.css">
-		<link rel="stylesheet" href="../node_modules/codemirror/theme/dracula.css">
-		<link rel="stylesheet" href="../node_modules/codemirror/addon/scroll/simplescrollbars.css">
-
-		<script src="../lib/jscolor-2.0.5/jscolor.js"></script>
-
-		<script src="../lib/three-105/examples/js/controls/TransformControls.js"></script>
 		<script src="../node_modules/three/examples/js/loaders/FBXLoader.js"></script>
 		<script src="../node_modules/three/examples/js/loaders/OBJLoader.js"></script>
 		<script src="../node_modules/three/examples/js/loaders/TGALoader.js"></script>
-		<script src="../node_modules/three/examples/js/shaders/CopyShader.js"></script>
-		<script src="../node_modules/three/examples/js/shaders/FXAAShader.js"></script>
-		<script src="../node_modules/three/examples/js/postprocessing/EffectComposer.js"></script>
-		<script src="../node_modules/three/examples/js/postprocessing/RenderPass.js"></script>
-		<script src="../node_modules/three/examples/js/postprocessing/ShaderPass.js"></script>
-		<script src="../lib/three-105/examples/js/postprocessing/OutlinePass.js"></script>
 
 		<script src="utils/func.js"></script>
 		<script src="utils/input.js"></script>
 		<script src="utils/file.js"></script>
-		<script src="utils/widget.js"></script>
 		<script src="utils/math.js"></script>
 		<script src="utils/csg.js"></script>
-		<script src="utils/editor.js"></script>
 
 		<script src="core/field.js"></script>
 		<script src="core/world.js"></script>
@@ -93,20 +60,10 @@
 		<script src="components/physics/mesh-shape.js"></script>
 
 		<script src="views/view.js"></script>
-		<script src="views/inspector.js"></script>
 		<script src="views/renderer.js"></script>
-		<script src="views/controls/camera.js"></script>
-		<script src="views/scene-renderer.js"></script>
-		<script src="views/scene-hierarchy.js"></script>
-		<script src="views/actor-inspector.js"></script>
-		<script src="views/project-hierarchy.js"></script>
-		<script src="views/project-explorer.js"></script>
-		<script src="views/asset-inspector.js"></script>
-		<script src="views/csg-editor.js"></script>
-		<script src="views/script-editor.js"></script>
 		<script src="views/game-renderer.js"></script>
 
-		<script src="index.js"></script>
+		<script src="player.js"></script>
 		<link rel="stylesheet" href="index.css"/>
 	</head>
 </html>

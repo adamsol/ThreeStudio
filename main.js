@@ -1,8 +1,11 @@
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
+const EDITOR = process.argv[2] != 'player';
 
 const electron = require('electron');
-require('electron-debug')();
+if (EDITOR) {
+	require('electron-debug')();
+}
 const windowStateKeeper = require('electron-window-state');
 
 const app = electron.app;
@@ -12,23 +15,37 @@ let mainWindow;
 
 function createMainWindow()
 {
-	const state = windowStateKeeper({
-		defaultWidth: 1600,
-    	defaultHeight: 900
-	});
+	if (EDITOR) {
+		const state = windowStateKeeper({
+			defaultWidth: 1600,
+			defaultHeight: 900,
+		});
+		mainWindow = new electron.BrowserWindow({
+			webPreferences: {
+				nodeIntegration: true,
+			},
+			x: state.x,
+			y: state.y,
+			width: state.width,
+			height: state.height,
+		});
+		state.manage(mainWindow);
+	}
+	else {
+		mainWindow = new electron.BrowserWindow({
+			webPreferences: {
+				nodeIntegration: true,
+			},
+			fullscreen: true,
+		});
+	}
 
-	mainWindow = new electron.BrowserWindow({
-		webPreferences: {
-			nodeIntegration: true,
-		},
-		x: state.x,
-		y: state.y,
-		width: state.width,
-		height: state.height,
-	});
-	state.manage(mainWindow);
+	if (EDITOR) {
+		mainWindow.loadURL(`file://${__dirname}/src/editor.html`);
+	} else {
+		mainWindow.loadURL(`file://${__dirname}/src/player.html`);
+	}
 
-	mainWindow.loadURL(`file://${__dirname}/src/index.html`);
 	mainWindow.on('closed', () => mainWindow = null);
 }
 
@@ -49,6 +66,11 @@ app.on('activate', () =>
 app.on('ready', () =>
 {
 	createMainWindow();
+
+	if (!EDITOR) {
+		mainWindow.setMenu(null);
+		return;
+	}
 
 	function execute() {
 		return () => mainWindow.webContents.send.apply(mainWindow.webContents, arguments);
