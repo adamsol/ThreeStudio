@@ -20,30 +20,30 @@
     "build": "electron-packager . --out=dist --asar --overwrite --all"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.1",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "ammojs": "0.0.2",
-    "bootstrap": "^4.3.1",
-    "codemirror": "^5.48.2",
-    "coffeescript": "^2.4.1",
+    "bootstrap": "^4.4.1",
+    "codemirror": "^5.52.2",
+    "coffeescript": "^2.5.1",
     "csg": "^1.0.1",
     "electron-debug": "^3.0.1",
     "electron-window-state": "^5.0.3",
     "esprima": "^4.0.1",
     "file": "^0.2.2",
-    "fs-extra": "^5.0.0",
+    "fs-extra": "^9.0.0",
     "golden-layout": "^1.5.9",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
-    "jstree": "^3.3.8",
-    "npm": "^6.10.2",
+    "jstree": "^3.3.9",
+    "npm": "^6.14.4",
     "path": "^0.12.7",
-    "rapydscript": "^0.5.60",
-    "three": "^0.105.2"
+    "rapydscript": "^0.5.61",
+    "three": "^0.115.0"
   },
   "devDependencies": {
-    "electron": "^5.0.8",
-    "electron-packager": "^14.0.4",
-    "xo": "^0.24.0"
+    "electron": "^8.2.0",
+    "electron-packager": "^14.2.1",
+    "xo": "^0.28.1"
   },
   "xo": {
     "envs": [
