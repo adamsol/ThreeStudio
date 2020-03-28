@@ -140,8 +140,8 @@ if (!localStorage['layout_config']) {
 loadScene(localStorage['scene_path'] || 'data/World.scene');
 
 $(window).on('beforeunload', () => {
-    localStorage['layout_config'] = JSON.stringify(layout.toConfig());
-    if (scene_path) {
+	localStorage['layout_config'] = JSON.stringify(layout.toConfig());
+	if (scene_path) {
 		localStorage['scene_path'] = scene_path;
 	}
 });

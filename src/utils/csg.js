@@ -1,7 +1,7 @@
 
 CSG.Vector.prototype.threeVector = function()
 {
-    return new THREE.Vector3(this.x, this.y, this.z);
+	return new THREE.Vector3(this.x, this.y, this.z);
 }
 
 function CSGVertex(pos, normal, uv)
@@ -16,16 +16,16 @@ CSGVertex.prototype.constructor = CSGVertex;
 
 CSGVertex.prototype.clone = function()
 {
-    return new CSGVertex(this.pos, this.normal, this.uv);
+	return new CSGVertex(this.pos, this.normal, this.uv);
 }
 
 CSGVertex.prototype.interpolate = function(other, t)
 {
-    return new CSGVertex(
-    	this.pos.lerp(other.pos, t),
+	return new CSGVertex(
+		this.pos.lerp(other.pos, t),
 		this.normal.lerp(other.normal, t),
 		this.uv.clone().lerp(other.uv, t),
-    );
+	);
 }
 
 CSG.fromGeometry = function(geometry, matrix4)
