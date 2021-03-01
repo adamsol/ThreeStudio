@@ -38,7 +38,7 @@
     "npm": "^6.14.4",
     "path": "^0.12.7",
     "rapydscript": "^0.5.61",
-    "three": "^0.115.0"
+    "three": "^0.125.0"
   },
   "devDependencies": {
     "electron": "^8.2.0",
