@@ -103,13 +103,6 @@ app.on('ready', () =>
 				],
 			},
 			{
-				label: 'Edit',
-				submenu: [
-					{role: 'undo'}, {role: 'redo'}, {type: 'separator'},
-					{role: 'cut'}, {role: 'copy'}, {role: 'paste'}, {label: 'Duplicate', accelerator: 'CmdOrCtrl+D'}, {role: 'delete', accelerator: 'Delete'},
-				],
-			},
-			{
 				label: 'View',
 				submenu: view_submenu,
 			},

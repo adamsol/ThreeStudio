@@ -22,11 +22,11 @@ async function newScene()
 function loadScene(file_path)
 {
 	if (!file_path) {
-		dialog.showOpenDialog({filters: [{name: 'Scene', extensions: ['scene']}]}, files => {
-			if (!files) {
+		dialog.showOpenDialog({filters: [{name: 'Scene', extensions: ['scene']}]}).then(result => {
+			if (result.canceled) {
 				return;
 			}
-			loadScene(files[0]);
+			loadScene(result.filePaths[0]);
 		});
 	} else {
 		fs.readFile(file_path, (error, content) => {
@@ -52,11 +52,11 @@ function saveScene(file_path)
 		return;
 	}
 	if (!file_path) {
-		dialog.showSaveDialog({filters: [{name: 'Scene', extensions: ['scene']}]}, file => {
-			if (!file) {
+		dialog.showSaveDialog({filters: [{name: 'Scene', extensions: ['scene']}]}).then(result => {
+			if (result.canceled) {
 				return;
 			}
-			saveScene(file);
+			saveScene(result.filePath);
 		});
 	} else {
 		let json = scene.export();

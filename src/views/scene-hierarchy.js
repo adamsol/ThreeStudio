@@ -22,8 +22,14 @@ function SceneHierarchyView(container, state)
 					actor.addComponent(new window[name]());
 				}
 			}
+			// https://github.com/vakata/jstree/issues/1021
+			self.skip_change_event = true;
+			self.hierarchy.on('refresh.jstree', () => {
+				scene.setSelection([actor.id]);
+				self.hierarchy.off('refresh.jstree');
+				self.skip_change_event = false;
+			});
 			self.refresh();
-			scene.setSelection([actor.id]);
 		}
 	});
 
@@ -127,6 +133,9 @@ SceneHierarchyView.prototype.onNodeDelete = function(event, data)
 
 SceneHierarchyView.prototype.onNodeChange = function(event, data)
 {
+	if (this.skip_change_event) {
+		return;
+	}
 	scene.setSelection(this.tree.get_selected());
 }
 

@@ -88,6 +88,11 @@ Geometry.prototype.getParameters = BufferGeometry.prototype.getParameters = func
 	return this.parameters;
 }
 
+Geometry.prototype.export = BufferGeometry.prototype.export = function()
+{
+	return this.toJSON();
+}
+
 Geometry.import = BufferGeometry.import = async function(json)
 {
 	return new THREE.ObjectLoader().parseGeometries([json])[json.uuid];

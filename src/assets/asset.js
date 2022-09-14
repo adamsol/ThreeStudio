@@ -39,10 +39,12 @@ let assets = new Asset('folder', 'data');
 let assetsById = {};
 let assetsByClass = {};
 
+let LOADING = 'LOADING';
+
 function addAsset(object, cls, name, parent)
 {
 	parent = parent || assets;
-	if (!parent.children[name]) {
+	if (!parent.children[name] || parent.children[name] === LOADING) {
 		let id = ++Asset.count;
 		let asset = new Asset('file', name, parent, {
 			class: cls,
@@ -112,6 +114,7 @@ function importAssets(dir_path, assets)
 			assets.children[folder] = new Asset('folder', folder, assets);
 		}
 		for (let file of files) {
+			assets.children[file] = LOADING;
 			let abs_path = path.join(dir_path, file);
 			let callback = onAssetLoad.partial(assets, file);
 			// Texture and model files are loaded by a corresponding loader.
@@ -136,13 +139,13 @@ function importAssets(dir_path, assets)
 	});
 }
 
-importAssets('data', assets);
+setTimeout(() => importAssets('data', assets));
 
 async function getAsset()
 {
 	let asset = assets;
 	for (let name of [...arguments].map(path.split).flatten()) {
-		for (let i = 0; i < 20 && asset.children[name] === undefined; ++i) {
+		while (asset.children[name] === LOADING) {
 			await sleep(100);
 		}
 		asset = asset.children[name];
